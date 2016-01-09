@@ -128,7 +128,7 @@ $.extend(
 				objConnection.sendCommand(opts);
 			};
 
-			this.delete = function (aryId) {
+			this.delete = function (aryId, callback) {
 				if (aryId == undefined || aryId.length == 0) return false;
 
 				var opts = {
@@ -137,7 +137,10 @@ $.extend(
 						id: aryId.join()
 					},
 					callbackSuccess: function(result, status, xhr) {
-						objController.refresh();
+						if (callback == undefined) {
+							objController.refresh();
+						}
+						else callback();
 					},
 					callbackFail: function(xhr, status, error) {
 						bootbox.alert(error);

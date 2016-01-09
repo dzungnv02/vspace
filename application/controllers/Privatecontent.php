@@ -56,9 +56,9 @@ class Privatecontent extends CI_Controller {
 
 	public function delete () {
 		$id = $this->input->post('id', TRUE);
-		$force = $this->input->post('option', TRUE);
+		//$force = $this->input->post('option', TRUE);
 		$userinfo = $this->session->userdata('userinfo');
-		$aryParams = array('id' => $id, 'option' => $force, 'sid' => $userinfo['session']);
+		$aryParams = array('id' => $id, 'option' => 'force', 'sid' => $userinfo['session']);
 		$result = $this->vservices->actionExecute('delete', $aryParams, 'space');		
 		echo $this->XML2JSON($result);
 	}

@@ -29,14 +29,19 @@ $.extend(
 			};
 
 			this.delete = function() {
-				var selectedNodes = objGrid.getSelectedNodes();
-				if (selectedNodes.length > 0) {
-					var aryId = [];
-					$(selectedNodes).each(function(idx) {
-						aryId[idx] = $($(selectedNodes)[idx]).attr('data-id');
-					});
-					objLayout.showDeleteConfirm(aryId);
+				var aryId = [];
+				var selectedGridNodes = objGrid.getSelectedNodes();
+				if (selectedGridNodes.length > 0) {					
+					$(selectedGridNodes).each(function(idx) {
+						aryId[idx] = $($(selectedGridNodes)[idx]).attr('data-id');
+					});					
+				}else {
+					var id = objTree.getSelectedNode()
+					if (id == rootDirId) return;
+					aryId = [id];
 				}
+
+				if (aryId.length > 0) objLayout.showDeleteConfirm(aryId);
 			};
 
 			this.upload = function() {
@@ -71,8 +76,9 @@ $.extend(
 
 			};
 
-			this.refresh = function() {
-				var selectedNode = objTree.findNodeById(objTree.getSelectedNode());					
+			this.refresh = function(currDir) {
+				if (currDir == undefined) currDir = objTree.getSelectedNode();
+				var selectedNode = objTree.findNodeById(currDir);					
 				self.openDir(selectedNode, function() {
 					objTree.nodeClick(selectedNode, true);
 				});

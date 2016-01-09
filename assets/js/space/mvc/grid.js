@@ -46,6 +46,7 @@ $.extend(
 					'data-size': item.size,
 					'data-type': opts.minetype,
 					'data-date': item.date,
+					'data-parent': item.parentID,
 					'data-child': opts.minetype == 'directory' ? item.subdirs : '0'
 				}).append(div, divLink);
 				bindNodeEvents(li);
@@ -54,7 +55,6 @@ $.extend(
 
 			var bindNodeEvents = function(node) {
 				if (o.eventHandlers == null) return false;
-
 				$(node).bind('click', function(e) {
 					o.eventHandlers.select(node, function() {
 						if (e.ctrlKey || e.metaKey) {

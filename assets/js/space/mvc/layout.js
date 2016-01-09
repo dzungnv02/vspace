@@ -110,7 +110,9 @@ $.extend(
 						message: formHTML,
 						show: false
 					})
-					.on('shown.bs.modal', function() {})
+					.on('shown.bs.modal', function() {
+						$(this).find('FORM#createFolderForm').find('INPUT').focus();
+					})
 					.on('hide.bs.modal', function(e) {})
 					.modal('show');
 
@@ -123,7 +125,7 @@ $.extend(
 				});
 
 				$(form).on('submit', function (e) {
-					var newFolderName = $(dlg).find('DIV.modal-dialog').find('FORM#createFolderForm INPUT[name="foldername"]').val().trim();
+					var newFolderName = $(dlg).find('FORM#createFolderForm INPUT[name="foldername"]').val().trim();
 					var destination = objTree.getSelectedNode();
 					objSpaceModel.createFolder(newFolderName, destination, dlg, validateCreateFolder);
 					e.preventDefault();
@@ -133,9 +135,9 @@ $.extend(
 
 			this.showDeleteConfirm = function (aryId){
 				var message = 'Bạn có chắc chắn muốn xóa [cusmsg] không?';
-				var rpStr = '';
+				var rpStr = '';				
 				if (aryId.length == 1) {
-					var node = objGrid.findNodeById(aryId[0]);
+					var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent():objGrid.findNodeById(aryId[0]);
 					var type = $(node).attr('data-type') == 'directory' ? 'thư mục' : 'file';
 					rpStr = type + ' <strong style="color:red">' + $(node).attr('data-name') + '</strong>';
 				}
@@ -144,7 +146,10 @@ $.extend(
 				}
 
 				bootbox.confirm(message.replace('[cusmsg]', rpStr), function(result) {
-  					if (result == true) objSpaceModel.delete(aryId);
+  					if (result == true) objSpaceModel.delete(aryId, function(){
+  						var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent():objGrid.findNodeById(aryId[0]);
+  						objController.refresh($(node).attr('data-parent'));
+  					});
 				}); 
 			};
 

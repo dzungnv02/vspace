@@ -25,18 +25,20 @@ $.extend(
                 var nodeName = opts.isRoot ? rootDirName : item.name;
                 var nodeClass = opts.isRoot == true ? 'home' : (opts.hasChild == true ? 'directory-hc' : 'directory');
                 var defaulState = (opts.isRoot == false && opts.defaultStatus == 0) ? 'collapsed' : 'expanded';
-                var container = opts.isRoot == true ? o.treeContainer : $('UL.vstree[data-parentID="' + item.parentID + '"]').find('> LI[data-id="' + item.parentID + '"]');
+                var container = opts.isRoot == true ? o.treeContainer : $('UL.vstree').find('> LI[data-id="' + item.parentID + '"]');
 
                 var ul = $('<ul></ul>', {
                     'class': 'vstree',
-                    'data-parentID': nodeId
+                    'data-parentID': nodeParentId
                 });
 
                 var li = $('<li></li>', {
                     'class': nodeClass,
-                    'data-type': 'folder',
+                    'data-type': 'directory',
                     'data-id': nodeId,
-                    'data-name': nodeName
+                    'data-name': nodeName,
+                    'data-parent': item.parentID,
+                    'data-child': item.subdirs
                 }).addClass(defaulState);
 
                 var a = $('<a></a>', {
@@ -112,17 +114,13 @@ $.extend(
 
             this.renderTreeBranch = function(items, currentParentId) {
                 if (currentParentId == undefined) currentParentId = rootDirId;
-
                 var folders = items.folder;
+                var currNode = self.findNodeById(currentParentId);
+                $(currNode).parent().find('UL.vstree').remove();
+                
                 if (folders.length > 0) {
                     for (var i = 0; i < folders.length; i++) {
                         if (folders[i].parentID != currentParentId || folders[i].id == currentParentId) continue;
-
-                        var oldNode = $(o.treeContainer).find('UL.vstree[data-parentID="' + folders[i].parentID + '"] LI[data-id="' + folders[i].id + '"]');
-                        if ($(oldNode).length > 0) {
-                            $(oldNode).parent().empty();
-                        }
-
                         var opts = {
                             isRoot: (folders[i].id == rootDirId),
                             hasChild: 0,
@@ -154,7 +152,7 @@ $.extend(
             };
 
             this.getSelectedNode = function() {
-                return selectedNode == null ? -1 : selectedNode;
+                return selectedNode == null ? rootDirId : selectedNode;
             };
 
             this.setOptions = function(opt, value) {
