@@ -1,0 +1,12 @@
+﻿Model: 
+- async call server
+- process data
+
+view:
+- Render UI
+- bind events
+
+
+Controller:
+- Event handle
+- get data processed by model and transfer to view
