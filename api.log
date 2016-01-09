@@ -29,3 +29,545 @@
 2016-01-09 16:28:55 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
 2016-01-09 16:30:56 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
 2016-01-09 16:32:57 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 17:58:01 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: 'id=1671085&username=dungnv02&fullname=Nguyễn Vũ Dũng&avatar=&gender=female&email=dungnv02@gmail.com&phone=&school=THCS Van Ho&province=HN&money=0&unread=0&session=8950d1630b6051d75555c9783359f4231feff062' - Action: 'http://api.violet.vn/user/login' - PARAMS: array (
+  'src' => 'space',
+  'token' => '41c504972f8ce48c305a94de182c10ef',
+  'username' => 'dungnv02',
+  'password' => '472607',
+  'sid' => '8950d1630b6051d75555c9783359f4231feff062',
+) - SERVER IP: 210.211.97.179
+2016-01-09 17:58:01 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '8950d1630b6051d75555c9783359f4231feff062',
+) - SERVER IP: 210.211.97.179
+2016-01-09 17:58:08 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15026" name="1.1" type="1" size="468044" date="2015-12-18 20:06:03" subdirs="1" />
+  <folder id="15080" name="1.2" type="2" size="0" date="2016-01-07 15:37:25" subdirs="0" />
+  <file id="15028" name="539563_3493671188506_1262774336_n.jpg" type="jpg" size="0" date="2015-12-20 10:25:15" thumbnail="http://space.violet.vn/uploads/space/8/8159/thumbnail.jpg" />
+  <file id="15029" name="xur1365753438.jpg" type="jpg" size="422022" date="2015-12-22 10:26:38" thumbnail="http://space.violet.vn/uploads/space/8/8160/thumbnail.jpg" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15024',
+  'sid' => '8950d1630b6051d75555c9783359f4231feff062',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:00:04 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:01:58 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:04:00 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:06:06 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:08:00 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:08:55 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '8950d1630b6051d75555c9783359f4231feff062',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:09:22 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '8950d1630b6051d75555c9783359f4231feff062',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:11:22 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:13:26 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:15:22 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:17:29 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:19:23 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:21:27 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:23:22 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:25:32 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:27:28 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:29:29 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:31:27 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:32:38 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<node errCode="Login" err="Bạn chưa đăng nhập. Dịch vụ này yêu cầu bạn phải đăng nhập mới truy cập được." />' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '8950d1630b6051d75555c9783359f4231feff062',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:32:39 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: 'status=0' - Action: 'http://api.violet.vn/user/logout' - PARAMS: array (
+  'sid' => '8950d1630b6051d75555c9783359f4231feff062',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:32:41 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: 'id=1671085&username=dungnv02&fullname=Nguyễn Vũ Dũng&avatar=&gender=female&email=dungnv02@gmail.com&phone=&school=THCS Van Ho&province=HN&money=0&unread=0&session=6c319321101aab964dd8eb392f687c5354975b01' - Action: 'http://api.violet.vn/user/login' - PARAMS: array (
+  'src' => 'space',
+  'token' => '41c504972f8ce48c305a94de182c10ef',
+  'username' => 'dungnv02',
+  'password' => '472607',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:32:41 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:34:22 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:36:23 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:36:36 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:37:02 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:39:04 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:41:11 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:43:05 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:43:50 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:44:45 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:46:48 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:47:37 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:49:37 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:50:48 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 18:52:54 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:54:54 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:57:00 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 18:58:53 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:00:52 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:02:53 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:04:58 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:06:55 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:08:53 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:10:56 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:12:44 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<node errCode="Login" err="Bạn chưa đăng nhập. Dịch vụ này yêu cầu bạn phải đăng nhập mới truy cập được." />' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:12:45 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: 'status=0' - Action: 'http://api.violet.vn/user/logout' - PARAMS: array (
+  'sid' => '6c319321101aab964dd8eb392f687c5354975b01',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:12:45 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: 'id=1671085&username=dungnv02&fullname=Nguyễn Vũ Dũng&avatar=&gender=female&email=dungnv02@gmail.com&phone=&school=THCS Van Ho&province=HN&money=0&unread=0&session=29afad40a1599406598cdfb629afed2cd7f18f55' - Action: 'http://api.violet.vn/user/login' - PARAMS: array (
+  'src' => 'space',
+  'token' => '41c504972f8ce48c305a94de182c10ef',
+  'username' => 'dungnv02',
+  'password' => '472607',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:12:45 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:12:51 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15075" name="Dir 7.1" type="1" size="0" date="2016-01-07 15:32:39" subdirs="0" />
+  <folder id="15076" name="Dir 7.2" type="2" size="0" date="2016-01-07 15:33:38" subdirs="0" />
+  <folder id="15088" name="Dir 7.3" type="3" size="0" date="2016-01-08 16:29:01" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15071',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:13:01 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:13:07 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<status errCode=\'errFolderNotEmpty\' err=\'Thư mục không rỗng!\' />' - Action: 'http://api.violet.vn/space/delete' - PARAMS: array (
+  'id' => '15071',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:14:00 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15026" name="1.1" type="1" size="468044" date="2015-12-18 20:06:03" subdirs="1" />
+  <folder id="15080" name="1.2" type="2" size="0" date="2016-01-07 15:37:25" subdirs="0" />
+  <file id="15028" name="539563_3493671188506_1262774336_n.jpg" type="jpg" size="0" date="2015-12-20 10:25:15" thumbnail="http://space.violet.vn/uploads/space/8/8159/thumbnail.jpg" />
+  <file id="15029" name="xur1365753438.jpg" type="jpg" size="422022" date="2015-12-22 10:26:38" thumbnail="http://space.violet.vn/uploads/space/8/8160/thumbnail.jpg" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15024',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:14:45 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:16:20 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:16:25 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:17:01 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:18:19 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:19:07 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="2" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:21:09 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:23:08 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:23:19 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15026" name="1.1" type="1" size="468044" date="2015-12-18 20:06:03" subdirs="1" />
+  <folder id="15080" name="1.2" type="2" size="0" date="2016-01-07 15:37:25" subdirs="0" />
+  <file id="15028" name="539563_3493671188506_1262774336_n.jpg" type="jpg" size="0" date="2015-12-20 10:25:15" thumbnail="http://space.violet.vn/uploads/space/8/8159/thumbnail.jpg" />
+  <file id="15029" name="xur1365753438.jpg" type="jpg" size="422022" date="2015-12-22 10:26:38" thumbnail="http://space.violet.vn/uploads/space/8/8160/thumbnail.jpg" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15024',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:25 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="1" />
+  <folder id="15079" name="Dir 2.1" type="1" size="0" date="2016-01-07 15:36:47" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:27 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15025" name=".." type="" size="0" date="" subdirs="2" />
+  <folder id="15091" name="2.2.2" type="2" size="0" date="2016-01-08 16:47:31" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15090',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:32 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15090" name=".." type="" size="0" date="" subdirs="1" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15091',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:36 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15025" name=".." type="" size="0" date="" subdirs="2" />
+  <folder id="15091" name="2.2.2" type="2" size="0" date="2016-01-08 16:47:31" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15090',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:42 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<node deletelist="" />' - Action: 'http://api.violet.vn/space/delete' - PARAMS: array (
+  'id' => '15091',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:43 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15025" name=".." type="" size="0" date="" subdirs="2" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15090',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:48 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15025" name=".." type="" size="0" date="" subdirs="2" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15090',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:52 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15025" name=".." type="" size="0" date="" subdirs="2" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15079',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:55 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+  <folder id="15079" name="Dir 2.1" type="1" size="0" date="2016-01-07 15:36:47" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:23:56 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+  <folder id="15079" name="Dir 2.1" type="1" size="0" date="2016-01-07 15:36:47" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:05 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<node deletelist="" />' - Action: 'http://api.violet.vn/space/delete' - PARAMS: array (
+  'id' => '15079',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:07 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:12 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:14 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:18 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<status errCode=\'errFileNotFound\' err=\'File/thư mục không tồn tại\' />' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15079',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:22 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:26 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:27 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:33 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15024" name="Dir 1" type="" size="890066" date="2015-12-16 12:19:01" subdirs="2" />
+  <folder id="15025" name="Dir 2" type="" size="0" date="2015-12-16 12:19:09" subdirs="1" />
+  <folder id="15067" name="Dir 3" type="" size="0" date="2016-01-07 13:19:06" subdirs="0" />
+  <folder id="15068" name="Dir 4" type="" size="0" date="2016-01-07 14:41:42" subdirs="1" />
+  <folder id="15069" name="Dir 5" type="" size="0" date="2016-01-07 14:47:13" subdirs="1" />
+  <folder id="15070" name="Dir 6" type="" size="0" date="2016-01-07 14:48:06" subdirs="3" />
+  <folder id="15071" name="Dir 7" type="" size="0" date="2016-01-07 14:50:06" subdirs="3" />
+  <folder id="15072" name="Dir 8" type="" size="0" date="2016-01-07 15:01:03" subdirs="3" />
+  <file id="15031" name="InternetDownloadManager60145.rar" type="rar" size="6091936" date="2015-12-22 11:26:36" thumbnail="" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '-1',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:37 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:39 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="15025" name=".." type="" size="0" date="" subdirs="1" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15090',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:42 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:24:43 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '<list>
+  <folder id="-1" name=".." type="" size="0" date="" subdirs="8" />
+  <folder id="15090" name="123" type="" size="0" date="2016-01-08 16:46:18" subdirs="0" />
+</list>' - Action: 'http://api.violet.vn/space/dir' - PARAMS: array (
+  'id' => '15025',
+  'sid' => '29afad40a1599406598cdfb629afed2cd7f18f55',
+) - SERVER IP: 210.211.97.179
+2016-01-09 19:26:37 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:28:38 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:30:34 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:32:37 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:34:33 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:36:33 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179
+2016-01-09 19:38:33 - File: /Volumes/SSD/www/application/libraries/Vservices.php - line:75 - API Result: '' - Action: 'http://api.violet.vn/user/noop' - PARAMS: NULL - SERVER IP: 210.211.97.179

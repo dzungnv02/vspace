@@ -128,7 +128,7 @@ $.extend(
 				objConnection.sendCommand(opts);
 			};
 
-			this.delete = function (aryId, dlg) {
+			this.delete = function (aryId) {
 				if (aryId == undefined || aryId.length == 0) return false;
 
 				var opts = {
@@ -138,7 +138,6 @@ $.extend(
 					},
 					callbackSuccess: function(result, status, xhr) {
 						objController.refresh();
-						dlg.modal('hide');
 					},
 					callbackFail: function(xhr, status, error) {
 						bootbox.alert(error);
@@ -147,6 +146,24 @@ $.extend(
 
 				objConnection.sendCommand(opts);
 			}
+
+			this.getLoadedDirs = function (id) {
+				if (id == undefined) return parsedData.folder;
+				for(var i = 0; i < parsedData.folder.length; i++) {
+					if (parsedData.folder[i].id == id) {
+						return parsedData.folder[i];
+					}  
+				}
+			};
+
+			this.getLoadedFiles = function (id) {
+				if (id == undefined) return parsedData.file;
+				for(var i = 0; i < parsedData.file.length; i++) {
+					if (parsedData.file[i].id == id) {
+						return parsedData.file[i];
+					}  
+				}
+			};
 
 			this.initialize = function() {
 				init();

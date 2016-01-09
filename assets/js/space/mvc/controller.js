@@ -35,7 +35,7 @@ $.extend(
 					$(selectedNodes).each(function(idx) {
 						aryId[idx] = $($(selectedNodes)[idx]).attr('data-id');
 					});
-					
+					objLayout.showDeleteConfirm(aryId);
 				}
 			};
 

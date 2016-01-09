@@ -131,6 +131,23 @@ $.extend(
 				});
 			};
 
+			this.showDeleteConfirm = function (aryId){
+				var message = 'Bạn có chắc chắn muốn xóa [cusmsg] không?';
+				var rpStr = '';
+				if (aryId.length == 1) {
+					var node = objGrid.findNodeById(aryId[0]);
+					var type = $(node).attr('data-type') == 'directory' ? 'thư mục' : 'file';
+					rpStr = type + ' <strong style="color:red">' + $(node).attr('data-name') + '</strong>';
+				}
+				else{
+					rpStr = '<strong>' + aryId.length + '</strong>' + ' file/thư mục đã chọn'
+				}
+
+				bootbox.confirm(message.replace('[cusmsg]', rpStr), function(result) {
+  					if (result == true) objSpaceModel.delete(aryId);
+				}); 
+			};
+
 			this.setOptions = function(opt, value) {
 				eval('o.' + opt + '= value;');
 			};

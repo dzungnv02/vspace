@@ -45,7 +45,8 @@ $.extend(
 					'data-name': item.name,
 					'data-size': item.size,
 					'data-type': opts.minetype,
-					'data-date': item.date
+					'data-date': item.date,
+					'data-child': opts.minetype == 'directory' ? item.subdirs : '0'
 				}).append(div, divLink);
 				bindNodeEvents(li);
 				return li;
@@ -56,7 +57,6 @@ $.extend(
 
 				$(node).bind('click', function(e) {
 					o.eventHandlers.select(node, function() {
-						console.debug(e);
 						if (e.ctrlKey || e.metaKey) {
 							if (!isHighLight(node))
 								highlightNode(node);
@@ -135,6 +135,10 @@ $.extend(
 			this.getSelectedNodes = function () {
 				return $(o.gridContainer).find('UL.vsgrid LI.vscell.selected');				
 			};
+
+			this.findNodeById = function (id) {
+				return $(o.gridContainer).find('UL.vsgrid LI.vscell[data-id="' + id + '"]');	
+			}
 
 			this.setOptions = function(opt, value) {
 				eval('o.' + opt + '= value;');
