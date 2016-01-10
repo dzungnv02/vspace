@@ -71,7 +71,6 @@ $.extend(
                 var itemId = $(node).attr('data-id');
                 $(o.treeContainer).find('.currentDir').removeClass('currentDir');
                 $(node).addClass('currentDir');
-                selectedNode = itemId;
                 return node;
             }
 
@@ -92,7 +91,7 @@ $.extend(
                 });
                 $(node).parent().removeClass(cls).addClass('collapsed');
             };
-	
+
             var collapseOtherNode = function(node) {
                 //var parentId = $(node).parent().attr('');
                 //var otherNode = $(o.treeContainer).find('UL.vstree LI.expanded');
@@ -103,7 +102,7 @@ $.extend(
                 if (forceOpen == undefined) forceOpen = false;
                 collapseOtherNode(node);
                 highlightNode($(node));
-                if ($(node).attr('data-id') != '-1') {		
+                if ($(node).attr('data-id') != '-1') {
                     if ($(node).parent().hasClass('collapsed') || forceOpen == true) {
                         expandNode(node);
                     } else {
@@ -117,7 +116,7 @@ $.extend(
                 var folders = items.folder;
                 var currNode = self.findNodeById(currentParentId);
                 $(currNode).parent().find('UL.vstree').remove();
-                
+
                 if (folders.length > 0) {
                     for (var i = 0; i < folders.length; i++) {
                         if (folders[i].parentID != currentParentId || folders[i].id == currentParentId) continue;
@@ -152,7 +151,29 @@ $.extend(
             };
 
             this.getSelectedNode = function() {
-                return selectedNode == null ? rootDirId : selectedNode;
+                var node = $(o.treeContainer).find('.currentDir');
+                if ($(node).length == 0) node = $(o.treeContainer).find('A[data-id="-1"]');
+                return $(node).attr('data-id');
+            };
+
+            this.findTreeBrand = function(node) {
+                var aryTreeBrand = [];
+                var newIdx = aryTreeBrand.length == 0 ? 0 : aryTreeBrand.length;
+                var id = $(node).attr('data-id');
+                var parentId = $(node).parent().attr('data-parent');                              
+                var parentNode = self.findNodeById(parentId);
+                aryTreeBrand[newIdx] = node;
+                if (id != rootDirId)   
+                    aryTreeBrand[newIdx + 1] = parentNode; 
+                else return aryTreeBrand;
+                   
+                while($(parentNode).attr('data-id') != rootDirId){
+                    newIdx = aryTreeBrand.length == 0 ? 0 : aryTreeBrand.length;
+                    parentId = $(parentNode).parent().attr('data-parent');
+                    parentNode = self.findNodeById(parentId);
+                    aryTreeBrand[newIdx] = parentNode;
+                }
+                return aryTreeBrand;
             };
 
             this.setOptions = function(opt, value) {

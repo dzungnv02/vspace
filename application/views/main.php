@@ -100,10 +100,10 @@ $base_url = base_url();
 
         <div id="directory-content-view-container">
         	<div id="navigation-bar">
-        		<ul class="breadcrumb">
+        		<ul class="breadcrumb"><!-- 
 	    			<li><i class="ace-icon fa fa-folder home-icon"></i><a href="" title="">Home</a></li>
 	    			<li><a href="" title="">Folder</a></li>
-	    			<li><a href="" title="">File</a></li>
+	    			<li><a href="" title="">File</a></li> -->
 	    		</ul>
                 <ul class="change-file-view list-inline pull-right">
                     <li><i class="ace-icon fa fa-th-large show-grid-view" title="Hiển thị thumbnail"></i></li>

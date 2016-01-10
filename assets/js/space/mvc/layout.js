@@ -19,13 +19,14 @@ $.extend(
 
 			var aryButtons = $(o.toolsbar).find('BUTTON');
 
+			var aryBreadcrumb = [];
+
 			var maxWidth = 0;
 
 			var self = this;
 
 			var init = function() {
 				layoutRender();
-
 				$(aryButtons).each(function(index) {
 					var button = this;
 					var func = $(button).attr('data-act');
@@ -66,6 +67,10 @@ $.extend(
 				grid.parent().width('calc(100% - ' + (tree.parent().width() + 8) + 'px)');
 				maxWidth = getDirTreeMaxWidth();
 				$(o.tree).height(dirTreeHeight - 5);
+			};
+
+			var renderRenameInput = function (container) {
+
 			};
 	
 			var validateCreateFolder = function(foldername, customErr) {
@@ -151,6 +156,28 @@ $.extend(
   						objController.refresh($(node).attr('data-parent'));
   					});
 				}); 
+			};
+
+			this.setBreadcrumb = function () {
+				var currId = objTree.getSelectedNode();
+				var node = objTree.findNodeById(currId);
+				var aryTreeBrand = objTree.findTreeBrand(node);
+				var container = $(o.navigationbar).find('UL.breadcrumb');
+				$(container).empty();
+
+				for (var i = aryTreeBrand.length - 1 ; i >= 0; i--) {
+					var item = null;
+					if (i == aryTreeBrand.length - 1) {
+						item = $('<li></li>').append($('<i></i>',{'class':'ace-icon fa fa-folder home-icon'}), $('<a></a>',{href:'',text:$(aryTreeBrand[i]).text()}));
+					} else { 
+						item = $('<li></li>').append($('<a></a>',{href:'',text:$(aryTreeBrand[i]).text()}));
+					}
+
+					var data = jQuery.hasData( $(aryTreeBrand[i])[0] ) && jQuery._data( $(aryTreeBrand[i])[0] );
+					$(item).find('A').bind('click', data.events.click[0].handler);
+
+					$(container).append(item);				
+				}						
 			};
 
 			this.setOptions = function(opt, value) {
