@@ -20,10 +20,10 @@ class Privatecontent extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct ();
-		$user = $this->session->userdata ( 'userInfo' );
+		$user = $this->session->userdata ( 'userinfo' );
 		$this->vservices->setApiUrl ( $this->config->item ( 'api_url' ) );
 		$this->vservices->setConnection ( $this->curl );
-		$this->vservices->setUserId ( $user ['us_id'] );
+		$this->_sid = $user ? $user['session'] : null;	
 	}
 	
 	public function getContent () {
@@ -98,7 +98,8 @@ class Privatecontent extends CI_Controller {
 			$this->session->set_userdata(array('userinfo' => $aryUserData));
 		}
 
-		$this->_sid = $aryUserData['session'];	
+		$this->_sid = $aryUserData['session'];
+
 		$aryData = array(
 			'USER' => $this->session->userdata('userinfo'),
 			'ERROR' => $aryErr,
