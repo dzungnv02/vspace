@@ -16,6 +16,7 @@ if ( ! defined('_DUMMY_USER_PASSWORD')) define('_DUMMY_USER_PASSWORD','472607');
 class Privatecontent extends CI_Controller {
 
 	const TOKENPW = 'violet';
+	private $_sid = null;
 
 	public function __construct() {
 		parent::__construct ();
@@ -36,7 +37,7 @@ class Privatecontent extends CI_Controller {
 		$parentID = $this->input->post('id', TRUE);
 		$src = $this->input->post('src', TRUE);		
 		$userinfo = $this->session->userdata('userinfo');
-		$aryParams = array('id' => $parentID, 'sid' => $userinfo['session']);
+		$aryParams = array('id' => $parentID, 'sid' => $this->_sid);
 		$result = $this->vservices->actionExecute('dir', $aryParams);			
 		echo $this->XML2JSON($result);
 	}
@@ -48,8 +49,7 @@ class Privatecontent extends CI_Controller {
 	public function createDir () {
 		$newFolderName = $this->input->post('foldername', TRUE);
 		$destination = $this->input->post('destination', TRUE);
-		$userinfo = $this->session->userdata('userinfo');
-		$aryParams = array('parent_id' => $destination, 'name' => $newFolderName, 'sid' => $userinfo['session']);		
+		$aryParams = array('parent_id' => $destination, 'name' => $newFolderName, 'sid' => $this->_sid);		
 		$result = $this->vservices->actionExecute('mkdir', $aryParams, 'space');
 		echo $this->XML2JSON($result);
 	}
@@ -57,8 +57,7 @@ class Privatecontent extends CI_Controller {
 	public function delete () {
 		$id = $this->input->post('id', TRUE);
 		//$force = $this->input->post('option', TRUE);
-		$userinfo = $this->session->userdata('userinfo');
-		$aryParams = array('id' => $id, 'option' => 'force', 'sid' => $userinfo['session']);
+		$aryParams = array('id' => $id, 'option' => 'force', 'sid' => $this->_sid);
 		$result = $this->vservices->actionExecute('delete', $aryParams, 'space');		
 		echo $this->XML2JSON($result);
 	}
@@ -66,8 +65,7 @@ class Privatecontent extends CI_Controller {
 	public function rename () {
 		$id = $this->input->post('id', TRUE);
 		$newName = $this->input->post('name', TRUE);
-		$userinfo = $this->session->userdata('userinfo');
-		$aryParams = array('id' => $id, 'name' => $newName, 'sid' => $userinfo['session']);
+		$aryParams = array('id' => $id, 'name' => $newName, 'sid' => $this->_sid);
 		$result = $this->vservices->actionExecute('rename', $aryParams, 'space');		
 		echo $this->XML2JSON($result);
 	}
@@ -87,9 +85,7 @@ class Privatecontent extends CI_Controller {
 		}
 		
 		if (!$userinfo) {
-			$sid = session_id();
-			//$aryParams = array('src' => 'space', 'token' => md5(_DUMMY_USER_NAME.self::TOKENPW),'username' => _DUMMY_USER_NAME, 'password' => _DUMMY_USER_PASSWORD, 'sid' => $sid);
-			$aryParams = array('src' => 'space', 'token' => md5($username.self::TOKENPW),'username' => $username, 'password' => $password, 'sid' => $sid);
+			$aryParams = array('src' => 'space', 'token' => md5($username.self::TOKENPW),'username' => $username, 'password' => $password/*, 'sid' => $sid*/);
 			$userData = $this->vservices->actionExecute('login', $aryParams, 'user');
 			$aryUserData = array();
 			parse_str ($userData, $aryUserData);
@@ -98,20 +94,21 @@ class Privatecontent extends CI_Controller {
 				$aryErr['errCode'] = 'Login';
 				echo json_encode(array('ERROR' => $aryErr));
 				return;
-			}
-
+			}			
 			$this->session->set_userdata(array('userinfo' => $aryUserData));
 		}
+
+		$this->_sid = $aryUserData['session'];	
 		$aryData = array(
 			'USER' => $this->session->userdata('userinfo'),
-			'ERROR' => $aryErr
+			'ERROR' => $aryErr,
+			'DEBUG' => array('My session' => $this->_sid)
 		);
 		echo json_encode($aryData);
 	}
 
-	public function logout() {
-		$userinfo = $this->session->userdata('userinfo');	
-		$aryParams = array('sid' => $userinfo['session']);
+	public function logout() {	
+		$aryParams = array('sid' => $this->_sid);
 		$result = $this->vservices->actionExecute('logout', $aryParams, 'user');
 		$this->session->unset_userdata('userinfo');
 		parse_str ($result, $aryLogout);
@@ -126,7 +123,7 @@ class Privatecontent extends CI_Controller {
 
 	private function _checkLogin (&$result) {
 		$userinfo = $this->session->userdata('userinfo');
-		$aryErr = array('err' => 'Bạn chưa đăng nhập. Dịch vụ này yêu cầu bạn phải đăng nhập mới truy cập được.', 'errCode' => 'Login');
+		$aryErr = array('err' => 'Bạn chưa đăng nhập. Dịch vụ này yêu cầu bạn phải đăng nhập mới truy cập được.AAA', 'errCode' => 'Login');
 		if (!$userinfo) {			
 			$result = json_encode(array('ERROR' => $aryErr));
 			return FALSE;
