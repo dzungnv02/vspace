@@ -56,6 +56,7 @@ $base_url = base_url();
         <div id="status-bar" class="col-sm-12 col-md-12 col-lg-12 header-color-blue2"></div>
     </div>
 </div>
+<!-- <div id="drop-zone"></div> -->
 <div class="loading-modal"></div>
 <?php
 $this->load->view('19/footer');

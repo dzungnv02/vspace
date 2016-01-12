@@ -3,6 +3,8 @@ $.extend(
 		vsSpaceModel: function(o) {
 			if (o == null) o = {};
 
+			var uploadHandler = null;
+			var session = null;
 			var parsedData = null;
 			var self = this;
 
@@ -32,6 +34,8 @@ $.extend(
 							password: password
 						},
 						callbackSuccess: function(result, status, xhr) {
+							session = Base64.decode(result.USER.session);
+							uploadHandler = Base64.decode(result.USER.uhandler);
 							objController.refresh();
 							dlg.modal('hide');
 						},
@@ -40,6 +44,7 @@ $.extend(
 								el: null,
 								err: null
 							};
+
 							if (error == 'errUserNotFound') {
 								customErr = {
 									el: 'username',
@@ -64,20 +69,28 @@ $.extend(
 				objConnection.sendCommand({
 					script: '/ajax/privatecontent/getcontent',
 					postdata: {
-						id: itemId,
-						src: 'server' /*'list.xml'*/
+						id: itemId
 					},
+
 					callbackSuccess: function(result, status, xhr) {
 						parsedData = {
 							folder: [],
 							file: []
 						};
+
 						var idx = 0;
-						for (var i = 0; i < result.folder.length; i++) {
-							if (result.folder[i].name == '..') continue;
-							parsedData.folder[idx] = result.folder[i];
-							parsedData.folder[idx].parentID = itemId;
-							idx++;
+						if (result.folder != undefined) {
+							if (!$.isArray(result.folder)) {
+								var aryDir = [result.folder];
+								result.folder = aryDir;
+							}
+
+							for (var i = 0; i < result.folder.length; i++) {
+								if (result.folder[i].name === '..') continue;
+								parsedData.folder[idx] = result.folder[i];
+								parsedData.folder[idx].parentID = itemId;
+								idx++;
+							}
 						}
 
 						if (result.file != undefined) {
@@ -99,11 +112,11 @@ $.extend(
 						}
 					}
 				});
-			};	
+			};
 
 			this.createFolder = function(newFolderName, destination, dlg, callback) {
 				if (!callback(newFolderName)) {
-					return false;	
+					return false;
 				}
 
 				var opts = {
@@ -111,7 +124,7 @@ $.extend(
 					postdata: {
 						destination: destination,
 						foldername: newFolderName
-					},					
+					},
 					callbackSuccess: function(result, status, xhr) {
 						objController.refresh();
 						dlg.modal('hide');
@@ -128,7 +141,7 @@ $.extend(
 				objConnection.sendCommand(opts);
 			};
 
-			this.delete = function (aryId, callback) {
+			this.delete = function(aryId, callback) {
 				if (aryId == undefined || aryId.length == 0) return false;
 
 				var opts = {
@@ -139,8 +152,7 @@ $.extend(
 					callbackSuccess: function(result, status, xhr) {
 						if (callback == undefined) {
 							objController.refresh();
-						}
-						else callback();
+						} else callback();
 					},
 					callbackFail: function(xhr, status, error) {
 						bootbox.alert(error);
@@ -150,21 +162,64 @@ $.extend(
 				objConnection.sendCommand(opts);
 			}
 
-			this.getLoadedDirs = function (id) {
+
+			this.upload = function(formData, callback) {
+				formData.append('sid', session);
+				formData.append('dir', objTree.getSelectedNode());
+				
+				var request = new XMLHttpRequest();
+				console.log(request);
+
+				if ("withCredentials" in request) {					
+					request.open("POST", uploadHandler);					
+				} else if (typeof XDomainRequest != "undefined") {
+					request = new XDomainRequest();
+					request.open("POST", uploadHandler);
+				} else {
+					request = null;
+				}
+
+				if (request != null) request.send(formData);
+
+				callback();
+			};
+
+			this.getUploadHandler = function(callback) {
+				var opts = {
+					script: '/ajax/privatecontent/getuploadhandler',
+					postdata: {},
+					callbackSuccess: function(result, status, xhr) {
+						session = Base64.decode(result.data.session);
+						uploadHandler = Base64.decode(result.data.uhandler);
+						callback(uploadHandler);
+					},
+					callbackFail: function(xhr, status, error) {
+						if (status != 'Login')
+							bootbox.alert(error);
+						else {
+							objUser.showLogin();
+						}
+					}
+				};
+
+				objConnection.sendCommand(opts);
+			}
+
+			this.getLoadedDirs = function(id) {
 				if (id == undefined) return parsedData.folder;
-				for(var i = 0; i < parsedData.folder.length; i++) {
+				for (var i = 0; i < parsedData.folder.length; i++) {
 					if (parsedData.folder[i].id == id) {
 						return parsedData.folder[i];
-					}  
+					}
 				}
 			};
 
-			this.getLoadedFiles = function (id) {
+			this.getLoadedFiles = function(id) {
 				if (id == undefined) return parsedData.file;
-				for(var i = 0; i < parsedData.file.length; i++) {
+				for (var i = 0; i < parsedData.file.length; i++) {
 					if (parsedData.file[i].id == id) {
 						return parsedData.file[i];
-					}  
+					}
 				}
 			};
 

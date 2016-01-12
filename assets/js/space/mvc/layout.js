@@ -17,6 +17,8 @@ $.extend(
 			if (o.grid == undefined)
 				o.grid = $('DIV#file-container');
 
+			var dropZone = $('DIV#drop-zone')
+
 			var aryButtons = $(o.toolsbar).find('BUTTON');
 
 			var aryBreadcrumb = [];
@@ -69,14 +71,14 @@ $.extend(
 				$(o.tree).height(dirTreeHeight - 5);
 			};
 
-			var renderRenameInput = function (container) {
+			var renderRenameInput = function(container) {
 
 			};
-	
+
 			var validateCreateFolder = function(foldername, customErr) {
 				if (customErr == undefined) customErr = null;
 				var errMsg = '';
-				var objErr= $('FORM#createFolderForm DIV.help-block[for="foldername"]');
+				var objErr = $('FORM#createFolderForm DIV.help-block[for="foldername"]');
 				$(objErr).text('').hide();
 				$(objErr).parent().parent().removeClass('has-error');
 
@@ -93,8 +95,7 @@ $.extend(
 					$(objErr).parent().parent().addClass('has-error');
 					$(objErr).parent().find('INPUT').focus();
 					return false;
-				}
-				else return true;
+				} else return true;
 			};
 
 			this.showCreateFolderDlg = function(callback) {
@@ -129,7 +130,7 @@ $.extend(
 					$(form).submit();
 				});
 
-				$(form).on('submit', function (e) {
+				$(form).on('submit', function(e) {
 					var newFolderName = $(dlg).find('FORM#createFolderForm INPUT[name="foldername"]').val().trim();
 					var destination = objTree.getSelectedNode();
 					objSpaceModel.createFolder(newFolderName, destination, dlg, validateCreateFolder);
@@ -138,46 +139,53 @@ $.extend(
 				});
 			};
 
-			this.showDeleteConfirm = function (aryId){
+			this.showDeleteConfirm = function(aryId) {
 				var message = 'Bạn có chắc chắn muốn xóa [cusmsg] không?';
-				var rpStr = '';				
+				var rpStr = '';
 				if (aryId.length == 1) {
-					var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent():objGrid.findNodeById(aryId[0]);
+					var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent() : objGrid.findNodeById(aryId[0]);
 					var type = $(node).attr('data-type') == 'directory' ? 'thư mục' : 'file';
 					rpStr = type + ' <strong style="color:red">' + $(node).attr('data-name') + '</strong>';
-				}
-				else{
+				} else {
 					rpStr = '<strong>' + aryId.length + '</strong>' + ' file/thư mục đã chọn'
 				}
 
 				bootbox.confirm(message.replace('[cusmsg]', rpStr), function(result) {
-  					if (result == true) objSpaceModel.delete(aryId, function(){
-  						var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent():objGrid.findNodeById(aryId[0]);
-  						objController.refresh($(node).attr('data-parent'));
-  					});
-				}); 
+					if (result == true) objSpaceModel.delete(aryId, function() {
+						var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent() : objGrid.findNodeById(aryId[0]);
+						objController.refresh($(node).attr('data-parent'));
+					});
+				});
 			};
 
-			this.setBreadcrumb = function () {
+			this.setBreadcrumb = function() {
 				var currId = objTree.getSelectedNode();
 				var node = objTree.findNodeById(currId);
 				var aryTreeBrand = objTree.findTreeBrand(node);
 				var container = $(o.navigationbar).find('UL.breadcrumb');
 				$(container).empty();
 
-				for (var i = aryTreeBrand.length - 1 ; i >= 0; i--) {
+				for (var i = aryTreeBrand.length - 1; i >= 0; i--) {
 					var item = null;
 					if (i == aryTreeBrand.length - 1) {
-						item = $('<li></li>').append($('<i></i>',{'class':'ace-icon fa fa-folder home-icon'}), $('<a></a>',{href:'',text:$(aryTreeBrand[i]).text()}));
-					} else { 
-						item = $('<li></li>').append($('<a></a>',{href:'',text:$(aryTreeBrand[i]).text()}));
+						item = $('<li></li>').append($('<i></i>', {
+							'class': 'ace-icon fa fa-folder home-icon'
+						}), $('<a></a>', {
+							href: '',
+							text: $(aryTreeBrand[i]).text()
+						}));
+					} else {
+						item = $('<li></li>').append($('<a></a>', {
+							href: '',
+							text: $(aryTreeBrand[i]).text()
+						}));
 					}
 
-					var data = jQuery.hasData( $(aryTreeBrand[i])[0] ) && jQuery._data( $(aryTreeBrand[i])[0] );
+					var data = jQuery.hasData($(aryTreeBrand[i])[0]) && jQuery._data($(aryTreeBrand[i])[0]);
 					$(item).find('A').bind('click', data.events.click[0].handler);
 
-					$(container).append(item);				
-				}						
+					$(container).append(item);
+				}
 			};
 
 			this.setOptions = function(opt, value) {

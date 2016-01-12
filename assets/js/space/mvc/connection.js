@@ -92,7 +92,9 @@ $.extend(
 				if (p.script == undefined) p.script = null;
 				if (p.callbackSuccess == undefined) p.callbackSuccess = null;
 				if (p.callbackFail == undefined) p.callbackFail = null;
-				p.script = p.script != null ? server + p.script : '';
+				
+				var iserver = p.server != undefined ? p.server : server;
+				p.script = p.script != null ? iserver + p.script : '';
 				self.connectionSetup(p.callbackSuccess, p.callbackFail);
 
 				var result = null;

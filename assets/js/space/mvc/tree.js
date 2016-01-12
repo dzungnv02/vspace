@@ -112,12 +112,13 @@ $.extend(
             };
 
             this.renderTreeBranch = function(items, currentParentId) {
+                console.log(folders);
                 if (currentParentId == undefined) currentParentId = rootDirId;
                 var folders = items.folder;
                 var currNode = self.findNodeById(currentParentId);
                 $(currNode).parent().find('UL.vstree').remove();
 
-                if (folders.length > 0) {
+                if (folders.length > 0) {   
                     for (var i = 0; i < folders.length; i++) {
                         if (folders[i].parentID != currentParentId || folders[i].id == currentParentId) continue;
                         var opts = {

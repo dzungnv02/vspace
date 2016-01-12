@@ -509,4 +509,5 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
-$config['api_url'] = 'http://api.violet.vn/';
+$config['api_url'] = 'http://api1.violet.vn/';
+$config['upload_handler'] = 'http://api1.violet.vn/space/upload';

@@ -46,7 +46,7 @@ $.fn, {
 		};
 
 		this.upload = function() {
-
+			objUpload.showUploadDlg();
 		};
 
 		this.download = function() {

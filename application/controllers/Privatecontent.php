@@ -23,7 +23,7 @@ class Privatecontent extends CI_Controller {
 		$user = $this->session->userdata ( 'userinfo' );
 		$this->vservices->setApiUrl ( $this->config->item ( 'api_url' ) );
 		$this->vservices->setConnection ( $this->curl );
-		$this->_sid = $user ? $user['session'] : null;	
+		$this->_sid = $user ? $user['session'] : null;
 	}
 	
 	public function getContent () {
@@ -42,8 +42,12 @@ class Privatecontent extends CI_Controller {
 		echo $this->XML2JSON($result);
 	}
 
-	public function getUserInfo () {
-
+	public function getUploadHandler () {
+		$aryErr = array('err' => '', 'errCode' => '0');
+		$aryData = array ('data' => array('session' => base64_encode($this->_sid), 
+											'uhandler' => base64_encode($this->config->item('upload_handler')),
+											),'ERROR' => $aryErr);
+		echo json_encode($aryData);
 	}
 
 	public function createDir () {
@@ -94,16 +98,17 @@ class Privatecontent extends CI_Controller {
 				$aryErr['errCode'] = 'Login';
 				echo json_encode(array('ERROR' => $aryErr));
 				return;
-			}			
+			}
 			$this->session->set_userdata(array('userinfo' => $aryUserData));
 		}
 
 		$this->_sid = $aryUserData['session'];
+		$aryUserData['session'] = base64_encode($aryUserData['session']);
+		$aryUserData['uhandler'] = base64_encode($this->config->item('upload_handler'));	
 
 		$aryData = array(
-			'USER' => $this->session->userdata('userinfo'),
+			'USER' => $aryUserData	,	
 			'ERROR' => $aryErr,
-			'DEBUG' => array('My session' => $this->_sid)
 		);
 		echo json_encode($aryData);
 	}
@@ -124,7 +129,7 @@ class Privatecontent extends CI_Controller {
 
 	private function _checkLogin (&$result) {
 		$userinfo = $this->session->userdata('userinfo');
-		$aryErr = array('err' => 'Bạn chưa đăng nhập. Dịch vụ này yêu cầu bạn phải đăng nhập mới truy cập được.AAA', 'errCode' => 'Login');
+		$aryErr = array('err' => 'Bạn chưa đăng nhập. Dịch vụ này yêu cầu bạn phải đăng nhập mới truy cập được.', 'errCode' => 'Login');
 		if (!$userinfo) {			
 			$result = json_encode(array('ERROR' => $aryErr));
 			return FALSE;

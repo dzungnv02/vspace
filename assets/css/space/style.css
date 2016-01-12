@@ -6,7 +6,8 @@
 @import "../bootstrap/ace.min.css";
 @import "vsgrid.css";
 @import "grid.css";
-@import "../jquery/uploadfile.min.css";
+@import "upload.css";
+/*@import "../jquery/uploadfile.min.css";*/
 
 body {
 	margin: 0;
