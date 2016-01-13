@@ -39,8 +39,12 @@ $.extend(
 				clearInterval(timer);
 			};
 
-			this.connectionSetup = function(callbackSuccess, callbackFail, dataType) {
-				if (dataType == undefined) dataType = 'json';
+			this.connectionSetup = function(opts) {				
+				var callbackSuccess = opts.callbackSuccess;
+				var callbackFail = opts.callbackFail;
+				var dataType = (opts.dataType == undefined) ? 'json' : opts.dataType;
+				var xhr = (opts.xhr == undefined) ? null : opts.xhr;
+				var timeout = opts.timeout;
 
 				var options = {
 					async: true,
@@ -81,9 +85,10 @@ $.extend(
 							console.debug(err);
 						}
 					},
-					timeout: ajaxTimeout
+					timeout: timeout
 				};
 
+				if (xhr != null) options.xhr  = xhr;				
 				$.ajaxSetup(options);
 			};
 
@@ -92,13 +97,16 @@ $.extend(
 				if (p.script == undefined) p.script = null;
 				if (p.callbackSuccess == undefined) p.callbackSuccess = null;
 				if (p.callbackFail == undefined) p.callbackFail = null;
+				if (p.xhr == undefined) p.xhr = null;
+				if (p.timeout == undefined) p.timeout = ajaxTimeout;
+
 				
 				var iserver = p.server != undefined ? p.server : server;
 				p.script = p.script != null ? iserver + p.script : '';
-				self.connectionSetup(p.callbackSuccess, p.callbackFail);
+				self.connectionSetup(p);
 
 				var result = null;
-				try {
+				try {					
 					result = $.ajax(p.script, {
 						data: p.postdata
 					});

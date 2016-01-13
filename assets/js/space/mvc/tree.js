@@ -92,11 +92,7 @@ $.extend(
                 $(node).parent().removeClass(cls).addClass('collapsed');
             };
 
-            var collapseOtherNode = function(node) {
-                //var parentId = $(node).parent().attr('');
-                //var otherNode = $(o.treeContainer).find('UL.vstree LI.expanded');
-                //$(o.treeContainer).find('UL.vstree LI.expanded').removeClass('expanded').addClass('collapsed');
-            };
+            var collapseOtherNode = function(node) {};
 
             this.nodeClick = function(node, forceOpen) {
                 if (forceOpen == undefined) forceOpen = false;
@@ -112,7 +108,6 @@ $.extend(
             };
 
             this.renderTreeBranch = function(items, currentParentId) {
-                console.log(folders);
                 if (currentParentId == undefined) currentParentId = rootDirId;
                 var folders = items.folder;
                 var currNode = self.findNodeById(currentParentId);
@@ -129,6 +124,17 @@ $.extend(
                         createNode(folders[i], opts);
                     };
                 }
+            };
+
+            this.appendNode = function (item, currentParentId) {
+                var currNode = self.findNodeById(currentParentId);
+                var opts = {
+                            isRoot: (item.id == rootDirId),
+                            hasChild: 0,
+                            defaultStatus: 1
+                        };
+                createNode(item, opts);
+                self.nodeClick(currNode, true);
             };
 
             this.createRootNode = function() {

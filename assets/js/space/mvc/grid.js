@@ -109,9 +109,11 @@ $.extend(
 				$(o.gridContainer).find('> UL > LI').addClass('selected');
 			};
 
-			this.renderGrid = function(items) {
+			this.renderGrid = function(items, isAppend) {
 				var ul = $('UL.vsgrid');
-				$(ul).empty();
+				if (isAppend == undefined) isAppend = false;
+
+				if (!isAppend) $(ul).empty();
 
 				if (items.folder.length > 0) {
 					for (var i = 0; i < items.folder.length; i++) {

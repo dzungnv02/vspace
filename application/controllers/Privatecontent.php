@@ -74,6 +74,17 @@ class Privatecontent extends CI_Controller {
 		echo $this->XML2JSON($result);
 	}
 
+	public function upload () {
+		$aryErr = array('err' => '', 'errCode' => '0');
+		$dir = $this->input->post('dir', TRUE);	
+		$aryData = array('ERROR' => $aryErr);
+		if (isset($_FILES)) {
+			$aryData['files'] = $_FILES;
+			$aryData['dir'] = array($dir);
+		}
+		echo json_encode($aryData);
+	}
+
 	public function login($renew = false) {
 		$userinfo = $this->session->userdata('userinfo');
 		$aryErr = array('err' => '', 'errCode' => '0');

@@ -149,6 +149,7 @@ $.extend(
 					postdata: {
 						id: aryId.join()
 					},
+					timeout: 0,					
 					callbackSuccess: function(result, status, xhr) {
 						if (callback == undefined) {
 							objController.refresh();
@@ -163,25 +164,40 @@ $.extend(
 			}
 
 
-			this.upload = function(formData, callback) {
+			this.upload = function(formData, progressBar, callback) {
 				formData.append('sid', session);
 				formData.append('dir', objTree.getSelectedNode());
-				
-				var request = new XMLHttpRequest();
-				console.log(request);
 
-				if ("withCredentials" in request) {					
-					request.open("POST", uploadHandler);					
-				} else if (typeof XDomainRequest != "undefined") {
-					request = new XDomainRequest();
-					request.open("POST", uploadHandler);
-				} else {
-					request = null;
-				}
+				var jqXHR = $.ajax({
+					xhr: function() {
+						var xhrobj = $.ajaxSettings.xhr();
+						if (xhrobj.upload) {
+							xhrobj.upload.addEventListener('progress', function(event) {
+								var percent = 0;
+								var position = event.loaded || event.position;
+								var total = event.total;
+								if (event.lengthComputable) {
+									percent = Math.ceil(position / total * 100);
+								}
+								$(progressBar).find('DIV').css('width', percent + '%');
 
-				if (request != null) request.send(formData);
-
-				callback();
+							}, false);
+						}
+						return xhrobj;
+					},
+					url: uploadHandler,
+					crossDomain: true,
+					type: "POST",
+					dataType: 'xml',
+					contentType: false,
+					processData: false,
+					cache: false,
+					data: formData,
+					timeout: 0,
+					success: function(data) {
+						callback(data);
+					}
+				});
 			};
 
 			this.getUploadHandler = function(callback) {

@@ -131,11 +131,10 @@ $.extend(
 				});
 
 				$(form).on('submit', function(e) {
+					e.preventDefault();
 					var newFolderName = $(dlg).find('FORM#createFolderForm INPUT[name="foldername"]').val().trim();
 					var destination = objTree.getSelectedNode();
 					objSpaceModel.createFolder(newFolderName, destination, dlg, validateCreateFolder);
-					e.preventDefault();
-					return false;
 				});
 			};
 
