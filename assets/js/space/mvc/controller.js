@@ -66,7 +66,7 @@ $.extend(
 						objTree.deleteNode(node);
 					}
 				}
-				return;
+				
 				objSpaceModel.paste(items, destination, act, function(data) {
 					self.refresh(destination, function(data) {
 						if (data.file != undefined) {
@@ -75,7 +75,7 @@ $.extend(
 							};
 						}
 						if (data.folder != undefined) {
-							for (var i = 0; i < data.folder.length; i++) {
+							for (var i = 0; i < data.folder.length; iß++) {
 								objGrid.highLightNode(data.file[i].id);
 							};
 						}
