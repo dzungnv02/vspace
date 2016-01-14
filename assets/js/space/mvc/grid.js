@@ -109,6 +109,10 @@ $.extend(
 				$(o.gridContainer).find('> UL > LI').addClass('selected');
 			};
 
+			var findNodeById = function (nodeId) {
+				return $(o.gridContainer).find('> UL > LI[data-id="'+nodeId+'"]');
+			};
+
 			this.renderGrid = function(items, isAppend) {
 				var ul = $('UL.vsgrid');
 				if (isAppend == undefined) isAppend = false;
@@ -133,6 +137,11 @@ $.extend(
 					};
 				}
 			};
+
+			this.highLightNode = function (nodeId) {
+				console.log(findNodeById(nodeId));			
+				highlightNode(findNodeById(nodeId));
+			}
 
 			this.getSelectedNodes = function () {
 				return $(o.gridContainer).find('UL.vsgrid LI.vscell.selected');				

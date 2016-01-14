@@ -15,7 +15,7 @@ class Filemanager extends CI_Controller {
         parent::__construct();
     }
 
-    public function index() {
+    public function oldin() {
 		/*
 		$user_info = $this->session->userdata('userInfo');
 
@@ -39,7 +39,7 @@ class Filemanager extends CI_Controller {
         $this->load->view('main-addon', $data);
     }
 
-    public function fm () {
+    public function index () {
         $data['user'] = array();
         $this->load->view('main_19', $data);
     }

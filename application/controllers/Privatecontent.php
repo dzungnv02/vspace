@@ -74,6 +74,15 @@ class Privatecontent extends CI_Controller {
 		echo $this->XML2JSON($result);
 	}
 
+	public function paste () {
+		$items = $id = $this->input->post('items', TRUE);		
+		$destination = $this->input->post('destination', TRUE);
+		$act = $this->input->post('act', TRUE);
+		$aryParams = array('id' => is_array($items) ? implode(',', $items) : $items, 'destination' => $destination, 'sid' => $this->_sid);
+		$result = $this->vservices->actionExecute((!$act) ? 'copy' : $act, $aryParams, 'space');		
+		echo $this->XML2JSON($result);		
+	}
+
 	public function upload () {
 		$aryErr = array('err' => '', 'errCode' => '0');
 		$dir = $this->input->post('dir', TRUE);	
@@ -133,7 +142,8 @@ class Privatecontent extends CI_Controller {
 	}
 
 	public function noop () {
-		$result = $this->vservices->actionExecute('noop', null, 'user');
+		$aryParams = array('sid' => $this->_sid);
+		$result = $this->vservices->actionExecute('noop', $aryParams, 'user');
 		$aryError = array('err' => '', 'errCode' => 0);
 		$result['ERROR'] = $aryError;
 	}
@@ -157,6 +167,12 @@ class Privatecontent extends CI_Controller {
 			}else return TRUE;
 		}*/
 	}
+
+	/**
+	* function XML2JSON
+	* @desc: parse XML result returned from API server
+	*
+	**/
 
     private function XML2JSON($xml) {
         function normalizeSimpleXML($obj, &$result) {
@@ -195,141 +211,6 @@ class Privatecontent extends CI_Controller {
 
         return json_encode($result);
     }
-
-    /*
-	public function createDir() {
-		$parentDir = $this->input->post ( 'fparentid', TRUE );
-		$name = $this->input->post ( 'fname', TRUE );
-
-		$xmlData = $this->vservices->actionExecute ( 'mkdir', array (
-				'name' => $name,
-				'parent_id' => $parentDir == 0 ? - 1 : $parentDir
-		) );
-
-		$this->xml->parse ( $xmlData );
-
-		$aryError = array (
-				'err' => $this->xml->status->_param ['err'],
-				'errCode' => ( int ) $this->xml->status->_param ['errCode']
-		);
-		$aryData = array (
-				'id' => $this->xml->status->_param ['id'],
-				'name' => $this->xml->status->_param ['name'],
-				'parentID' => $parentDir,
-				'ERROR' => $aryError
-		);
-		echo json_encode ( $aryData );
-	}
-
-	public function delete() {
-		$delobj = $this->input->post ( 'delobj', TRUE );
-		$xmlData = $this->vservices->actionExecute ( 'deletemulti', array (
-				'delobj' => $delobj
-		) );
-		$this->xml->parse ( $xmlData );
-		$aryFolders = array ();
-
-		if (isset ( $this->xml->tree->folder )) {
-			if (is_array ( $this->xml->tree->folder )) {
-				foreach ( $this->xml->tree->folder as $key => $folder ) {
-					$aryFolders ['DIRECTORIES'] [] = $folder->_param ['id'];
-				}
-			} else {
-				$aryFolders ['DIRECTORIES'] [] = $this->xml->tree->folder->_param ['id'];
-			}
-		}
-
-		if (isset ( $this->xml->tree->file )) {
-			if (is_array ( $this->xml->tree->file )) {
-				foreach ( $this->xml->tree->file as $key => $file ) {
-					$aryFolders ['FILES'] [] = $file->_param ['id'];
-				}
-			} else {
-				$aryFolders ['FILES'] [] = $this->xml->tree->file->_param ['id'];
-			}
-		}
-
-		$aryError = array (
-				'err' => $this->xml->tree->_param ['err'],
-				'errCode' => ( int ) $this->xml->tree->_param ['errCode']
-		);
-		$aryData = array (
-				'DIRECTORIES' => isset ( $aryFolders ['DIRECTORIES'] ) ? $aryFolders ['DIRECTORIES'] : array (),
-				'FILES' => isset ( $aryFolders ['FILES'] ) ? $aryFolders ['FILES'] : array (),
-				'ERROR' => $aryError
-		);
-		echo json_encode ( $aryData );
-	}
-
-	public function rename() {
-		$item = $this->input->post ( 'data', TRUE );
-		$objItem = json_decode($item);
-
-		$xmlData = $this->vservices->actionExecute ('rename', array ('id' => $objItem->id, 'name' => $objItem->name, 'type' => $objItem->type, 'parentid' => $objItem->parentID == 0 ? -1:$objItem->parentID, 'newName' => $objItem->newName));
-		$this->xml->parse ( $xmlData );
-		$err = $this->xml->tree->_param ['err'];
-		$errCode = ( int ) $this->xml->tree->_param ['errCode'];
-		$aryItem = array('id' => (int) $this->xml->tree->item->_param['id'],'name' => $this->xml->tree->item->_param['name'],'parentID' => $this->xml->tree->item->_param['parentId'] == -1 ? 0 : $this->xml->tree->item->_param['parentId']);
-
- 		$aryData ['DIRECTORIES'] = $objItem->type == 'directory' ? $aryItem :array();
- 		$aryData ['FILES'] = $objItem->type == 'file' ? $aryItem :array();
-		$aryData ['ERROR'] = array ('err' => $err, 'errCode' => $errCode);
-
-		echo json_encode ( $aryData );
-	}
-
-	public function copy() {
-		$destination = $this->input->post ( 'destination', TRUE );
-		$data = $this->input->post ( 'data', TRUE );
-		$act = $this->input->post ( 'act', TRUE );
-		$option = $this->input->post ( 'option', TRUE );
-
-		$xmlData = $this->vservices->actionExecute ( 'copy', array (
-				'act' => $act,
-				'option' => $option,
-				'data' => $data,
-				'destination' => $destination == 0 ? - 1 : $destination
-		) );
-
-		$this->xml->parse ( $xmlData );
-
-		$deletedFiles = array();
-		$deletedDirs = array();
-		$aryNewDirs = isset ( $this->xml->data->folderdata ) ? json_decode ( $this->xml->data->folderdata->_value ) : array ();
-		$aryNewFiles = isset ( $this->xml->data->filedata ) ? json_decode ( $this->xml->data->filedata->_value ) : array ();
-
-		if ($act == 'move') {
-			$deletedFiles = isset ( $this->xml->data->deletedFiles ) ? json_decode ( $this->xml->data->deletedFiles->_value ) : array ();
-			$deletedDirs = isset ( $this->xml->data->deletedDirs ) ? json_decode ( $this->xml->data->deletedDirs->_value ) : array ();
-		}
-
-		$aryData = array (
-				'DIRECTORIES' => $aryNewDirs,
-				'FILES' => $aryNewFiles,
-				'deletedFiles' => $deletedFiles,
-				'deletedDirs' => $deletedDirs
-		);
-
-		$aryData ['ERROR'] = array (
-				'err' => $this->xml->data->_param ['err'],
-				'errCode' => ( int ) $this->xml->data->_param ['errCode']
-		);
-		echo json_encode ( $aryData );
-	}
-
-	public function getSpaceInfo () {
-		$this->load->model('frontend/User_model', 'user');
-		$userInfo = $this->session->userdata ( 'userInfo' );
-		$aryParams = array();
-        parse_str($userInfo['user'], $aryParams);
-		$aryUser = $this->user->get_user_by_id($aryParams['id']);
-		$aryData = array('USER' => $aryUser);
-		$aryData ['ERROR'] = array (
-				'err' => '',
-				'errCode' => 0
-		);
-		echo json_encode ( $aryData );
-	}*/
 }
 
 /* End of file privatecontent.php */

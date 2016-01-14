@@ -141,15 +141,15 @@ $.extend(
 				objConnection.sendCommand(opts);
 			};
 
-			this.delete = function(aryId, callback) {
-				if (aryId == undefined || aryId.length == 0) return false;
+			this.delete = function(items, callback) {
+				if (items == undefined || items.length == 0) return false;
 
 				var opts = {
 					script: '/ajax/privatecontent/delete',
 					postdata: {
-						id: aryId.join()
+						id: items.join()
 					},
-					timeout: 0,					
+					timeout: 0,
 					callbackSuccess: function(result, status, xhr) {
 						if (callback == undefined) {
 							objController.refresh();
@@ -198,6 +198,30 @@ $.extend(
 						callback(data);
 					}
 				});
+			};
+
+			this.paste = function(items, destination, act, callback) {
+				if (items == undefined || items.length == 0) return false;
+
+				var opts = {
+					script: '/ajax/privatecontent/paste',
+					postdata: {
+						items: items.join(),
+						destination: destination,
+						act: act
+					},
+					timeout: 0,
+					callbackSuccess: function(result, status, xhr) {
+						if (callback == undefined) {
+							objController.refresh();
+						} else callback(result);
+					},
+					callbackFail: function(xhr, status, error) {
+						bootbox.alert(error);
+					}
+				};
+
+				objConnection.sendCommand(opts);
 			};
 
 			this.getUploadHandler = function(callback) {

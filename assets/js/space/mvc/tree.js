@@ -157,6 +157,11 @@ $.extend(
                 return $(o.treeContainer).find('A[data-id="' + id + '"]')
             };
 
+            this.deleteNode = function (node) {
+                var nodeContainer = $(node).parent().parent();
+                $(nodeContainer).hide();
+            };
+
             this.getSelectedNode = function() {
                 var node = $(o.treeContainer).find('.currentDir');
                 if ($(node).length == 0) node = $(o.treeContainer).find('A[data-id="-1"]');
