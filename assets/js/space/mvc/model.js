@@ -243,7 +243,26 @@ $.extend(
 				};
 
 				objConnection.sendCommand(opts);
-			}
+			};
+
+			this.rename = function(id, newname, callback) {
+				var opts = {
+					script: '/ajax/privatecontent/rename',
+					postdata: {id:id, name: newname},
+					callbackSuccess: function(result, status, xhr) {
+						callback();
+					},
+					callbackFail: function(xhr, status, error) {
+						if (status != 'Login')
+							bootbox.alert(error);
+						else {
+							objUser.showLogin();
+						}
+					}
+				};
+
+				objConnection.sendCommand(opts);
+			};
 
 			this.getLoadedDirs = function(id) {
 				if (id == undefined) return parsedData.folder;

@@ -37,6 +37,8 @@ $.extend(
                     });
                 });
 
+                documentEventsBinding();
+
                 $(o.tree).parent().resizable({
                     maxWidth: maxWidth,
                     minWidth: 220,
@@ -51,6 +53,21 @@ $.extend(
                     $(o.tree).parent().resizable({
                         maxWidth: maxWidth
                     });
+                });
+            };
+
+            var documentEventsBinding = function() {
+                $(document).bind('keydown', function(e) {
+                    switch (e.which) {
+                        case 65:
+                            //select all
+                            if (e.ctrlKey) {
+                                objGrid.selectAllNode();
+                            }
+                            break;
+                        default:
+                            break;
+                    };
                 });
             };
 
@@ -71,9 +88,56 @@ $.extend(
                 $(o.tree).height(dirTreeHeight - 5);
             };
 
-            var renderRenameInput = function(container) {
+            var renameInit = function(node) {
+                var input = $('<input />', {
+                    type: 'text',
+                    name: 'newname',
+                    id: 'txtNewName',
+                    value: $(node).attr('data-name')
+                });
+                $(input).bind('focusout', function(e) {
+                    renameCancel(node);
+                }).bind('keydown', function(e) {
+                    var keycode = (e.keyCode ? e.keyCode : e.which);
+                    if (keycode == '27') {
+                        renameCancel(node);
+                    } else if (keycode == '13') {
+                        renameComplete(node);
+                    }
+                    e.stopPropagation();
+                });
 
+                $(node).find('A').parent().append(input);
+                $(node).find('A').remove();
+                $(input).focus();
+                $(input).select();
             };
+
+            var renameCancel = function(node) {
+                $(node).find('INPUT').parent().append($('<a></a>', {
+                    'data-id': $(node).attr('data-id'),
+                    id: $(node).attr('data-id'),
+                    text: $(node).attr('data-name')
+                }));
+                $(node).find('INPUT').remove();
+            }
+
+            var renameComplete = function(node) {
+                var input = $(node).find('INPUT');
+                var id = $(node).attr('data-id');
+                var newName = $(input).val();
+
+                objSpaceModel.rename(id, newName, function() {
+                    $(node).find('INPUT').parent().append($('<a></a>', {
+                        'data-id': $(node).attr('data-id'),
+                        id: $(node).attr('data-id'),
+                        text: newName
+                    }));
+                    $(node).find('INPUT').remove();
+
+                    objController.refresh($(node).attr('data-parent'));
+                });
+            }
 
             var validateCreateFolder = function(foldername, customErr) {
                 if (customErr == undefined) customErr = null;
@@ -97,6 +161,10 @@ $.extend(
                     return false;
                 } else return true;
             };
+
+            this.rename = function(node) {
+                renameInit(node);                
+            }
 
             this.showCreateFolderDlg = function(callback) {
                 var formHTML = '<form id="createFolderForm" action="#" name="createFolderForm" method="POST" class="form-horizontal">';

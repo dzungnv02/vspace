@@ -59,9 +59,7 @@ $.extend(
                 if (o.eventHandlers == null) return false;
                 $(node).bind('click', function(e) {
                     if (e.button == 0) {
-                        o.eventHandlers.open(node, function(node) {
-                            self.nodeClick(node);
-                        });
+                        o.eventHandlers.open(node, function(node) {self.nodeClick(node)});
                     }
                     return false;
                 });

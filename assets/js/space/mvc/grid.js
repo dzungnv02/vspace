@@ -56,34 +56,39 @@ $.extend(
 			var bindNodeEvents = function(node) {
 				if (o.eventHandlers == null) return false;
 				$(node).bind('click', function(e) {
-					o.eventHandlers.select(node, function() {
-						if (e.ctrlKey || e.metaKey) {
-							if (!isHighLight(node))
-								highlightNode(node);
-							else
-								clearHighLightNode(node);
-						} else if (e.shiftKey) {
-							var firstItem = $(o.gridContainer).find('LI.selected');
-							var aryNode = $(o.gridContainer).find('> UL > LI');
-							var start = aryNode.index(firstItem);
-							var finish = aryNode.index(node);
-							aryNode.slice(Math.min(start, finish), Math.max(start, finish) + 1).each(function(i, o) {
-								highlightNode(o);
+					e.stopPropagation();
+					nodeClick(this, e);
+					return false;
+				})
+					.bind('dblclick', function(e) {
+						if ($(node).attr('data-type') == 'directory') {
+							o.eventHandlers.open(node, function(node, oViewTree) {
+								oViewTree.nodeClick($('DIV#treeview-container').find('A[data-id="' + $(node).attr('data-id') + '"]'));
 							});
 						} else {
-							clearAllHighLightNode(node);
-							highlightNode(node);
+							console.log('Preview!');
 						}
 					});
-				})
-				.bind('dblclick', function (e) {
-					if ($(node).attr('data-type') == 'directory') {
-						o.eventHandlers.open(node, function (node, oViewTree) {
-							oViewTree.nodeClick($('DIV#treeview-container').find('A[data-id="'+  $(node).attr('data-id') +'"]'));
+			};
+
+			var nodeClick = function(node, event) {
+				o.eventHandlers.select(node, function() {
+					if (event.ctrlKey || event.metaKey) {
+						if (!isHighLight(node))
+							highlightNode(node);
+						else
+							clearHighLightNode(node);
+					} else if (event.shiftKey) {
+						var firstItem = $(o.gridContainer).find('LI.selected');
+						var aryNode = $(o.gridContainer).find('> UL > LI');
+						var start = aryNode.index(firstItem);
+						var finish = aryNode.index(node);
+						aryNode.slice(Math.min(start, finish), Math.max(start, finish) + 1).each(function(i, o) {
+							highlightNode(o);
 						});
-					}
-					else {
-						console.log('Preview!');
+					} else {
+						clearAllHighLightNode(node);
+						highlightNode(node);
 					}
 				});
 			};
@@ -109,8 +114,8 @@ $.extend(
 				$(o.gridContainer).find('> UL > LI').addClass('selected');
 			};
 
-			var findNodeById = function (nodeId) {
-				return $(o.gridContainer).find('> UL > LI[data-id="'+nodeId+'"]');
+			var findNodeById = function(nodeId) {
+				return $(o.gridContainer).find('> UL > LI[data-id="' + nodeId + '"]');
 			};
 
 			this.renderGrid = function(items, isAppend) {
@@ -138,17 +143,25 @@ $.extend(
 				}
 			};
 
-			this.highLightNode = function (nodeId) {
-				console.log(findNodeById(nodeId));			
+			this.selectAllNode = function() {
+				highLightAllNode();
+			};
+
+			this.clearSelecteds = function() {
+				clearAllHighLightNode();
+			}
+
+			this.highLightNode = function(nodeId) {
+				console.log(findNodeById(nodeId));
 				highlightNode(findNodeById(nodeId));
 			}
 
-			this.getSelectedNodes = function () {
-				return $(o.gridContainer).find('UL.vsgrid LI.vscell.selected');				
+			this.getSelectedNodes = function() {
+				return $(o.gridContainer).find('UL.vsgrid LI.vscell.selected');
 			};
 
-			this.findNodeById = function (id) {
-				return $(o.gridContainer).find('UL.vsgrid LI.vscell[data-id="' + id + '"]');	
+			this.findNodeById = function(id) {
+				return $(o.gridContainer).find('UL.vsgrid LI.vscell[data-id="' + id + '"]');
 			}
 
 			this.setOptions = function(opt, value) {

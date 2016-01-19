@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"pre",
+				"preventDefault()	Event"
+			],
+			[
+				"key",
+				"keypress	Event"
+			],
+			[
 				"is",
 				"is_array"
 			],
@@ -103,23 +111,7 @@
 			"file": "assets/js/space/mvc/controller.js",
 			"settings":
 			{
-				"buffer_size": 4311,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "assets/js/space/mvc/ultis.js",
-			"settings":
-			{
-				"buffer_size": 1906,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "assets/js/space/mvc/tree.js",
-			"settings":
-			{
-				"buffer_size": 8001,
+				"buffer_size": 4924,
 				"line_ending": "Windows"
 			}
 		},
@@ -127,39 +119,34 @@
 			"file": "assets/js/space/mvc/grid.js",
 			"settings":
 			{
-				"buffer_size": 4510,
+				"buffer_size": 4782,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "assets/js/space/mvc/model.js",
+			"file": "assets/js/space/mvc/tree.js",
 			"settings":
 			{
-				"buffer_size": 6544,
+				"buffer_size": 7946,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "api.log",
+			"contents": "$.extend(\n    $.fn, {\n        vsViewLayout: function(o) {\n            if (o == null) o = {};\n            if (o.maincontainer == undefined)\n                o.maincontainer = null;\n            if (o.titlebar == undefined)\n                o.titlebar = $('DIV#navbar');\n            if (o.toolsbar == undefined)\n                o.toolsbar = $('DIV#tools-bar');\n            if (o.statusbar == undefined)\n                o.statusbar = $('DIV#status-bar');\n            if (o.navigationbar == undefined)\n                o.navigationbar = $('DIV#navigation-bar');\n            if (o.tree == undefined)\n                o.tree = $('DIV#treeview-container');\n            if (o.grid == undefined)\n                o.grid = $('DIV#file-container');\n\n            var dropZone = $('DIV#drop-zone')\n\n            var aryButtons = $(o.toolsbar).find('BUTTON');\n\n            var aryBreadcrumb = [];\n\n            var maxWidth = 0;\n\n            var self = this;\n\n            var init = function() {\n                layoutRender();\n                $(aryButtons).each(function(index) {\n                    var button = this;\n                    var func = $(button).attr('data-act');\n                    $(button).bind('click', function(e) {\n                        eval('objController.' + func + '();');\n                    });\n                });\n\n                documentEventsBinding();\n\n                $(o.tree).parent().resizable({\n                    maxWidth: maxWidth,\n                    minWidth: 220,\n                    handles: \"e\",\n                    resize: function(event, ui) {\n                        layoutRender();\n                    }\n                });\n\n                $(window).resize(function() {\n                    layoutRender();\n                    $(o.tree).parent().resizable({\n                        maxWidth: maxWidth\n                    });\n                });\n            };\n\n            var documentEventsBinding = function() {\n                $(document).bind('keydown', function(e) {\n                    switch (e.which) {\n                        case 65:\n                            //select all\n                            if (e.ctrlKey) {\n                                objGrid.selectAllNode();\n                            }\n                            break;\n                        default:\n                            break;\n                    };\n                });\n            };\n\n            var getDirTreeMaxWidth = function() {\n                var scrWidth = $(document).width();\n                return parseInt(scrWidth / 3);\n            };\n\n            var layoutRender = function() {\n                var scrHeght = $(window).innerHeight();\n                var dirTreeHeight = scrHeght - $(o.titlebar).height() - $(o.toolsbar).height() - $(o.statusbar).height() - 5;\n                var tree = $(o.tree);\n                var grid = $(o.grid);\n                tree.parent().height(dirTreeHeight);\n                grid.parent().height(dirTreeHeight);\n                grid.parent().width('calc(100% - ' + (tree.parent().width() + 8) + 'px)');\n                maxWidth = getDirTreeMaxWidth();\n                $(o.tree).height(dirTreeHeight - 5);\n            };\n\n            var renderRenameInput = function(node) {\n                var input = $('<input />', {type:text, name:'newname', id:'txtNewName', value:$(node).attr('data-name')});\n                $(input).bind('focusout', function (e) {\n                    console.log('Focus out!');\n                }).bind('keydown', function (e) {\n                    e.stopPropagation();\n                    \n                    return false;\n                });\n            };\n\n            var validateCreateFolder = function(foldername, customErr) {\n                if (customErr == undefined) customErr = null;\n                var errMsg = '';\n                var objErr = $('FORM#createFolderForm DIV.help-block[for=\"foldername\"]');\n                $(objErr).text('').hide();\n                $(objErr).parent().parent().removeClass('has-error');\n\n                if (customErr == null) {\n                    if (foldername == '') {\n                        errMsg = 'Bạn hãy nhập tên thư mục!';\n                    }\n                } else {\n                    errMsg = customErr.err;\n                }\n\n                if (errMsg != '') {\n                    $(objErr).text(errMsg).show();\n                    $(objErr).parent().parent().addClass('has-error');\n                    $(objErr).parent().find('INPUT').focus();\n                    return false;\n                } else return true;\n            };\n\n            this.showCreateFolderDlg = function(callback) {\n                var formHTML = '<form id=\"createFolderForm\" action=\"#\" name=\"createFolderForm\" method=\"POST\" class=\"form-horizontal\">';\n                formHTML += '    <div class=\"form-group\">';\n                formHTML += '		<div class=\"col-xs-9\">';\n                formHTML += '			<input type=\"text\" class=\"form-control\" name=\"foldername\" placeholder=\"Nhập tên thư  mục\" />';\n                formHTML += '			<div class=\"help-block\" style=\"display:none\" for=\"foldername\"></div>';\n                formHTML += '		</div>';\n                formHTML += '		<div class=\"col-xs-3\">';\n                formHTML += '			<button id=\"btnOK\" type=\"button\" class=\"btn btn-success btn-sm\">OK</button>';\n                formHTML += '		</div>';\n                formHTML += '	</div>';\n                formHTML += '</form>';\n\n                var dlg = bootbox.dialog({\n                        title: 'Tạo thư mục',\n                        message: formHTML,\n                        show: false\n                    })\n                    .on('shown.bs.modal', function() {\n                        $(this).find('FORM#createFolderForm').find('INPUT').focus();\n                    })\n                    .on('hide.bs.modal', function(e) {})\n                    .modal('show');\n\n                $(dlg).find('DIV.modal-dialog').css('width', '350px');\n                var btnOK = $(dlg).find('DIV.modal-dialog FORM#createFolderForm BUTTON#btnOK');\n                var form = $(dlg).find('DIV.modal-dialog FORM#createFolderForm');\n\n                $(btnOK).unbind('click').bind('click', function(e) {\n                    $(form).submit();\n                });\n\n                $(form).on('submit', function(e) {\n                    e.preventDefault();\n                    var newFolderName = $(dlg).find('FORM#createFolderForm INPUT[name=\"foldername\"]').val().trim();\n                    var destination = objTree.getSelectedNode();\n                    objSpaceModel.createFolder(newFolderName, destination, dlg, validateCreateFolder);\n                });\n            };\n\n            this.showDeleteConfirm = function(aryId) {\n                var message = 'Bạn có chắc chắn muốn xóa [cusmsg] không?';\n                var rpStr = '';\n                if (aryId.length == 1) {\n                    var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent() : objGrid.findNodeById(aryId[0]);\n                    var type = $(node).attr('data-type') == 'directory' ? 'thư mục' : 'file';\n                    rpStr = type + ' <strong style=\"color:red\">' + $(node).attr('data-name') + '</strong>';\n                } else {\n                    rpStr = '<strong>' + aryId.length + '</strong>' + ' file/thư mục đã chọn'\n                }\n\n                bootbox.confirm(message.replace('[cusmsg]', rpStr), function(result) {\n                    if (result == true) objSpaceModel.delete(aryId, function() {\n                        var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent() : objGrid.findNodeById(aryId[0]);\n                        objController.refresh($(node).attr('data-parent'));\n                    });\n                });\n            };\n\n            this.setBreadcrumb = function() {\n                var currId = objTree.getSelectedNode();\n                var node = objTree.findNodeById(currId);\n                var aryTreeBrand = objTree.findTreeBrand(node);\n                var container = $(o.navigationbar).find('UL.breadcrumb');\n                $(container).empty();\n\n                for (var i = aryTreeBrand.length - 1; i >= 0; i--) {\n                    var item = null;\n                    if (i == aryTreeBrand.length - 1) {\n                        item = $('<li></li>').append($('<i></i>', {\n                            'class': 'ace-icon fa fa-folder home-icon'\n                        }), $('<a></a>', {\n                            href: '',\n                            text: $(aryTreeBrand[i]).text()\n                        }));\n                    } else {\n                        item = $('<li></li>').append($('<a></a>', {\n                            href: '',\n                            text: $(aryTreeBrand[i]).text()\n                        }));\n                    }\n\n                    var data = jQuery.hasData($(aryTreeBrand[i])[0]) && jQuery._data($(aryTreeBrand[i])[0]);\n                    $(item).find('A').bind('click', data.events.click[0].handler);\n\n                    $(container).append(item);\n                }\n            };\n\n            this.setOptions = function(opt, value) {\n                eval('o.' + opt + '= value;');\n            };\n\n            this.getOptions = function(opt) {\n                if (opt == null) return o;\n                else return eval('o.' + opt);\n            };\n\n            this.initialize = function() {\n                init();\n                return this;\n            };\n\n            return this.initialize();\n        }\n    });",
+			"file": "assets/js/space/mvc/layout.js",
+			"file_size": 9892,
+			"file_write_time": 130975827890000000,
 			"settings":
 			{
-				"buffer_size": 202773,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/controllers/Privatecontent.php",
-			"settings":
-			{
-				"buffer_size": 7204,
+				"buffer_size": 9644,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "assets/css/space/style2.css",
+			"file": "assets/js/space/grid.js",
 			"settings":
 			{
-				"buffer_size": 24674,
+				"buffer_size": 14349,
 				"line_ending": "Unix"
 			}
 		}
@@ -211,37 +198,39 @@
 	[
 		"/Volumes/SSD/www",
 		"/Volumes/SSD/www/application",
-		"/Volumes/SSD/www/application/third_party",
+		"/Volumes/SSD/www/application/controllers",
 		"/Volumes/SSD/www/assets",
-		"/Volumes/SSD/www/assets/css",
-		"/Volumes/SSD/www/assets/css/space",
 		"/Volumes/SSD/www/assets/js",
 		"/Volumes/SSD/www/assets/js/space",
-		"/Volumes/SSD/www/assets/js/space/mvc"
+		"/Volumes/SSD/www/system"
 	],
 	"file_history":
 	[
+		"/Volumes/SSD/www/application/controllers/Privatecontent.php",
+		"/Volumes/SSD/www/assets/js/space/mvc/manager.js",
+		"/Volumes/SSD/www/assets/js/space/grid.js",
+		"/Volumes/SSD/vspace/assets/js/space/grid.js",
+		"/Volumes/SSD/www/assets/js/space/mvc/layout.js",
+		"/Volumes/SSD/www/assets/js/space/mvc/ultis.js",
+		"/Volumes/SSD/www/assets/js/space/mvc/grid.js",
+		"/Volumes/SSD/www/assets/js/space/manager.js",
+		"/Volumes/SSD/www/assets/js/space/mvc/model.js",
+		"/Volumes/SSD/www/assets/js/space/mvc/tree.js",
+		"/Volumes/SSD/www/assets/js/space/tree.js",
+		"/Volumes/SSD/www/assets/css/space/vsgrid.css",
+		"/Volumes/SSD/www/assets/css/space/style2.css",
+		"/Volumes/SSD/www/api.log",
 		"/Volumes/SSD/www/assets/js/space/mvc/upload.js",
 		"/Volumes/SSD/www/assets/js/space/mvc/user.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/tree.js",
-		"/Volumes/SSD/www/assets/css/space/style2.css",
-		"/Volumes/SSD/www/assets/css/space/vsgrid.css",
 		"/Volumes/SSD/www/assets/css/space/style.css",
-		"/Volumes/SSD/www/assets/js/space/mvc/grid.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/layout.js",
-		"/Volumes/SSD/www/application/controllers/Privatecontent.php",
-		"/Volumes/SSD/www/assets/js/space/mvc/ultis.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/manager.js",
 		"/Volumes/SSD/www/application/controllers/Filemanager.php",
 		"/Volumes/SSD/www/assets/css/space/upload.css",
 		"/Volumes/SSD/www/assets/js/space/mvc/connection.js",
 		"/Volumes/SSD/www/application/views/main_19.php",
 		"/Volumes/SSD/www/application/views/19/footer.php",
-		"/Volumes/SSD/www/assets/js/space/mvc/model.js",
 		"/Volumes/SSD/www/assets/js/space/mvc/encryption.js",
 		"/Volumes/SSD/www/assets/js/space/mvc/controller.js",
 		"/Volumes/SSD/www/assets/css/space/vupload.css",
-		"/Volumes/SSD/www/api.log",
 		"/Volumes/SSD/www/application/libraries/Vservices.php",
 		"/Volumes/SSD/www/application/config/config.php",
 		"/Volumes/SSD/www/application/views/main.php",
@@ -271,6 +260,17 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"stopPropagation",
+			"nodeClick",
+			"clearAllHighLightNode",
+			"click",
+			"objGrid",
+			"copy",
+			".keyCode",
+			"renameInit",
+			".keyCode",
+			"e.key",
+			"upload",
 			"copy",
 			"();\n",
 			"ul.vstree",
@@ -331,7 +331,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -340,15 +340,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4311,
+						"buffer_size": 4924,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								620,
-								620
+								3797,
+								3797
 							]
 						],
 						"settings":
@@ -357,27 +357,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": -0.0,
-						"translation.y": 329.0,
+						"translation.y": 1815.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "assets/js/space/mvc/ultis.js",
+					"file": "assets/js/space/mvc/grid.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1906,
+						"buffer_size": 4782,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1512,
-								1512
+								2075,
+								2075
 							]
 						],
 						"settings":
@@ -386,10 +386,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 293.0,
+						"translation.y": 762.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -398,15 +398,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8001,
+						"buffer_size": 7946,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6492,
-								6492
+								2463,
+								2463
 							]
 						],
 						"settings":
@@ -416,157 +416,69 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": -0.0,
-						"translation.y": 1886.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "assets/js/space/mvc/grid.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4510,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3908,
-								3908
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1507.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "assets/js/space/mvc/model.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6544,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5261,
-								5261
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2846.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "api.log",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 202773,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 38354.0,
+						"translation.y": 483.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "application/controllers/Privatecontent.php",
+					"buffer": 3,
+					"file": "assets/js/space/mvc/layout.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7204,
+						"buffer_size": 9644,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								778,
-								778
+								4438,
+								4438
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 522.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "assets/css/space/style2.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 24674,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								11678,
-								11678
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"tab_size": 2,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 8347.0,
+						"translation.y": 1257.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "assets/js/space/grid.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14349,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10721,
+								10741
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 3923.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -649,7 +561,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 373.0,
+	"side_bar_width": 237.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

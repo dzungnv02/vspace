@@ -23,7 +23,7 @@ class Privatecontent extends CI_Controller {
 		$user = $this->session->userdata ( 'userinfo' );
 		$this->vservices->setApiUrl ( $this->config->item ( 'api_url' ) );
 		$this->vservices->setConnection ( $this->curl );
-		$this->_sid = $user ? $user['session'] : null;
+		$this->_sid = ($user && isset($user['session'])) ? $user['session'] : null;
 	}
 	
 	public function getContent () {
@@ -207,6 +207,9 @@ class Privatecontent extends CI_Controller {
 
         if (is_array($result) && !isset($result['ERROR'])) {
         	$result['ERROR'] = $aryErr;
+        }
+        else if (!$result) {
+        	$result = array('ERROR' => $aryErr);
         }
 
         return json_encode($result);

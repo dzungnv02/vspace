@@ -59,14 +59,15 @@ $.extend(
 				var items = objUltis.clipBoard.get();
 				var act = objUltis.clipBoard.act;
 
+				var arySource = [];
 				if (objUltis.clipBoard.act == 'move') {
-					var source = objUltis.clipBoard.get();					
+					var source = objUltis.clipBoard.get();
 					for (var i = 0; i < source.length; i++) {
-						var node = objTree.findNodeById(source[i]);						
-						objTree.deleteNode(node);
+						var node = objTree.findNodeById(source[i]);
+						arySource[i] = node;
 					}
 				}
-				
+
 				objSpaceModel.paste(items, destination, act, function(data) {
 					self.refresh(destination, function(data) {
 						if (data.file != undefined) {
@@ -79,12 +80,24 @@ $.extend(
 								objGrid.highLightNode(data.file[i].id);
 							};
 						}
+
+						for (var i = 0; i < arySource.length; i++) {
+							objTree.deleteNode(arySource[i]);
+						}
+
 					}, data);
 				});
 			};
 
 			this.rename = function() {
-
+				var node = objGrid.getSelectedNodes();
+				if (node.length > 0) node = $($(node)[0]);
+				else if (node.length == 0) node = $(objTree.findNodeById(objTree.getSelectedNode())).parent();
+				objLayout.rename(node, function () {					
+					var parentId = $(node).attr('data-parent');
+					console.log(parentId);
+					self.refresh(parentId);
+				});
 			};
 
 			this.share = function() {
@@ -135,6 +148,23 @@ $.extend(
 			};
 
 			var init = function() {
+				$('DIV#file-container.vsgrid').attr('unselectable', 'on')
+					.css({
+						'-moz-user-select': '-moz-none',
+						'-moz-user-select': 'none',
+						'-o-user-select': 'none',
+						'-khtml-user-select': 'none',
+						'-webkit-user-select': 'none',
+						'-ms-user-select': 'none',
+						'user-select': 'none'
+					}).unbind('selectstart').bind('selectstart', function() {
+						return false;
+					}).unbind('click').bind('click', function(e) {
+						objGrid.clearSelecteds();
+						return false;
+					});
+
+
 				objTree.setOptions('eventHandlers', treeEventHandlers);
 				objGrid.setOptions('eventHandlers', gridEventHandlers);
 				objTree.createRootNode();
@@ -144,6 +174,8 @@ $.extend(
 					objGrid.renderGrid(data);
 					objLayout.setBreadcrumb();
 				});
+
+
 			};
 
 			var getSelectedItems = function() {

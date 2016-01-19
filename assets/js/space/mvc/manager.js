@@ -34,7 +34,7 @@ if (jQuery)
 
 		var initApp = function() {
 			var scriptFiles = [
-				'upload.js','encryption.js', 'ultis.js', 'connection.js', 'model.js', 'user.js', 'layout.js', 'tree.js', 'grid.js', 'controller.js'
+				'tree.js', 'grid.js','upload.js','encryption.js', 'ultis.js', 'connection.js', 'model.js', 'user.js', 'layout.js','controller.js'
 			];
 
 			includingScript(scriptFiles).done(function() {

@@ -633,7 +633,7 @@ span, a {
 }
 
 #treeview-container {
-  overflow: visible;
+  overflow: auto;
   background: #fff;
   flex-grow: 1;
 }
