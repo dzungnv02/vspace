@@ -155,17 +155,7 @@ class Privatecontent extends CI_Controller {
 			$result = json_encode(array('ERROR' => $aryErr));
 			return FALSE;
 		}
-		else return TRUE;
-		/*else {
-			$aryParams = array('src' => 'space', 'us_id' => $userinfo['id']);
-			$result = $this->vservices->actionExecute('getinfo', $aryParams, 'user');
-			parse_str ($result, $aryResult);
-			error_log(var_export($aryParams, TRUE) . '   -   ' . var_export($aryResult, TRUE), 3, dirname(dirname(dirname(__FILE__))).'/userinfo.log');
-			if (isset($aryResult['errCode'])) {
-				$result = json_encode(array('ERROR' => $aryErr));
-				return FALSE;
-			}else return TRUE;
-		}*/
+		else return TRUE;		
 	}
 
 	/**
