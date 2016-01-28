@@ -53,6 +53,7 @@ $.extend(
                     $(o.tree).parent().resizable({
                         maxWidth: maxWidth
                     });
+                    objLightBox.calculate();
                 });
             };
 
@@ -89,6 +90,7 @@ $.extend(
             };
 
             var renameInit = function(node) {
+                var id = $(node).attr('data-id');
                 var input = $('<input />', {
                     type: 'text',
                     name: 'newname',
@@ -107,18 +109,15 @@ $.extend(
                     e.stopPropagation();
                 });
 
-                $(node).find('A').parent().append(input);
-                $(node).find('A').remove();
+                $(input).insertBefore($(node).find('A[data-id="'+id+'"]'));
+                $(node).find('A[data-id="'+id+'"]').hide();
                 $(input).focus();
                 $(input).select();
             };
 
             var renameCancel = function(node) {
-                $(node).find('INPUT').parent().append($('<a></a>', {
-                    'data-id': $(node).attr('data-id'),
-                    id: $(node).attr('data-id'),
-                    text: $(node).attr('data-name')
-                }));
+                var id = $(node).attr('data-id');               
+                $(node).find('A[data-id="'+id+'"]').show();
                 $(node).find('INPUT').remove();
             }
 

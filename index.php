@@ -1,5 +1,10 @@
 <?php
 date_default_timezone_set('Asia/Saigon');
+ini_set('session.cookie_domain', 'violet.vn');
+session_name('symfony');
+session_start();
+
+
 /**
  * CodeIgniter
  *

@@ -7,6 +7,8 @@ $.extend(
 			var self = this;
 			var data = [];
 			var currentViewMode = 'grid';
+			var aryImg = ['jpg', 'jpeg', 'gif', 'png', 'bmp'];
+			var aryVideo = ['mp4', 'flv', 'webm'];
 
 			var init = function() {
 				var ul = $('<ul></ul>', {
@@ -19,12 +21,30 @@ $.extend(
 				if (opts.minetype == undefined) opts.minetype = 'directory';
 				var icon = 'icon-' + opts.minetype;
 				var img = null;
+				var preloadedObj = null;
 				if (item.thumbnail != undefined) {
 					img = item.thumbnail != '' ? $('<img>', {
 						src: item.thumbnail,
 						align: 'middle'
 					}) : null;
 				}
+
+				if ($.inArray(opts.minetype, aryImg) > -1) {
+					preloadedObj = $('<img />', {
+						src: Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + item.id
+					});
+				}
+				else if ($.inArray(opts.minetype, htmlvideos) > -1) {
+					preloadedObj = $('<video></video>', {
+						src: Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + item.id
+					});
+
+					preloadedObj[0].addEventListener('loadedmetadata', function (e){
+						$(this).attr('width', this.videoWidth);
+						$(this).attr('height', this.videoHeight);
+					});
+				}
+
 				var div = $('<div></div>', {
 					'class': icon
 				});
@@ -33,7 +53,8 @@ $.extend(
 					id: item.id,
 					href: '#',
 					rel: item.name,
-					text: item.name
+					text: item.name,
+					'data-id':item.id
 				});
 				var divLink = $('<div></div>', {
 					'class': 'file-name'
@@ -49,11 +70,11 @@ $.extend(
 					'data-parent': item.parentID,
 					'data-child': opts.minetype == 'directory' ? item.subdirs : '0'
 				}).append(div, divLink);
-				bindNodeEvents(li);
+				bindNodeEvents(li, preloadedObj);
 				return li;
 			};
 
-			var bindNodeEvents = function(node) {
+			var bindNodeEvents = function(node, preloadedObj) {
 				if (o.eventHandlers == null) return false;
 				$(node).bind('click', function(e) {
 					e.stopPropagation();
@@ -66,7 +87,33 @@ $.extend(
 								oViewTree.nodeClick($('DIV#treeview-container').find('A[data-id="' + $(node).attr('data-id') + '"]'));
 							});
 						} else {
-							console.log('Preview!');
+							var dimensions = {
+								x: '900',
+								y: '470'
+							};
+							var nodeType = $(node).attr('data-type');
+							var type = $.inArray(nodeType, aryImg) > -1 ? 'image' : ($.inArray(nodeType, aryVideo) > -1 ? 'video' : 'other');
+							if (type == 'image') {
+								dimensions = {
+									x: preloadedObj[0].naturalWidth,
+									y: preloadedObj[0].naturalHeight
+								}
+							} else if (type == 'video') {
+								dimensions.x = $(preloadedObj).attr('width');
+								dimensions.y = $(preloadedObj).attr('height');
+							}
+
+							var opts = {
+								source: {
+									type: type,
+									src: Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + $(node).attr('data-id'),
+									minetype: nodeType,
+									dimensions: dimensions,
+									title: $(node).attr('data-name'),
+								}
+							};
+
+							objLightBox.show(opts);
 						}
 					});
 			};

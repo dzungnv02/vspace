@@ -25,17 +25,40 @@ $.extend(
 				else return eval('o.' + opt);
 			};
 
+			this.loadSpace = function(callback) {
+				var opts = {
+					script: '/privatecontent/onload',
+					postdata: {},
+					callbackSuccess: function(result, status, xhr) {
+						callback(result);
+					},
+					callbackFail: function(xhr, status, error) {
+						if (status == 'Login') {
+							objUltis.showAlert(status, error, function() {
+								objUser.showLogin();
+							});
+						} else {
+							objUltis.showAlert(status, error, function() {
+								console.log(xhr);
+							});
+						}
+					}
+				};
+
+				objConnection.sendCommand(opts);
+
+			};
+
 			this.login = function(username, password, dlg, callback) {
 				if (callback(username, password)) {
 					var opts = {
-						script: '/privatecontent/login/1',
+						script: '/privatecontent/login',
 						postdata: {
 							username: username,
 							password: password
 						},
 						callbackSuccess: function(result, status, xhr) {
-							session = Base64.decode(result.USER.session);
-							uploadHandler = Base64.decode(result.USER.uhandler);
+							appprofile = result.USER;
 							objController.refresh();
 							dlg.modal('hide');
 						},
@@ -105,10 +128,14 @@ $.extend(
 						callback(parsedData);
 					},
 					callbackFail: function(xhr, status, error) {
-						if (status != 'Login')
-							bootbox.alert(error);
-						else {
-							objUser.showLogin();
+						if (status == 'Login') {
+							objUltis.showAlert(status, error, function() {
+								objUser.showLogin();
+							});
+						} else {
+							objUltis.showAlert(status, error, function() {
+								console.log(xhr);
+							});
 						}
 					}
 				});
@@ -130,11 +157,18 @@ $.extend(
 						dlg.modal('hide');
 					},
 					callbackFail: function(xhr, status, error) {
-						var customErr = {
-							el: status,
-							err: error
-						};
-						callback(newFolderName, customErr);
+						if (status == 'Login') {
+							objUltis.showAlert(status, error, function() {
+								objUser.showLogin();
+							});
+						} else {
+							var customErr = {
+								el: status,
+								err: error
+							};
+							callback(newFolderName, customErr);
+						}
+
 					}
 				};
 
@@ -156,18 +190,22 @@ $.extend(
 						} else callback();
 					},
 					callbackFail: function(xhr, status, error) {
-						bootbox.alert(error);
+						if (status == 'Login') {
+							objUltis.showAlert(status, error, function() {
+								objUser.showLogin();
+							});
+						} else {
+							objUltis.showAlert(status, error, function() {
+								console.log(xhr);
+							});
+						}
 					}
 				};
 
 				objConnection.sendCommand(opts);
-			}
-
+			};
 
 			this.upload = function(formData, progressBar, callback) {
-				formData.append('sid', session);
-				formData.append('dir', objTree.getSelectedNode());
-
 				var jqXHR = $.ajax({
 					xhr: function() {
 						var xhrobj = $.ajaxSettings.xhr();
@@ -185,7 +223,7 @@ $.extend(
 						}
 						return xhrobj;
 					},
-					url: uploadHandler,
+					url: Base64.decode(appprofile.uhandler) + 'space/upload',
 					crossDomain: true,
 					type: "POST",
 					dataType: 'xml',
@@ -196,6 +234,11 @@ $.extend(
 					timeout: 0,
 					success: function(data) {
 						callback(data);
+					},
+					error: function() {
+						objUltis.showAlert(status, error, function() {
+							console.log(xhr);
+						});
 					}
 				});
 			};
@@ -217,51 +260,50 @@ $.extend(
 						} else callback(result);
 					},
 					callbackFail: function(xhr, status, error) {
-						bootbox.alert(error);
-					}
-				};
-
-				objConnection.sendCommand(opts);
-			};
-
-			this.getUploadHandler = function(callback) {
-				var opts = {
-					script: '/ajax/privatecontent/getuploadhandler',
-					postdata: {},
-					callbackSuccess: function(result, status, xhr) {
-						session = Base64.decode(result.data.session);
-						uploadHandler = Base64.decode(result.data.uhandler);
-						callback(uploadHandler);
-					},
-					callbackFail: function(xhr, status, error) {
-						if (status != 'Login')
-							bootbox.alert(error);
-						else {
-							objUser.showLogin();
+						if (status == 'Login') {
+							objUltis.showAlert(status, error, function() {
+								objUser.showLogin();
+							});
+						} else {
+							objUltis.showAlert(status, error, function() {
+								console.log(xhr);
+							});
 						}
 					}
 				};
 
 				objConnection.sendCommand(opts);
 			};
+
 
 			this.rename = function(id, newname, callback) {
 				var opts = {
 					script: '/ajax/privatecontent/rename',
-					postdata: {id:id, name: newname},
+					postdata: {
+						id: id,
+						name: newname
+					},
 					callbackSuccess: function(result, status, xhr) {
 						callback();
 					},
 					callbackFail: function(xhr, status, error) {
-						if (status != 'Login')
-							bootbox.alert(error);
-						else {
-							objUser.showLogin();
+						if (status == 'Login') {
+							objUltis.showAlert(status, error, function() {
+								objUser.showLogin();
+							});
+						} else {
+							objUltis.showAlert(status, error, function() {
+								console.log(xhr);
+							});
 						}
 					}
 				};
 
 				objConnection.sendCommand(opts);
+			};
+
+			this.logout = function() {
+
 			};
 
 			this.getLoadedDirs = function(id) {

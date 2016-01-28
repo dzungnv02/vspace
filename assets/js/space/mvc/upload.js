@@ -9,32 +9,47 @@ $.extend(
 			var maxsize = 200 * 1024 * 1024;
 			var isUploaded = false;
 			var init = function() {};
+			var inputFile = $('<input />',{type:'file',id:'uploadFiles', 'multiple':'multiple'});
 
 			var initUploadZone = function() {
 				var dropZone = $('<div></div>', {
 					id: dropZoneId,
-					text: 'Kéo & thả file từ máy tính của bạn vào đây!'
+					text: 'Kéo & thả file từ máy tính của bạn (hoặc click) vào đây để tải file !',
+					style:'cursor: pointer; cursor: hand;'
+				});
+
+				dropZone.unbind('click').bind('click', function (){
+					inputFile.trigger('click');
 				});
 				return dropZone;
 			};
 
+			var fileInputSelected = function (e) {
+				var files = e.target.files;
+				handlerDropFile(files);
+			};
+
 			var onloadDlg = function(dropZone) {
+				inputFile.unbind('change').bind('change', function (e) {
+					fileInputSelected(e);
+				});	
+
 				$(dropZone).on('dragenter', function(e) {
-						e.stopPropagation();
-						e.preventDefault();
-					})
+					e.stopPropagation();
+					e.preventDefault();
+				})
 					.on('dragover', function(e) {
 						e.stopPropagation();
 						e.preventDefault();
 					})
 					.on('drop', function(e) {
-						e.preventDefault();						
-						handlerDropFile(e);
+						e.preventDefault();
+						var files = e.originalEvent.dataTransfer.files;
+						handlerDropFile(files);
 					});
 			};
 
-			var handlerDropFile = function(e) {
-				var files = e.originalEvent.dataTransfer.files;
+			var handlerDropFile = function(files) {
 				var limit = files.length < maxfile ? files.length : maxfile;
 				var dropZone = $('#' + dropZoneId);
 				var fileValid = [];
@@ -78,12 +93,14 @@ $.extend(
 					$(dropZone).append(divFile);
 				}
 
-
 				if (fileValid.length > 0) {
 					for (var i = 0; i < fileValid.length; i++) {
 						var formData = new FormData();
 						var progressBar = $('SPAN.progress[id="' + fileValid[i].name + '"]');
 						formData.append('file', fileValid[i]);
+						formData.append('sid', appprofile.session);
+						formData.append('dir', objTree.getSelectedNode());
+
 						if (fileValid[i].type == 'application/zip') formData.append('unpack', 'true');
 
 						objSpaceModel.upload(formData, progressBar, function(xmldata) {
@@ -128,18 +145,17 @@ $.extend(
 			this.showUploadDlg = function() {
 				var dropZone = initUploadZone();
 				uploadDlg = bootbox.dialog({
-						title: 'UPLOAD',
-						message: $(dropZone),
-						show: false
-					})
-					.on('shown.bs.modal', function() {
+					title: 'Tải ',
+					message: dropZone,
+					show: false
+				})
+					.on('shown.bs.modal', function(e) {
 						isUploaded = false;
-						objSpaceModel.getUploadHandler(function(a) {});
 						onloadDlg(dropZone);
 					}).
-					on('hide.bs.modal', function () {
-						if (isUploaded == true) objController.refresh();
-					})
+				on('hide.bs.modal', function(e) {
+					if (isUploaded == true) objController.refresh();
+				})
 					.modal('show');
 			};
 

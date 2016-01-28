@@ -42,16 +42,17 @@ $.extend(
 			this.connectionSetup = function(opts) {				
 				var callbackSuccess = opts.callbackSuccess;
 				var callbackFail = opts.callbackFail;
-				var dataType = (opts.dataType == undefined) ? 'json' : opts.dataType;
-				var xhr = (opts.xhr == undefined) ? null : opts.xhr;
+				var dataType = (opts.dataType == undefined) ? 'json' : opts.dataType;				
 				var timeout = opts.timeout;
+				var crossDomain  = (opts.crossDomain == undefined) ? false : opts.crossDomain;
+				var cache = (opts.cache == undefined) ? false : opts.cache;
 
 				var options = {
 					async: true,
 					cache: false,
-					crossDomain: false,
+					crossDomain: crossDomain,
 					type: 'POST',
-					dataType: dataType,
+					dataType: dataType,					
 					error: function(xhr, status, error) {
 						if (callbackFail != null) {
 							callbackFail(xhr, status, error);
@@ -88,7 +89,10 @@ $.extend(
 					timeout: timeout
 				};
 
-				if (xhr != null) options.xhr  = xhr;				
+				if (opts.xhr != undefined) options.xhr  = opts.xhr;
+				if (opts.contentType != undefined) options.contentType  = opts.contentType;
+				if (opts.processData != undefined) options.processData  = opts.processData;
+
 				$.ajaxSetup(options);
 			};
 

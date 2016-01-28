@@ -5,6 +5,16 @@ $.extend(
 
 			var init = function() {};
 
+			this.showAlert = function(title, message, callback) {
+				bootbox.dialog({
+					title: title,
+					message: message,
+					show: false
+				}).on('hide.bs.modal', function(e) {
+					callback();
+				}).modal('show');
+			};
+
 			this.formatFileSize = function(size, decimal) {
 				var i;
 				i = Math.floor(Math.log(size) / Math.log(1024));
@@ -15,10 +25,7 @@ $.extend(
 					throw Error("" + size + " did not compute to a valid number to be humanized.");
 				} else {
 					return (size / Math.pow(1024, i))
-						.toFixed(decimal) * 1 + " " + ["Byte", "KB", "MB", "GB",
-							"TB", "PB", "EB", "ZB",
-							"YB"
-						][i];
+						.toFixed(decimal) * 1 + " " + ["Byte", "KB", "MB", "GB","TB", "PB", "EB", "ZB", "YB"][i];
 				}
 			};
 
@@ -69,7 +76,8 @@ $.extend(
 				clear: function() {
 					this.content = null;
 				},
-				do: function(act) {
+				do :
+				function(act) {
 					this.act = act;
 				}
 			};

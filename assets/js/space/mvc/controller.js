@@ -93,7 +93,7 @@ $.extend(
 				var node = objGrid.getSelectedNodes();
 				if (node.length > 0) node = $($(node)[0]);
 				else if (node.length == 0) node = $(objTree.findNodeById(objTree.getSelectedNode())).parent();
-				objLayout.rename(node, function () {					
+				objLayout.rename(node, function() {
 					var parentId = $(node).attr('data-parent');
 					console.log(parentId);
 					self.refresh(parentId);
@@ -108,15 +108,25 @@ $.extend(
 
 			};
 
+			this.logout = function() {
+
+			}
+
 			this.refresh = function(currDir, callback, callbackparam) {
 				if (currDir == undefined) currDir = objTree.getSelectedNode();
-				var selectedNode = objTree.findNodeById(currDir);
-				self.openDir(selectedNode, function() {
-					objTree.nodeClick(selectedNode, true);
-					if (callback != undefined) {
-						callback(callbackparam);
-					}
-				});
+				var selectedNode = objTree.findNodeById((currDir != undefined) ? currDir : rootDirId);
+
+				if (selectedNode.length > 0) {
+					self.openDir(selectedNode, function() {
+						objTree.nodeClick(selectedNode, true);
+						if (callback != undefined) {
+							callback(callbackparam);
+						}
+					});
+				}
+				else {
+
+				}
 			};
 
 			this.addonInsert = function() {};
@@ -169,12 +179,10 @@ $.extend(
 				objGrid.setOptions('eventHandlers', gridEventHandlers);
 				objTree.createRootNode();
 
-				objSpaceModel.getListItemsByParentId(rootDirId, function(data) {
-					objTree.renderTreeBranch(data, rootDirId);
-					objGrid.renderGrid(data);
-					objLayout.setBreadcrumb();
+				objSpaceModel.loadSpace(function(data) {
+					appprofile = data.USER;
+					self.refresh();				
 				});
-
 
 			};
 

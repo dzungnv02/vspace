@@ -25,6 +25,9 @@ $base_url = base_url();
                 <button id="btnRefresh" data-act="refresh" class="btn btn-info" title="Tải lại"><i class="fa fa-refresh"></i></button>
                 <!--<button id="btnGetFileURL" data-act="addonInsert" class="btn btn-info" title="Lấy link của file"><i class="fa fa-link"></i></button>-->
             </div>
+            <div class="btn-group logout">
+                <button id="btnLogout" data-act="logout" class="btn btn-info" title="Logout"><i class="fa fa-power-off"></i></button>
+            </div>
         </div>
     </div>
 

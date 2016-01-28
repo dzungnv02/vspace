@@ -363,7 +363,9 @@ $config['encryption_key'] = '';
 */
 
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'ci_session';
+//$config['sess_cookie_name'] = 'ci_session';
+$config['sess_cookie_name'] = 'symfony';
+//$config['sess_cookie_domain'] = 'violet.vn';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = dirname(__FILE__).'/sess_tmp/';
 $config['sess_match_ip'] = FALSE;
@@ -387,7 +389,7 @@ $config['sess_regenerate_destroy'] = FALSE;
 |
 */
 $config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
+$config['cookie_domain']	= 'violet.vn';
 $config['cookie_path']		= '/';
 $config['cookie_secure']	= FALSE;
 $config['cookie_httponly'] 	= FALSE;
@@ -510,4 +512,3 @@ $config['proxy_ips'] = '';
 
 
 $config['api_url'] = 'http://api1.violet.vn/';
-$config['upload_handler'] = 'http://api1.violet.vn/space/upload';
