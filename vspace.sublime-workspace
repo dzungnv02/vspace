@@ -4,6 +4,90 @@
 		"selected_items":
 		[
 			[
+				"max",
+				"max-height"
+			],
+			[
+				"ma",
+				"max-width"
+			],
+			[
+				"color",
+				"color = 'inherit'	Style CSS"
+			],
+			[
+				"statu",
+				"status	Window"
+			],
+			[
+				"us",
+				"userid"
+			],
+			[
+				"a",
+				"aryParams"
+			],
+			[
+				"wi",
+				"width	Style CSS"
+			],
+			[
+				"cons",
+				"console.log()"
+			],
+			[
+				"user",
+				"userinfo"
+			],
+			[
+				"sess",
+				"session_id"
+			],
+			[
+				"session",
+				"session_id"
+			],
+			[
+				"session_s",
+				"session_status"
+			],
+			[
+				"dir",
+				"dirname"
+			],
+			[
+				"_",
+				"_msession"
+			],
+			[
+				"var_",
+				"var_export"
+			],
+			[
+				"err",
+				"error_log"
+			],
+			[
+				"session_de",
+				"session_destroy"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"ses",
+				"session_id"
+			],
+			[
+				"ini_",
+				"ini_get"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
 				"pre",
 				"preventDefault()	Event"
 			],
@@ -18,10 +102,6 @@
 			[
 				"pro",
 				"progress	Event"
-			],
-			[
-				"ma",
-				"margin-top"
 			],
 			[
 				"paddin",
@@ -42,10 +122,6 @@
 			[
 				"fon",
 				"font-family"
-			],
-			[
-				"wi",
-				"width"
 			],
 			[
 				"o",
@@ -84,10 +160,6 @@
 				"self"
 			],
 			[
-				"cons",
-				"console.log('$0');"
-			],
-			[
 				"jso",
 				"json_encode"
 			],
@@ -108,10 +180,77 @@
 	"buffers":
 	[
 		{
+			"contents": "$.extend(\n	$.fn, {\n		vsController: function(o) {\n			if (o == null) o = {};\n			var self = this;\n\n			/**************************\n			 * EVENT HANDLING - BEGIN *\n			 *************************/\n			this.selectItem = function(node, callback) {\n				callback();\n			};\n\n			this.openDir = function(node, callback) {\n				var itemId = $(node).attr('data-id');\n				objSpaceModel.getListItemsByParentId(itemId, function(data) {\n					objTree.renderTreeBranch(data, itemId);\n					objGrid.renderGrid(data);\n					if ($(node).prop('tagName').toLowerCase() == 'li') {\n						callback(node, objTree);\n					} else {\n						callback(node);\n					}\n					objLayout.setBreadcrumb();\n				});\n			};\n\n			this.createDir = function() {\n				objLayout.showCreateFolderDlg(function() {});\n			};\n\n			this.delete = function() {\n				var items = getSelectedItems();\n				if (items.length > 0) objLayout.showDeleteConfirm(items);\n			};\n\n			this.upload = function() {\n				objUpload.showUploadDlg();\n			};\n\n			this.download = function() {\n\n			};\n\n			this.copy = function() {\n				var items = getSelectedItems();\n				objUltis.clipBoard.put(items);\n				objUltis.clipBoard.do('copy');\n			};\n\n			this.move = function() {\n				var items = getSelectedItems();\n				objUltis.clipBoard.put(items);\n				objUltis.clipBoard.do('move');\n			};\n\n			this.paste = function() {\n				var destination = objTree.getSelectedNode();\n				var items = objUltis.clipBoard.get();\n				var act = objUltis.clipBoard.act;\n\n				var arySource = [];\n				if (objUltis.clipBoard.act == 'move') {\n					var source = objUltis.clipBoard.get();\n					for (var i = 0; i < source.length; i++) {\n						var node = objTree.findNodeById(source[i]);\n						arySource[i] = node;\n					}\n				}\n\n				objSpaceModel.paste(items, destination, act, function(data) {\n					self.refresh(destination, function(data) {\n						if (data.file != undefined) {\n							for (var i = 0; i < data.file.length; i++) {\n								objGrid.highLightNode(data.file[i].id);\n							};\n						}\n						if (data.folder != undefined) {\n							for (var i = 0; i < data.folder.length; iß++) {\n								objGrid.highLightNode(data.file[i].id);\n							};\n						}\n\n						for (var i = 0; i < arySource.length; i++) {\n							objTree.deleteNode(arySource[i]);\n						}\n\n					}, data);\n				});\n			};\n\n			this.rename = function() {\n				var node = objGrid.getSelectedNodes();\n				if (node.length > 0) node = $($(node)[0]);\n				else if (node.length == 0) node = $(objTree.findNodeById(objTree.getSelectedNode())).parent();\n				objLayout.rename(node, function() {\n					var parentId = $(node).attr('data-parent');\n					console.log(parentId);\n					self.refresh(parentId);\n				});\n			};\n\n			this.share = function() {\n\n			};\n\n			this.preview = function() {\n\n			};\n\n			this.logout = function() {\n				\n			}\n\n			this.refresh = function(currDir, callback, callbackparam) {\n				if (currDir == undefined) currDir = objTree.getSelectedNode();\n				var selectedNode = objTree.findNodeById((currDir != undefined) ? currDir : rootDirId);\n\n				if (selectedNode.length > 0) {\n					self.openDir(selectedNode, function() {\n						objTree.nodeClick(selectedNode, true);\n						if (callback != undefined) {\n							callback(callbackparam);\n						}\n					});\n				}\n				else {\n\n				}\n			};\n\n			this.addonInsert = function() {};\n			/**************************\n			 * EVENT HANDLING - END *\n			 *************************/\n\n			var treeEventHandlers = {\n				open: self.openDir,\n				create: self.createDir,\n				delete: self.delete,\n				rename: self.rename,\n				copy: self.copy,\n				paste: self.paste,\n				move: self.move,\n				refresh: self.refresh\n			};\n\n			var gridEventHandlers = {\n				select: self.selectItem,\n				open: self.openDir,\n				create: self.createDir,\n				delete: self.delete,\n				rename: self.rename,\n				copy: self.copy,\n				paste: self.paste,\n				move: self.move,\n				refresh: self.refresh\n			};\n\n			var init = function() {\n				$('DIV#file-container.vsgrid').attr('unselectable', 'on')\n					.css({\n						'-moz-user-select': '-moz-none',\n						'-moz-user-select': 'none',\n						'-o-user-select': 'none',\n						'-khtml-user-select': 'none',\n						'-webkit-user-select': 'none',\n						'-ms-user-select': 'none',\n						'user-select': 'none'\n					}).unbind('selectstart').bind('selectstart', function() {\n						return false;\n					}).unbind('click').bind('click', function(e) {\n						objGrid.clearSelecteds();\n						return false;\n					});\n\n\n				objTree.setOptions('eventHandlers', treeEventHandlers);\n				objGrid.setOptions('eventHandlers', gridEventHandlers);\n				objTree.createRootNode();\n\n				objSpaceModel.loadSpace(function(data) {\n					appprofile = data.USER;\n					self.refresh();				\n				});\n\n			};\n\n			var getSelectedItems = function() {\n				var selectedNode = objGrid.getSelectedNodes();\n				var items = [];\n				if (selectedNode.length > 0) {\n					for (var i = 0; i < selectedNode.length; i++) {\n						items[i] = $($(selectedNode)[i]).attr('data-id');\n					}\n				} else {\n					var id = objTree.getSelectedNode();\n					if (id != rootDirId) items[0] = objTree.getSelectedNode();\n				}\n				return items;\n			};\n\n			this.setOptions = function(opts) {\n				o = opts;\n			};\n\n			this.getOptions = function(opt) {\n				if (opt == null) return o;\n				else {\n					return eval('o.' + opt);\n				}\n			};\n\n			this.initialize = function() {\n				init();\n				return this;\n			};\n\n			return this.initialize();\n		}\n	});",
 			"file": "assets/js/space/mvc/controller.js",
+			"file_size": 5545,
+			"file_write_time": 130981879280000000,
 			"settings":
 			{
-				"buffer_size": 4924,
+				"buffer_size": 5328,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "assets/js/space/mvc/vlightbox.js",
+			"settings":
+			{
+				"buffer_size": 5527,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "assets/js/space/mvc/model.js",
+			"settings":
+			{
+				"buffer_size": 8230,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/controllers/Privatecontent.php",
+			"settings":
+			{
+				"buffer_size": 6398,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "api.log",
+			"settings":
+			{
+				"buffer_size": 1686151,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 9938,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "application/views/19/footer.php",
+			"settings":
+			{
+				"buffer_size": 792,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "assets/js/space/mvc/manager.js",
+			"settings":
+			{
+				"buffer_size": 1823,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "assets/js/space/mvc/layout.js",
+			"settings":
+			{
+				"buffer_size": 11266,
 				"line_ending": "Windows"
 			}
 		},
@@ -119,35 +258,8 @@
 			"file": "assets/js/space/mvc/grid.js",
 			"settings":
 			{
-				"buffer_size": 4782,
+				"buffer_size": 6387,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "assets/js/space/mvc/tree.js",
-			"settings":
-			{
-				"buffer_size": 7946,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "$.extend(\n    $.fn, {\n        vsViewLayout: function(o) {\n            if (o == null) o = {};\n            if (o.maincontainer == undefined)\n                o.maincontainer = null;\n            if (o.titlebar == undefined)\n                o.titlebar = $('DIV#navbar');\n            if (o.toolsbar == undefined)\n                o.toolsbar = $('DIV#tools-bar');\n            if (o.statusbar == undefined)\n                o.statusbar = $('DIV#status-bar');\n            if (o.navigationbar == undefined)\n                o.navigationbar = $('DIV#navigation-bar');\n            if (o.tree == undefined)\n                o.tree = $('DIV#treeview-container');\n            if (o.grid == undefined)\n                o.grid = $('DIV#file-container');\n\n            var dropZone = $('DIV#drop-zone')\n\n            var aryButtons = $(o.toolsbar).find('BUTTON');\n\n            var aryBreadcrumb = [];\n\n            var maxWidth = 0;\n\n            var self = this;\n\n            var init = function() {\n                layoutRender();\n                $(aryButtons).each(function(index) {\n                    var button = this;\n                    var func = $(button).attr('data-act');\n                    $(button).bind('click', function(e) {\n                        eval('objController.' + func + '();');\n                    });\n                });\n\n                documentEventsBinding();\n\n                $(o.tree).parent().resizable({\n                    maxWidth: maxWidth,\n                    minWidth: 220,\n                    handles: \"e\",\n                    resize: function(event, ui) {\n                        layoutRender();\n                    }\n                });\n\n                $(window).resize(function() {\n                    layoutRender();\n                    $(o.tree).parent().resizable({\n                        maxWidth: maxWidth\n                    });\n                });\n            };\n\n            var documentEventsBinding = function() {\n                $(document).bind('keydown', function(e) {\n                    switch (e.which) {\n                        case 65:\n                            //select all\n                            if (e.ctrlKey) {\n                                objGrid.selectAllNode();\n                            }\n                            break;\n                        default:\n                            break;\n                    };\n                });\n            };\n\n            var getDirTreeMaxWidth = function() {\n                var scrWidth = $(document).width();\n                return parseInt(scrWidth / 3);\n            };\n\n            var layoutRender = function() {\n                var scrHeght = $(window).innerHeight();\n                var dirTreeHeight = scrHeght - $(o.titlebar).height() - $(o.toolsbar).height() - $(o.statusbar).height() - 5;\n                var tree = $(o.tree);\n                var grid = $(o.grid);\n                tree.parent().height(dirTreeHeight);\n                grid.parent().height(dirTreeHeight);\n                grid.parent().width('calc(100% - ' + (tree.parent().width() + 8) + 'px)');\n                maxWidth = getDirTreeMaxWidth();\n                $(o.tree).height(dirTreeHeight - 5);\n            };\n\n            var renderRenameInput = function(node) {\n                var input = $('<input />', {type:text, name:'newname', id:'txtNewName', value:$(node).attr('data-name')});\n                $(input).bind('focusout', function (e) {\n                    console.log('Focus out!');\n                }).bind('keydown', function (e) {\n                    e.stopPropagation();\n                    \n                    return false;\n                });\n            };\n\n            var validateCreateFolder = function(foldername, customErr) {\n                if (customErr == undefined) customErr = null;\n                var errMsg = '';\n                var objErr = $('FORM#createFolderForm DIV.help-block[for=\"foldername\"]');\n                $(objErr).text('').hide();\n                $(objErr).parent().parent().removeClass('has-error');\n\n                if (customErr == null) {\n                    if (foldername == '') {\n                        errMsg = 'Bạn hãy nhập tên thư mục!';\n                    }\n                } else {\n                    errMsg = customErr.err;\n                }\n\n                if (errMsg != '') {\n                    $(objErr).text(errMsg).show();\n                    $(objErr).parent().parent().addClass('has-error');\n                    $(objErr).parent().find('INPUT').focus();\n                    return false;\n                } else return true;\n            };\n\n            this.showCreateFolderDlg = function(callback) {\n                var formHTML = '<form id=\"createFolderForm\" action=\"#\" name=\"createFolderForm\" method=\"POST\" class=\"form-horizontal\">';\n                formHTML += '    <div class=\"form-group\">';\n                formHTML += '		<div class=\"col-xs-9\">';\n                formHTML += '			<input type=\"text\" class=\"form-control\" name=\"foldername\" placeholder=\"Nhập tên thư  mục\" />';\n                formHTML += '			<div class=\"help-block\" style=\"display:none\" for=\"foldername\"></div>';\n                formHTML += '		</div>';\n                formHTML += '		<div class=\"col-xs-3\">';\n                formHTML += '			<button id=\"btnOK\" type=\"button\" class=\"btn btn-success btn-sm\">OK</button>';\n                formHTML += '		</div>';\n                formHTML += '	</div>';\n                formHTML += '</form>';\n\n                var dlg = bootbox.dialog({\n                        title: 'Tạo thư mục',\n                        message: formHTML,\n                        show: false\n                    })\n                    .on('shown.bs.modal', function() {\n                        $(this).find('FORM#createFolderForm').find('INPUT').focus();\n                    })\n                    .on('hide.bs.modal', function(e) {})\n                    .modal('show');\n\n                $(dlg).find('DIV.modal-dialog').css('width', '350px');\n                var btnOK = $(dlg).find('DIV.modal-dialog FORM#createFolderForm BUTTON#btnOK');\n                var form = $(dlg).find('DIV.modal-dialog FORM#createFolderForm');\n\n                $(btnOK).unbind('click').bind('click', function(e) {\n                    $(form).submit();\n                });\n\n                $(form).on('submit', function(e) {\n                    e.preventDefault();\n                    var newFolderName = $(dlg).find('FORM#createFolderForm INPUT[name=\"foldername\"]').val().trim();\n                    var destination = objTree.getSelectedNode();\n                    objSpaceModel.createFolder(newFolderName, destination, dlg, validateCreateFolder);\n                });\n            };\n\n            this.showDeleteConfirm = function(aryId) {\n                var message = 'Bạn có chắc chắn muốn xóa [cusmsg] không?';\n                var rpStr = '';\n                if (aryId.length == 1) {\n                    var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent() : objGrid.findNodeById(aryId[0]);\n                    var type = $(node).attr('data-type') == 'directory' ? 'thư mục' : 'file';\n                    rpStr = type + ' <strong style=\"color:red\">' + $(node).attr('data-name') + '</strong>';\n                } else {\n                    rpStr = '<strong>' + aryId.length + '</strong>' + ' file/thư mục đã chọn'\n                }\n\n                bootbox.confirm(message.replace('[cusmsg]', rpStr), function(result) {\n                    if (result == true) objSpaceModel.delete(aryId, function() {\n                        var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent() : objGrid.findNodeById(aryId[0]);\n                        objController.refresh($(node).attr('data-parent'));\n                    });\n                });\n            };\n\n            this.setBreadcrumb = function() {\n                var currId = objTree.getSelectedNode();\n                var node = objTree.findNodeById(currId);\n                var aryTreeBrand = objTree.findTreeBrand(node);\n                var container = $(o.navigationbar).find('UL.breadcrumb');\n                $(container).empty();\n\n                for (var i = aryTreeBrand.length - 1; i >= 0; i--) {\n                    var item = null;\n                    if (i == aryTreeBrand.length - 1) {\n                        item = $('<li></li>').append($('<i></i>', {\n                            'class': 'ace-icon fa fa-folder home-icon'\n                        }), $('<a></a>', {\n                            href: '',\n                            text: $(aryTreeBrand[i]).text()\n                        }));\n                    } else {\n                        item = $('<li></li>').append($('<a></a>', {\n                            href: '',\n                            text: $(aryTreeBrand[i]).text()\n                        }));\n                    }\n\n                    var data = jQuery.hasData($(aryTreeBrand[i])[0]) && jQuery._data($(aryTreeBrand[i])[0]);\n                    $(item).find('A').bind('click', data.events.click[0].handler);\n\n                    $(container).append(item);\n                }\n            };\n\n            this.setOptions = function(opt, value) {\n                eval('o.' + opt + '= value;');\n            };\n\n            this.getOptions = function(opt) {\n                if (opt == null) return o;\n                else return eval('o.' + opt);\n            };\n\n            this.initialize = function() {\n                init();\n                return this;\n            };\n\n            return this.initialize();\n        }\n    });",
-			"file": "assets/js/space/mvc/layout.js",
-			"file_size": 9892,
-			"file_write_time": 130975827890000000,
-			"settings":
-			{
-				"buffer_size": 9644,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "assets/js/space/grid.js",
-			"settings":
-			{
-				"buffer_size": 14349,
-				"line_ending": "Unix"
 			}
 		}
 	],
@@ -158,10 +270,14 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
-		"last_filter": "",
+		"height": 207.0,
+		"last_filter": "php",
 		"selected_items":
 		[
+			[
+				"php",
+				"PHP CodeBeautifier"
+			],
 			[
 				"",
 				"Package Control: Install Package"
@@ -175,7 +291,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 467.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -200,45 +316,54 @@
 		"/Volumes/SSD/www/application",
 		"/Volumes/SSD/www/application/controllers",
 		"/Volumes/SSD/www/assets",
-		"/Volumes/SSD/www/assets/js",
-		"/Volumes/SSD/www/assets/js/space",
-		"/Volumes/SSD/www/system"
+		"/Volumes/SSD/www/assets/js"
 	],
 	"file_history":
 	[
 		"/Volumes/SSD/www/application/controllers/Privatecontent.php",
-		"/Volumes/SSD/www/assets/js/space/mvc/manager.js",
-		"/Volumes/SSD/www/assets/js/space/grid.js",
-		"/Volumes/SSD/vspace/assets/js/space/grid.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/layout.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/ultis.js",
+		"/Volumes/SSD/www/assets/js/space/mvc/upload.js",
 		"/Volumes/SSD/www/assets/js/space/mvc/grid.js",
-		"/Volumes/SSD/www/assets/js/space/manager.js",
+		"/Volumes/SSD/www/assets/js/space/mvc/ultis.js",
+		"/Volumes/SSD/www/assets/js/space/mvc/layout.js",
 		"/Volumes/SSD/www/assets/js/space/mvc/model.js",
+		"/Volumes/SSD/www/assets/js/space/mvc/manager.js",
+		"/Volumes/SSD/www/application/views/19/header.php",
+		"/Volumes/SSD/www/assets/js/space/mvc/vlightbox.js",
+		"/Volumes/SSD/www/assets/css/space/grid.css",
+		"/Volumes/SSD/www/assets/css/space/style2.css",
+		"/Volumes/SSD/www/assets/js/space/manager.js",
+		"/Volumes/SSD/www/application/views/19/footer.php",
+		"/Volumes/SSD/www/assets/js/space/mvc/user.js",
+		"/Volumes/SSD/www/application/views/main_19.php",
+		"/Volumes/SSD/vspace/assets/js/space/1.9/manager.1.9.js",
+		"/Volumes/SSD/www/api.log",
+		"/Volumes/SSD/www/assets/js/space/mvc/connection.js",
+		"/Volumes/SSD/www/application/config/config.php",
+		"/Volumes/SSD/www/application/libraries/Vservices.php",
 		"/Volumes/SSD/www/assets/js/space/mvc/tree.js",
+		"/Volumes/SSD/www/assets/css/space/style.css",
+		"/Volumes/SSD/www/logs/session.log",
+		"/Volumes/SSD/www/application/config/autoload.php",
+		"/Volumes/SSD/www/index.php",
+		"/Volumes/SSD/vspace/application/controllers/Privatecontent.php",
+		"/Volumes/SSD/www/assets/css/space/upload.css",
+		"/Volumes/SSD/www/assets/js/space/grid.js",
+		"/Volumes/SSD/www/system/libraries/Session/Session.php",
+		"/Volumes/SSD/www/system/libraries/Session/SessionHandlerInterface.php",
+		"/Volumes/SSD/www/system/libraries/Session/drivers/Session_files_driver.php",
+		"/Volumes/SSD/www/system/libraries/Session/Session_driver.php",
+		"/Volumes/SSD/vspace/assets/js/space/grid.js",
 		"/Volumes/SSD/www/assets/js/space/tree.js",
 		"/Volumes/SSD/www/assets/css/space/vsgrid.css",
-		"/Volumes/SSD/www/assets/css/space/style2.css",
-		"/Volumes/SSD/www/api.log",
-		"/Volumes/SSD/www/assets/js/space/mvc/upload.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/user.js",
-		"/Volumes/SSD/www/assets/css/space/style.css",
 		"/Volumes/SSD/www/application/controllers/Filemanager.php",
-		"/Volumes/SSD/www/assets/css/space/upload.css",
-		"/Volumes/SSD/www/assets/js/space/mvc/connection.js",
-		"/Volumes/SSD/www/application/views/main_19.php",
-		"/Volumes/SSD/www/application/views/19/footer.php",
 		"/Volumes/SSD/www/assets/js/space/mvc/encryption.js",
 		"/Volumes/SSD/www/assets/js/space/mvc/controller.js",
 		"/Volumes/SSD/www/assets/css/space/vupload.css",
-		"/Volumes/SSD/www/application/libraries/Vservices.php",
-		"/Volumes/SSD/www/application/config/config.php",
 		"/Volumes/SSD/www/application/views/main.php",
 		"/Volumes/SSD/www/readme.rst",
 		"/Volumes/SSD/www/application/config/routes.php",
 		"/Volumes/SSD/www/application/views/19/loginform.php",
 		"/Volumes/SSD/www/.htaccess",
-		"/Volumes/SSD/www/index.php",
 		"/Users/dzungnv02/Desktop/database.php",
 		"/Volumes/Data/mysql-init.txt",
 		"/usr/local/mysql-5.7.10-osx10.9-x86_64/support-files/my-default.cnf"
@@ -260,6 +385,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"logout",
+			"dir",
+			"'+'\">",
+			"renameInit",
+			"imagePreloaded",
+			"};\n",
+			"_checkLogin",
+			",\n",
+			"handlerDropFile",
+			";\n",
+			"onloadDlg",
+			"_checkLogin",
+			"));\n",
+			";\n",
 			"stopPropagation",
 			"nodeClick",
 			"clearAllHighLightNode",
@@ -331,7 +470,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -340,44 +479,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4924,
+						"buffer_size": 5328,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3797,
-								3797
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 1815.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "assets/js/space/mvc/grid.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4782,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2075,
-								2075
+								2741,
+								2741
 							]
 						],
 						"settings":
@@ -386,87 +496,259 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 762.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "assets/js/space/mvc/tree.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7946,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2463,
-								2463
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 483.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "assets/js/space/mvc/layout.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9644,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4438,
-								4438
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1257.0,
+						"translation.y": 1274.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "assets/js/space/grid.js",
+					"buffer": 1,
+					"file": "assets/js/space/mvc/vlightbox.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14349,
+						"buffer_size": 5527,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10721,
-								10741
+								4708,
+								4708
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 48.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "assets/js/space/mvc/model.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8230,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7583,
+								7583
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4415.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "application/controllers/Privatecontent.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6398,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3752,
+								3752
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": -0.0,
+						"translation.y": 1289.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "api.log",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1686151,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 263678.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9938,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1754,
+								1754
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "application/views/19/footer.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 792,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								792,
+								792
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "assets/js/space/mvc/manager.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1823,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4,
+								10
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "assets/js/space/mvc/layout.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11266,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1934,
+								1934
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 672.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "assets/js/space/mvc/grid.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6387,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3630,
+								3630
 							]
 						],
 						"settings":
@@ -475,10 +757,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": -0.0,
-						"translation.y": 3923.0,
+						"translation.y": 1129.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 6,
 					"type": "text"
 				}
 			]

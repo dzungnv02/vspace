@@ -17,7 +17,7 @@ $.extend(
             if (o.grid == undefined)
                 o.grid = $('DIV#file-container');
 
-            var dropZone = $('DIV#drop-zone')
+            var dropZone = $('DIV#drop-zone');
 
             var aryButtons = $(o.toolsbar).find('BUTTON');
 
@@ -59,7 +59,11 @@ $.extend(
 
             var documentEventsBinding = function() {
                 $(document).bind('keydown', function(e) {
+                    console.log(e.which);
                     switch (e.which) {
+                        case 13:
+                            objController.preview();
+                            break;
                         case 65:
                             //select all
                             if (e.ctrlKey) {
@@ -97,6 +101,7 @@ $.extend(
                     id: 'txtNewName',
                     value: $(node).attr('data-name')
                 });
+                
                 $(input).bind('focusout', function(e) {
                     renameCancel(node);
                 }).bind('keydown', function(e) {
@@ -109,15 +114,15 @@ $.extend(
                     e.stopPropagation();
                 });
 
-                $(input).insertBefore($(node).find('A[data-id="'+id+'"]'));
-                $(node).find('A[data-id="'+id+'"]').hide();
+                $(input).insertBefore($(node).find('A[data-id="' + id + '"]'));
+                $(node).find('A[data-id="' + id + '"]').hide();
                 $(input).focus();
                 $(input).select();
             };
 
             var renameCancel = function(node) {
-                var id = $(node).attr('data-id');               
-                $(node).find('A[data-id="'+id+'"]').show();
+                var id = $(node).attr('data-id');
+                $(node).find('A[data-id="' + id + '"]').show();
                 $(node).find('INPUT').remove();
             }
 
@@ -162,7 +167,7 @@ $.extend(
             };
 
             this.rename = function(node) {
-                renameInit(node);                
+                renameInit(node);
             }
 
             this.showCreateFolderDlg = function(callback) {
@@ -253,6 +258,33 @@ $.extend(
                     $(container).append(item);
                 }
             };
+            
+            this.setStatusBar = function () {
+                $(o.statusbar).empty();
+                var selectedNode = objGrid.getSelectedNodes();
+                var selectedSize = 0;
+                var totalUsed = $('<span></span>',{html:  'Tổng dung lượng đã sử dụng: <strong>' + objUltis.formatFileSize(totalSizeUsed) + '</strong>'});
+                var statusItems = $('<span></span>');
+                var statusSize = $('<span></span>');
+
+                if (selectedNode.length > 0) {
+                    for (var i = 0; i < selectedNode.length; i++) {
+                        selectedSize += parseFloat($(selectedNode[i]).attr('data-size'));
+                    }
+                    var html = selectedNode.length == 1 ? ($(selectedNode).attr('data-type') == 'directory' ? 'Thư mục:' : 'File:') + ' <strong>' + $(selectedNode).attr('data-name') + '</strong>' : '<strong>' + selectedNode.length + ' file/thư mục được chọn';
+
+                }
+                else {
+                    var html = '';
+                }
+
+                $(o.statusbar).append(totalUsed);
+                if (html != '') {
+                    $(statusItems).html(html);
+                    $(statusSize).html(' - Dung lượng:<strong>' + objUltis.formatFileSize(selectedSize) + '</strong>');
+                    $(o.statusbar).append(statusItems,statusSize);
+                }
+            }
 
             this.setOptions = function(opt, value) {
                 eval('o.' + opt + '= value;');

@@ -138,6 +138,7 @@ $.extend(
 						highlightNode(node);
 					}
 				});
+				objLayout.setStatusBar();
 			};
 
 			var highlightNode = function(node) {
@@ -188,6 +189,10 @@ $.extend(
 						$(ul).append(li);
 					};
 				}
+			};
+
+			this.clearContent = function () {
+				$(o.gridContainer).find('UL.vsgrid LI').remove();
 			};
 
 			this.selectAllNode = function() {

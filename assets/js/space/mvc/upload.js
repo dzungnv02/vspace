@@ -8,31 +8,36 @@ $.extend(
 			var maxfile = 20;
 			var maxsize = 200 * 1024 * 1024;
 			var isUploaded = false;
-			var init = function() {};
-			var inputFile = $('<input />',{type:'file',id:'uploadFiles', 'multiple':'multiple'});
 
+			var inputFile = $('<input />', {
+				type: 'file',
+				id: 'uploadFiles',
+				'multiple': 'multiple'
+			});
+
+			var init = function() {};
 			var initUploadZone = function() {
 				var dropZone = $('<div></div>', {
 					id: dropZoneId,
 					text: 'Kéo & thả file từ máy tính của bạn (hoặc click) vào đây để tải file !',
-					style:'cursor: pointer; cursor: hand;'
+					style: 'cursor: pointer; cursor: hand;'
 				});
 
-				dropZone.unbind('click').bind('click', function (){
+				dropZone.unbind('click').bind('click', function() {
 					inputFile.trigger('click');
 				});
 				return dropZone;
 			};
 
-			var fileInputSelected = function (e) {
+			var fileInputSelected = function(e) {
 				var files = e.target.files;
 				handlerDropFile(files);
 			};
 
 			var onloadDlg = function(dropZone) {
-				inputFile.unbind('change').bind('change', function (e) {
+				inputFile.unbind('change').bind('change', function(e) {
 					fileInputSelected(e);
-				});	
+				});
 
 				$(dropZone).on('dragenter', function(e) {
 					e.stopPropagation();
@@ -145,7 +150,7 @@ $.extend(
 			this.showUploadDlg = function() {
 				var dropZone = initUploadZone();
 				uploadDlg = bootbox.dialog({
-					title: 'Tải ',
+					title: 'Tải lên',
 					message: dropZone,
 					show: false
 				})

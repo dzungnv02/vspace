@@ -39,7 +39,10 @@ $.extend(
 			};
 
 			this.download = function() {
-
+				var node = objGrid.getSelectedNodes();
+				if (node.length > 0) node = $($(node)[0]);
+				if ($(node).attr('data-type') != 'directory')
+					window.location.href = Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + $(node).attr('data-id');
 			};
 
 			this.copy = function() {
@@ -95,7 +98,6 @@ $.extend(
 				else if (node.length == 0) node = $(objTree.findNodeById(objTree.getSelectedNode())).parent();
 				objLayout.rename(node, function() {
 					var parentId = $(node).attr('data-parent');
-					console.log(parentId);
 					self.refresh(parentId);
 				});
 			};
@@ -105,11 +107,19 @@ $.extend(
 			};
 
 			this.preview = function() {
-
+				var node = objGrid.getSelectedNodes();
+				if (node.length > 0) node = $($(node)[0]);
+				if ($(node).attr('data-type') == 'directory') return;
+				$(node).trigger('dblclick');
 			};
 
 			this.logout = function() {
-
+				objSpaceModel.logout(function (result) {					
+					objTree.clearContent();
+					objGrid.clearContent();
+					submitCount = false;
+					self.refresh();
+				});
 			}
 
 			this.refresh = function(currDir, callback, callbackparam) {
@@ -181,7 +191,10 @@ $.extend(
 
 				objSpaceModel.loadSpace(function(data) {
 					appprofile = data.USER;
-					self.refresh();				
+					self.refresh(null,function (data){
+						objLayout.setStatusBar();
+					}, null);	
+
 				});
 
 			};

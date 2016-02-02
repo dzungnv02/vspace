@@ -186,6 +186,10 @@ $.extend(
                 return aryTreeBrand;
             };
 
+            this.clearContent = function () {
+                $(o.treeContainer).find('> UL.vstree > LI.home UL').remove();
+            };
+
             this.setOptions = function(opt, value) {
                 eval('o.' + opt + '= value;');
             };

@@ -20,7 +20,8 @@ class Privatecontent extends CI_Controller {
 		parent::__construct ();
 		$this->vservices->setApiUrl ( $this->config->item ( 'api_url' ) );
 		$this->vservices->setConnection ( $this->curl );
-		$logged = $this->_getSession();
+		$logged = $this->router->method !== 'logout' ? $this->_getSession() : TRUE;
+
 		if (!$logged && !in_array($this->router->method, array('login','logout'))) {
 			$loginResult = '';
 			$this->_checkLogin($loginResult);
@@ -39,7 +40,7 @@ class Privatecontent extends CI_Controller {
 		$src = $this->input->post('src', TRUE);
 		$userinfo = $_SESSION['userinfo'];
 		$aryParams = array('id' => $parentID, 'sid' => $userinfo['session']);
-		$result = $this->vservices->actionExecute('dir', $aryParams);			
+		$result = $this->vservices->actionExecute('dir', $aryParams);
 		echo $this->XML2JSON($result);
 	}
 
@@ -107,8 +108,10 @@ class Privatecontent extends CI_Controller {
 		$result = $this->vservices->actionExecute('logout', array('sid' => session_id()), 'user');
 		unset($_SESSION['userinfo']);
 		session_destroy();
+		$aryErr = array('err' => '', 'errCode' => '0');
 		parse_str ($result, $aryLogout);
-		echo json_encode($aryLogout);
+		$aryData = array('data' => $aryLogout, 'ERROR' => $aryErr);
+		echo json_encode($aryData);
 	}
 
 	public function noop () {
@@ -188,7 +191,7 @@ class Privatecontent extends CI_Controller {
 			$_SESSION['userinfo'] = $aryUserData;
 			$logged = TRUE;
 		}
-		else if (isset ($_SESSION['userinfo '])){			
+		else if (isset ($_SESSION['userinfo'])){			
 			unset($_SESSION['userinfo']);
 			session_destroy();
 		}

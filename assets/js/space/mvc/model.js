@@ -44,9 +44,7 @@ $.extend(
 						}
 					}
 				};
-
 				objConnection.sendCommand(opts);
-
 			};
 
 			this.login = function(username, password, dlg, callback) {
@@ -102,6 +100,7 @@ $.extend(
 						};
 
 						var idx = 0;
+						var sizeUsed = 0;
 						if (result.folder != undefined) {
 							if (!$.isArray(result.folder)) {
 								var aryDir = [result.folder];
@@ -112,6 +111,7 @@ $.extend(
 								if (result.folder[i].name === '..') continue;
 								parsedData.folder[idx] = result.folder[i];
 								parsedData.folder[idx].parentID = itemId;
+								sizeUsed += parseFloat(parsedData.folder[idx].size);
 								idx++;
 							}
 						}
@@ -123,7 +123,13 @@ $.extend(
 							} else {
 								parsedData.file = result.file;
 							}
+
+							for(var i = 0; i < parsedData.file.length; i ++ ) {
+								sizeUsed += parseFloat(parsedData.file[i].size);
+							}
 						}
+
+						if (itemId == null || itemId == -1) totalSizeUsed = sizeUsed;
 
 						callback(parsedData);
 					},
@@ -302,8 +308,20 @@ $.extend(
 				objConnection.sendCommand(opts);
 			};
 
-			this.logout = function() {
-
+			this.logout = function(callback) {
+				var opts = {
+					script: '/ajax/privatecontent/logout',
+					postdata: {},
+					callbackSuccess: function(result, status, xhr) {
+						callback(result);
+					},
+					callbackFail: function(xhr, status, error) {
+						objUltis.showAlert(status, error, function() {
+							console.log(xhr);
+						});
+					}
+				};
+				objConnection.sendCommand(opts);
 			};
 
 			this.getLoadedDirs = function(id) {

@@ -127,7 +127,7 @@ $.extend(
 				var player = generatePlayer();
 
 				container.find('DIV.modal-header span').html('File: <strong>' + o.source.title + '</strong> - Kích thước: ' + o.source.dimensions.x + 'px × ' + o.source.dimensions.y + 'px');
-				container.find('DIV.modal-body').empty();
+
 
 				var width = o.source.dimensions.x > maxWidth ? maxWidth : o.source.dimensions.x;
 				var ratio = (o.source.dimensions.x / o.source.dimensions.y);
@@ -140,13 +140,6 @@ $.extend(
 					width = Math.ceil((height - Math.abs(container.find('DIV.modal-header').height())) * ratio);
 				}
 
-				if (player != null) {
-					container.find('DIV.modal-body').append(player);
-
-				} else {
-					container.find('DIV.modal-body').html('<span style="display:inline-block;width:100%;height:100%;text-align:center;line-weight:'+(height - Math.abs(container.find('DIV.modal-header').height())) + 'px'+'">Chưa hỗ trợ xem kiểu file này!</span>');
-				}
-
 				container.find('DIV.modal-dialog').css('max-width', '100%');
 				container.find('DIV.modal-dialog').css('max-height', '100%');
 				container.find('DIV.modal-dialog').css('width', width + 'px');
@@ -155,6 +148,14 @@ $.extend(
 				container.find('DIV.modal-body').css('height', (height - Math.abs(container.find('DIV.modal-header').height())) + 'px');
 
 				$(container).on('shown.bs.modal', function(e) {
+					container.find('DIV.modal-body').empty();
+					if (player != null) {
+						container.find('DIV.modal-body').append(player);
+
+					} else {
+						container.find('DIV.modal-body').html('<span style="display:inline-block;width:100%;height:100%;text-align:center;line-weight:' + (height - Math.abs(container.find('DIV.modal-header').height())) + 'px' + '">Chưa hỗ trợ xem kiểu file này!</span>');
+					}
+
 					if (o.source.type == 'video') {
 						if (player[0].tagName == 'VIDEO') {
 							player[0].play();
@@ -169,6 +170,11 @@ $.extend(
 							});
 						}
 					}
+				}).on('hide.bs.modal', function(e) {
+					if (player[0].tagName == 'VIDEO') {
+						player[0].pause();
+					}
+					container.find('DIV.modal-body').empty();
 				}).modal('show');
 			};
 
