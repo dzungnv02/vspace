@@ -69,7 +69,7 @@ $.extend(
 						var node = objTree.findNodeById(source[i]);
 						arySource[i] = node;
 					}
-				}
+				} 
 
 				objSpaceModel.paste(items, destination, act, function(data) {
 					self.refresh(destination, function(data) {
@@ -114,7 +114,7 @@ $.extend(
 			};
 
 			this.logout = function() {
-				objSpaceModel.logout(function (result) {					
+				objSpaceModel.logout(function(result) {
 					objTree.clearContent();
 					objGrid.clearContent();
 					submitCount = false;
@@ -133,8 +133,7 @@ $.extend(
 							callback(callbackparam);
 						}
 					});
-				}
-				else {
+				} else {
 
 				}
 			};
@@ -191,9 +190,9 @@ $.extend(
 
 				objSpaceModel.loadSpace(function(data) {
 					appprofile = data.USER;
-					self.refresh(null,function (data){
+					self.refresh(null, function(data) {
 						objLayout.setStatusBar();
-					}, null);	
+					}, null);
 
 				});
 
