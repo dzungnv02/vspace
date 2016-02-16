@@ -56,8 +56,6 @@ $.extend(
 				var dlgFooter = $('<div></div>', {
 					class: 'modal-footer'
 				});
-
-
 				container.append(modalDlg.append(dlgContent.append(dlgHeader, dlgBody)));
 			}
 
@@ -112,6 +110,11 @@ $.extend(
 						break;
 					default:
 						// statements_def
+						player = $('<span></span>', {id:'emptyPl', text: 'Chưa hỗ trợ xem kiểu file này!'});
+						player.css('display','inline-block');
+						player.css('width','100%');
+						player.css('height','100%');		
+						player.css('text-align','center');
 						break;
 				}
 
@@ -127,7 +130,6 @@ $.extend(
 				var player = generatePlayer();
 
 				container.find('DIV.modal-header span').html('File: <strong>' + o.source.title + '</strong> - Kích thước: ' + o.source.dimensions.x + 'px × ' + o.source.dimensions.y + 'px');
-
 
 				var width = o.source.dimensions.x > maxWidth ? maxWidth : o.source.dimensions.x;
 				var ratio = (o.source.dimensions.x / o.source.dimensions.y);
@@ -151,10 +153,10 @@ $.extend(
 					container.find('DIV.modal-body').empty();
 					if (player != null) {
 						container.find('DIV.modal-body').append(player);
-
-					} else {
-						container.find('DIV.modal-body').html('<span style="display:inline-block;width:100%;height:100%;text-align:center;line-weight:' + (height - Math.abs(container.find('DIV.modal-header').height())) + 'px' + '">Chưa hỗ trợ xem kiểu file này!</span>');
 					}
+					/*else {
+						container.find('DIV.modal-body').html('<span style="display:inline-block;width:100%;height:100%;text-align:center;line-weight:' + (height - Math.abs(container.find('DIV.modal-header').height())) + 'px' + '">Chưa hỗ trợ xem kiểu file này!</span>');
+					}*/
 
 					if (o.source.type == 'video') {
 						if (player[0].tagName == 'VIDEO') {

@@ -115,7 +115,7 @@ class Privatecontent extends CI_Controller {
 	}
 
 	public function noop () {
-		$aryParams = array('sid' => $this->_sid);
+		$aryParams = array('sid' => session_id());
 		$result = $this->vservices->actionExecute('noop', $aryParams, 'user');
 		$aryError = array('err' => '', 'errCode' => 0);
 		$result['ERROR'] = $aryError;
