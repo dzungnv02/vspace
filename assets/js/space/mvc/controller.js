@@ -103,7 +103,7 @@ $.extend(
 			};
 
 			this.share = function() {
-
+				
 			};
 
 			this.preview = function() {
@@ -189,13 +189,14 @@ $.extend(
 				objTree.createRootNode();
 
 				objSpaceModel.loadSpace(function(data) {
-					appprofile = data.USER;
+					appprofile = data.USER;					
 					self.refresh(null, function(data) {
 						objLayout.setStatusBar();
 					}, null);
 
 				});
-
+				
+				objConnection.ping();
 			};
 
 			var getSelectedItems = function() {

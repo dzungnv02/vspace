@@ -6,7 +6,7 @@ $.extend(
 			var uploadDlg = null;
 			var dropZoneId = 'drop-zone';
 			var maxfile = 20;
-			var maxsize = 200 * 1024 * 1024;
+			var maxsize = 100 * 1024 * 1024;
 			var isUploaded = false;
 
 			var inputFile = $('<input />', {
@@ -112,36 +112,45 @@ $.extend(
 							isUploaded = true;
 							var files = [];
 							var dirs = [];
+							var returnList = $(xmldata).find('list');
+							if (returnList.length > 0) {
+								returnList.find('folder').each(function(idx) {
+									dirs[idx] = {
+										id: $(this).attr('id'),
+										name: $(this).attr('name'),
+										parentID: objTree.getSelectedNode(),
+										type: $(this).attr('type'),
+										size: $(this).attr('size'),
+										date: $(this).attr('date'),
+										subdirs: $(this).attr('subdirs')
+									};
+								});
 
-							$(xmldata).find('list').find('folder').each(function(idx) {
-								dirs[idx] = {
-									id: $(this).attr('id'),
-									name: $(this).attr('name'),
-									parentID: objTree.getSelectedNode(),
-									type: $(this).attr('type'),
-									size: $(this).attr('size'),
-									date: $(this).attr('date'),
-									subdirs: $(this).attr('subdirs')
+								returnList.find('file').each(function(idx) {
+									files[idx] = {
+										id: $(this).attr('id'),
+										name: $(this).attr('name'),
+										parentID: objTree.getSelectedNode(),
+										type: $(this).attr('type'),
+										size: $(this).attr('size'),
+										date: $(this).attr('date'),
+										thumbnail: $(this).attr('thumbnail')
+									};
+								});
+
+								var items = {
+									folder: dirs,
+									file: files
 								};
-							});
-
-							$(xmldata).find('list').find('file').each(function(idx) {
-								files[idx] = {
-									id: $(this).attr('id'),
-									name: $(this).attr('name'),
-									parentID: objTree.getSelectedNode(),
-									type: $(this).attr('type'),
-									size: $(this).attr('size'),
-									date: $(this).attr('date'),
-									thumbnail: $(this).attr('thumbnail')
-								};
-							});
-
-							var items = {
-								folder: dirs,
-								file: files
-							};
-							objGrid.renderGrid(items, true);
+								objGrid.renderGrid(items, true);
+							} else {
+								var error = $(xmldata).find('status');
+								error.each(function(idx){
+									console.log($(this).attr('errCode'));
+									console.log($(this).attr('err'));
+									console.log(progressBar);
+								});
+							}
 						});
 					}
 				}

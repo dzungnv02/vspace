@@ -24,6 +24,72 @@ $.extend(
 				self.calculate();
 			};
 
+			var unsupported = function() {
+				var player = $('<span></span>', {
+					id: 'emptyPl',
+					text: 'Chưa hỗ trợ xem kiểu file này!'
+				});
+				player.css('display', 'inline-block');
+				player.css('width', '100%');
+				player.css('height', '100%');
+				player.css('text-align', 'center');
+				return player;
+			};
+
+			var picturePreview = function() {
+				var player = $('<img/>', {
+					id: 'vLightBoxImage',
+					src: o.source.src,
+					style: 'max-width:100%;max-height:100%;'
+				});
+
+				player.bind('loadedmetadata',function (e){
+					console.log(this);
+				});
+
+				return player;
+			};
+
+			var htmlVideosPreview = function() {
+				var player = $('<video controls autoplay></video>', {
+					id: 'vLightBoxVideo',
+					style: 'max-width:100%;max-height:100%;padding:0px;'
+				}).append($('<source />', {
+					src: o.source.src,
+					type: 'video/' + o.source.minetype
+				}));
+
+				$(player).hide();
+
+				player[0].addEventListener('loadedmetadata', function(e) {
+					o.source.dimensions.x = player[0].videoWidth;
+					o.source.dimensions.y = player[0].videoHeight;
+					$(player).width('100%');
+					$(player).height('100%');
+					$(player).show();
+				});
+
+				return player;
+			};
+
+			var flashVideosPlayer = function () {
+				var generateFlash = function (url, id, width, height, version, bg, flashvars, params, att) {
+
+				};
+			};
+
+			var htmlAudioPreview = function() {
+				var player = $('<audio></audio>', {
+					id: 'vLightBoxAudio',
+					'controls': 'controls'
+				}).append($('<source />', {
+					src: o.source.src,
+					type: 'audio/' + o.source.minetype
+				}));
+
+				return player;
+			};
+
 			var renderContainer = function() {
 				container = $('<div></div>', {
 					id: 'vLightBoxDlg',
@@ -65,56 +131,22 @@ $.extend(
 
 				switch (o.source.type) {
 					case 'image':
-						player = $('<img/>', {
-							id: 'vLightBoxImage',
-							src: o.source.src,
-							style: 'max-width:100%;max-height:100%;'
-						});
+						player = picturePreview();
 						break;
 					case 'video':
 						if ($.inArray(o.source.minetype, htmlvideos) > -1) {
-							player = $('<video controls autoplay></video>', {
-								id: 'vLightBoxVideo',
-								style: 'max-width:100%;max-height:100%;padding:0px;'
-							}).append($('<source />', {
-								src: o.source.src,
-								type: 'video/' + o.source.minetype
-							}));
-
-							$(player).hide();
-
-							player[0].addEventListener('loadedmetadata', function(e) {
-								o.source.dimensions.x = player[0].videoWidth;
-								o.source.dimensions.y = player[0].videoHeight;
-								$(player).width('100%');
-								$(player).height('100%');
-								$(player).show();
-							});
+							player = htmlVideosPreview();
 						} else {
-							/*player = $('<span></span>', {
-								id: 'flashPlayer1',
-								name: 'flashPlayer1',
-								style: 'max-width:100%;max-height:100%;padding:0px;'
-							});*/
+							player = unsupported();
 						}
 
 						break;
 					case 'audio':
-						player = $('<audio></audio>', {
-							id: 'vLightBoxAudio',
-							'controls': 'controls'
-						}).append($('<source />', {
-							src: o.source.src,
-							type: 'audio/' + o.source.minetype
-						}));
+						player = htmlAudioPreview();
 						break;
 					default:
 						// statements_def
-						player = $('<span></span>', {id:'emptyPl', text: 'Chưa hỗ trợ xem kiểu file này!'});
-						player.css('display','inline-block');
-						player.css('width','100%');
-						player.css('height','100%');		
-						player.css('text-align','center');
+						player = unsupported();
 						break;
 				}
 
@@ -146,30 +178,15 @@ $.extend(
 				container.find('DIV.modal-dialog').css('max-height', '100%');
 				container.find('DIV.modal-dialog').css('width', width + 'px');
 				container.find('DIV.modal-dialog').css('height', height + 'px');
-
 				container.find('DIV.modal-body').css('height', (height - Math.abs(container.find('DIV.modal-header').height())) + 'px');
 
 				$(container).on('shown.bs.modal', function(e) {
 					container.find('DIV.modal-body').empty();
-					if (player != null) {
-						container.find('DIV.modal-body').append(player);
-					}
-					/*else {
-						container.find('DIV.modal-body').html('<span style="display:inline-block;width:100%;height:100%;text-align:center;line-weight:' + (height - Math.abs(container.find('DIV.modal-header').height())) + 'px' + '">Chưa hỗ trợ xem kiểu file này!</span>');
-					}*/
+					container.find('DIV.modal-body').append(player);
 
 					if (o.source.type == 'video') {
 						if (player[0].tagName == 'VIDEO') {
 							player[0].play();
-						} else {
-							player.ready(function(e) {
-								var s1 = new SWFObject('./' + includeDir.replace('mvc/', 'hdplayer/') + 'hdplayer.swf', 'player', '640', '360', '9');
-								s1.addParam('allowfullscreen', 'true');
-								s1.addParam('allowscriptaccess', 'always');
-								s1.addParam('wmode', 'transparent');
-								s1.addVaiable('file', 'http://www.youtube.com/watch?v=ODePHkWSg-U');
-								s1.write('flashPlayer1');
-							});
 						}
 					}
 				}).on('hide.bs.modal', function(e) {

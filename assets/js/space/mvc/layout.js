@@ -59,7 +59,6 @@ $.extend(
 
             var documentEventsBinding = function() {
                 $(document).bind('keydown', function(e) {
-                    console.log(e.which);
                     switch (e.which) {
                         case 13:
                             objController.preview();
@@ -101,7 +100,7 @@ $.extend(
                     id: 'txtNewName',
                     value: $(node).attr('data-name')
                 });
-                
+
                 $(input).bind('focusout', function(e) {
                     renameCancel(node);
                 }).bind('keydown', function(e) {
@@ -258,12 +257,16 @@ $.extend(
                     $(container).append(item);
                 }
             };
-            
-            this.setStatusBar = function () {
+
+            this.setStatusBar = function() {
                 $(o.statusbar).empty();
                 var selectedNode = objGrid.getSelectedNodes();
                 var selectedSize = 0;
-                var totalUsed = $('<span></span>',{html:  'Tổng dung lượng đã sử dụng: <strong>' + objUltis.formatFileSize(totalSizeUsed) + '</strong>'});
+                var dateStr = '';
+
+                var totalUsed = $('<span></span>', {
+                    html: 'Tổng dung lượng đã sử dụng: <strong>' + objUltis.formatFileSize(appprofile.SPACE.used) + '/' + objUltis.formatFileSize(appprofile.SPACE.total) + '</strong> - '  + (appprofile.SPACE.expire != '' ? 'Sử dụng đến: ' + '<strong>' + appprofile.SPACE.expire +'</strong>' : '')
+                });
                 var statusItems = $('<span></span>');
                 var statusSize = $('<span></span>');
 
@@ -273,8 +276,7 @@ $.extend(
                     }
                     var html = selectedNode.length == 1 ? ($(selectedNode).attr('data-type') == 'directory' ? 'Thư mục:' : 'File:') + ' <strong>' + $(selectedNode).attr('data-name') + '</strong>' : '<strong>' + selectedNode.length + ' file/thư mục được chọn';
 
-                }
-                else {
+                } else {
                     var html = '';
                 }
 
@@ -282,7 +284,7 @@ $.extend(
                 if (html != '') {
                     $(statusItems).html(html);
                     $(statusSize).html(' - Dung lượng:<strong>' + objUltis.formatFileSize(selectedSize) + '</strong>');
-                    $(o.statusbar).append(statusItems,statusSize);
+                    $(o.statusbar).append(statusItems, statusSize);
                 }
             }
 

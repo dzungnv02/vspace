@@ -85,7 +85,6 @@ $.extend(
 					show: false
 				})
 					.on('shown.bs.modal', function() {
-						//$(formHTML).show();
 						$(formHTML).find('INPUT')[0].focus();
 						$(formHTML).find('INPUT')[0].select();
 					})
@@ -107,7 +106,6 @@ $.extend(
 				});
 
 				$(formHTML).unbind('click').bind('submit', function(e) {
-					console.log('SUBMIT LOGIN!');
 					var username = $(formHTML).find('INPUT[name="username"]').val().trim();
 					var password = $(formHTML).find('INPUT[name="password"]').val().trim();
 					if (submitCount == false) objSpaceModel.login(username, password, loginDlg, self.validateLogin);

@@ -10,7 +10,6 @@ $.extend(
 
 			var init = function() {
 				if (!modelExisted) {
-					objConnection.ping();
 					modelExisted = true;
 				}
 				return false;
@@ -56,9 +55,11 @@ $.extend(
 							password: password
 						},
 						callbackSuccess: function(result, status, xhr) {
+							console.log(result);
 							appprofile = result.USER;
 							objController.refresh();
 							dlg.modal('hide');
+							dlg = null;
 						},
 						callbackFail: function(xhr, status, error) {
 							var customErr = {
@@ -77,12 +78,29 @@ $.extend(
 									err: 'Password không đúng!'
 								};
 							}
-							callback(username, password, customErr);
+							callback(username, password, customErr);							
 						}
 					};
-
-					objConnection.sendCommand(opts);
+					if (dlg != null)
+						objConnection.sendCommand(opts);
 				}
+			};
+
+			this.logout = function(callback) {
+				var opts = {
+					script: '/ajax/privatecontent/logout',
+					postdata: {},
+					callbackSuccess: function(result, status, xhr) {
+						callback(result);
+						appprofile = null;
+					},
+					callbackFail: function(xhr, status, error) {
+						objUltis.showAlert(status, error, function() {
+							console.log(xhr);
+						});
+					}
+				};
+				objConnection.sendCommand(opts);
 			};
 
 			this.getListItemsByParentId = function(itemId, callback) {
@@ -305,22 +323,6 @@ $.extend(
 					}
 				};
 
-				objConnection.sendCommand(opts);
-			};
-
-			this.logout = function(callback) {
-				var opts = {
-					script: '/ajax/privatecontent/logout',
-					postdata: {},
-					callbackSuccess: function(result, status, xhr) {
-						callback(result);
-					},
-					callbackFail: function(xhr, status, error) {
-						objUltis.showAlert(status, error, function() {
-							console.log(xhr);
-						});
-					}
-				};
 				objConnection.sendCommand(opts);
 			};
 

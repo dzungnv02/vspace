@@ -2,49 +2,49 @@ $.extend(
 	$.fn, {
 		vsConnection: function(o) {
 			if (o == null) o = {};
-			var timer = null;
 			var parsedData = null;
 			var self = this;
 			var noopScript = '/ajax/privatecontent/noop';
-			var noopInterval = 120000; //2 minutes
 			var ajaxTimeout = 10000;
 
-			var init = function() {				
+			var init = function() {
 				return;
 			};
 
 			this.ping = function() {
-				timer = setInterval(function() {
-					var script = server + noopScript;
-					var options = {
-						async: true,
-						cache: false,
-						crossDomain: false,
-						type: 'POST',
-						dataType: 'text',
-						error: function(xhr, status, error) {							
-							console.debug(error);
-						},
-						success: function(result, status, xhr) {
-							console.debug(status);
-						},
-						timeout: ajaxTimeout
-					};
+				noopTimer = setInterval(function() {
+					if (appprofile != null) {
+						var script = server + noopScript;
+						var options = {
+							async: true,
+							cache: false,
+							crossDomain: false,
+							type: 'POST',
+							dataType: 'text',
+							error: function(xhr, status, error) {
+								console.debug(error);
+							},
+							success: function(result, status, xhr) {
+								console.debug(status);
+							},
+							timeout: ajaxTimeout
+						};
 
-					$.ajax(script, options);
+						$.ajax(script, options);
+					}
 				}, noopInterval);
 			};
 
-			this.unping = function () {
-				clearInterval(timer);
+			this.unping = function() {
+				clearInterval(noopTimer);
 			};
 
-			this.connectionSetup = function(opts) {				
+			this.connectionSetup = function(opts) {
 				var callbackSuccess = opts.callbackSuccess;
 				var callbackFail = opts.callbackFail;
-				var dataType = (opts.dataType == undefined) ? 'json' : opts.dataType;				
+				var dataType = (opts.dataType == undefined) ? 'json' : opts.dataType;
 				var timeout = opts.timeout;
-				var crossDomain  = (opts.crossDomain == undefined) ? false : opts.crossDomain;
+				var crossDomain = (opts.crossDomain == undefined) ? false : opts.crossDomain;
 				var cache = (opts.cache == undefined) ? false : opts.cache;
 
 				var options = {
@@ -52,7 +52,7 @@ $.extend(
 					cache: false,
 					crossDomain: crossDomain,
 					type: 'POST',
-					dataType: dataType,					
+					dataType: dataType,
 					error: function(xhr, status, error) {
 						if (callbackFail != null) {
 							callbackFail(xhr, status, error);
@@ -78,10 +78,9 @@ $.extend(
 								console.debug(status);
 								console.debug(result);
 							}
-						}
-						catch (err) {
+						} catch (err) {
 							if (callbackFail != null) {
-								callbackFail (xhr, 'System', 'Có lỗi hệ thống xảy ra, vui lòng quay lại trong ít phút!');
+								callbackFail(xhr, 'System', 'Có lỗi hệ thống xảy ra, vui lòng quay lại trong ít phút!');
 							}
 							console.debug(err);
 						}
@@ -89,9 +88,9 @@ $.extend(
 					timeout: timeout
 				};
 
-				if (opts.xhr != undefined) options.xhr  = opts.xhr;
-				if (opts.contentType != undefined) options.contentType  = opts.contentType;
-				if (opts.processData != undefined) options.processData  = opts.processData;
+				if (opts.xhr != undefined) options.xhr = opts.xhr;
+				if (opts.contentType != undefined) options.contentType = opts.contentType;
+				if (opts.processData != undefined) options.processData = opts.processData;
 
 				$.ajaxSetup(options);
 			};
@@ -104,20 +103,19 @@ $.extend(
 				if (p.xhr == undefined) p.xhr = null;
 				if (p.timeout == undefined) p.timeout = ajaxTimeout;
 
-				
+
 				var iserver = p.server != undefined ? p.server : server;
 				p.script = p.script != null ? iserver + p.script : '';
 				self.connectionSetup(p);
 
 				var result = null;
-				try {					
+				try {
 					result = $.ajax(p.script, {
 						data: p.postdata
 					});
 
 					return result;
-				}
-				catch(err) {
+				} catch (err) {
 					console.debug(err);
 				}
 			};

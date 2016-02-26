@@ -20,22 +20,28 @@ class Privatecontent extends CI_Controller {
 		parent::__construct ();
 		$this->vservices->setApiUrl ( $this->config->item ( 'api_url' ) );
 		$this->vservices->setConnection ( $this->curl );
-		$logged = $this->router->method !== 'logout' ? $this->_getSession() : TRUE;
+		$loginResult = '';
+		$logged = $this->_checkLogin($loginResult);
 
+		error_log( date('Y.m.d H:i:s') .'---- ROUTER METHOD: '. $this->router->method. "\n", 3, dirname(BASEPATH) .'/logs/controller.log');
+		
 		if (!$logged && !in_array($this->router->method, array('login','logout'))) {
-			$loginResult = '';
-			$this->_checkLogin($loginResult);
-			echo $loginResult;
-			exit();		
+			if (!$this->_getSession()) {
+				echo $loginResult;
+				exit();
+			}
 		}
 	}
 
 	public function onload () {
-		$aryData = array ('USER' => $_SESSION['userinfo'], 'ERROR' => array('err' => '', 'errCode' => '0'));
+		error_log( date('Y.m.d H:i:s') .'---- CONTROLLER ACTION: '. __FUNCTION__ . "\n\n\n", 3, dirname(BASEPATH) .'/logs/controller.log');
+		$_SESSION['userinfo']['SPACE'] = $this->_getSpaceInfo();
+		$aryData = array ('USER' => $_SESSION['userinfo'], 'ERROR' => array('onload' => 'TRUE','err' => '', 'errCode' => '0', 'session' => session_id()));
 		echo json_encode($aryData);
 	}
 	
 	public function getContent () {
+		error_log( date('Y.m.d H:i:s') .'---- CONTROLLER ACTION: '. __FUNCTION__ . "\n\n\n", 3, dirname(BASEPATH) .'/logs/controller.log');
 		$parentID = $this->input->post('id', TRUE);
 		$src = $this->input->post('src', TRUE);
 		$userinfo = $_SESSION['userinfo'];
@@ -77,9 +83,11 @@ class Privatecontent extends CI_Controller {
 	}
 
 	public function login() {
+		error_log( date('Y.m.d H:i:s') .'---- CONTROLLER ACTION: '. __FUNCTION__ . "\n\n\n", 3, dirname(BASEPATH) .'/logs/controller.log');
 		$username = $this->input->post('username', TRUE);
 		$password = $this->input->post('password', TRUE);
 
+		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- SESSION ID: '. var_export(session_id(), TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
 		$aryErr = array('err' => '', 'errCode' => '0');
 		$aryParams = array('src' => 'space', 'token' => md5($username.self::TOKENPW),'username' => $username, 'password' => $password, 'sid' => session_id());
 		$userData = $this->vservices->actionExecute('login', $aryParams, 'user');
@@ -94,8 +102,9 @@ class Privatecontent extends CI_Controller {
 		}
 
 		$aryUserData['uhandler'] = base64_encode($this->config->item('api_url'));
+		$aryUserData['SPACE'] = $this->_getSpaceInfo();
 		$_SESSION['userinfo'] = $aryUserData;
-		
+		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- SESSION PARAMS: '. var_export($_SESSION, TRUE) . "\n\n\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
 		$aryData = array(
 			'USER' => $aryUserData	,	
 			'ERROR' => $aryErr
@@ -105,12 +114,20 @@ class Privatecontent extends CI_Controller {
 	}
 
 	public function logout() {
+		error_log( date('Y.m.d H:i:s') .'---- CONTROLLER ACTION: '. __FUNCTION__ . "\n\n\n", 3, dirname(BASEPATH) .'/logs/controller.log');
 		$result = $this->vservices->actionExecute('logout', array('sid' => session_id()), 'user');
-		unset($_SESSION['userinfo']);
-		session_destroy();
+		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- OLD SESSION ID: '. var_export(session_id(), TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
+		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- OLD SESSION PARAMS: '."\n". var_export($_SESSION, TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
+		session_unset();		
+		//session_destroy();
+		//session_start();
+		session_regenerate_id(true);
+		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- NEW SESSION ID: '. var_export(session_id(), TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
+		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- NEW SESSION PARAMS: '. var_export($_SESSION, TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
+		
 		$aryErr = array('err' => '', 'errCode' => '0');
 		parse_str ($result, $aryLogout);
-		$aryData = array('data' => $aryLogout, 'ERROR' => $aryErr);
+		$aryData = array('data' => $aryLogout, 'ERROR' => $aryErr, 'session' => session_id());
 		echo json_encode($aryData);
 	}
 
@@ -138,7 +155,6 @@ class Privatecontent extends CI_Controller {
 	* @desc: parse XML result returned from API server
 	*
 	**/
-
     private function XML2JSON($xml) {
         function normalizeSimpleXML($obj, &$result) {
             $data = $obj;
@@ -182,20 +198,37 @@ class Privatecontent extends CI_Controller {
 
     private function _getSession () {		
     	$logged = FALSE;
-		$currUserInfo = $this->vservices->actionExecute('getcurrentuser', array('sid' => session_id()), 'user');
-		$aryUserData = array();		
-		parse_str ($currUserInfo, $aryUserData);
-		if ((int)$aryUserData['id'] > 0) {
-			$aryUserData['session'] = session_id();
+    	$currUserInfo = '';
+    	$sid = session_id();
+		$currUserInfo = $this->vservices->actionExecute('getcurrentuser', array('sid' => $sid), 'user');		
+		$aryUserData = array('id' => 0);			
+		if ($currUserInfo != '')  parse_str ($currUserInfo, $aryUserData);
+		if ((int)$aryUserData['id'] != 0) {
+			$aryUserData['session'] = $sid;
 			$aryUserData['uhandler'] = base64_encode($this->config->item('api_url'));
 			$_SESSION['userinfo'] = $aryUserData;
 			$logged = TRUE;
 		}
-		else if (isset ($_SESSION['userinfo'])){			
-			unset($_SESSION['userinfo']);
-			session_destroy();
-		}
+
 		return $logged;					
+    }
+
+    private function _getSpaceInfo () {
+    	$spaceInfo = $this->vservices->actionExecute('info', array('sid' => session_id()), 'space');
+		$arySpaceInfo = array();
+		if ($spaceInfo != '') {
+			$pattern = '/total="([0-9]+)" used="([0-9]+)" create="([0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2} [0-9]{2}\:[0-9]{2}\:[0-9]{2})" expire="(?:([0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2} [0-9]{2}\:[0-9]{2}\:[0-9]{2})|())"/';
+			$aryTmp = array();
+			preg_match($pattern, $spaceInfo, $aryTmp);
+			if (count($aryTmp) > 0) {
+				$arySpaceInfo['total'] = $aryTmp[1];
+				$arySpaceInfo['used'] = $aryTmp[2];
+				$arySpaceInfo['create'] = $aryTmp[3] !='' ? date('d/m/Y H:i:s', strtotime($aryTmp[3])) : '';
+				$arySpaceInfo['expire'] = $aryTmp[4] !='' ? date('d/m/Y H:i:s', strtotime($aryTmp[4])) : '';
+				return $arySpaceInfo;
+			}
+		}
+		return $arySpaceInfo;
     }
 }
 

@@ -25,7 +25,7 @@ $.extend(
 					throw Error("" + size + " did not compute to a valid number to be humanized.");
 				} else {
 					return (size / Math.pow(1024, i))
-						.toFixed(decimal) * 1 + " " + ["Byte", "KB", "MB", "GB","TB", "PB", "EB", "ZB", "YB"][i];
+						.toFixed(decimal) * 1 + ' ' + ["Byte", "KB", "MB", "GB","TB", "PB", "EB", "ZB", "YB"][i];
 				}
 			};
 

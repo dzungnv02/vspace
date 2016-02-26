@@ -12,7 +12,12 @@ var htmlvideos = ['mp4', 'ogg', 'webm'];
 var aryImg = ['jpg', 'jpeg', 'gif', 'png', 'bmp'];
 var aryVideo = ['mp4', 'flv', 'webm'];
 var flashvideos = ['flv'];
+
 var totalSizeUsed = 0;
+var spaceQuota = 0;
+var expireDate = '';
+var noopTimer = null;
+var noopInterval = 120000; //2 minutes
 
 var objController = null;
 var objConnection = null;

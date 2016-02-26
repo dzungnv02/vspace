@@ -70,9 +70,12 @@ Class Vservices {
 		
 		$result = $this->_curlObj->execute();
 
-		$serverIP = gethostbyname ('api.violet.vn');
-		$logMsg = date('Y-m-d H:i:s') .' - File: '. __FILE__ . ' - line:'. __LINE__ .' - API Result: '. var_export($result, true). ' - Action: '. var_export($url, true) .' - PARAMS: '. var_export($aryParams, true).' - SERVER IP: '.$serverIP."\n";
-		error_log($logMsg, 3, dirname(dirname(dirname(__FILE__))).'/api.log');
+		$serverIP = gethostbyname (parse_url($this->_apiUrl, PHP_URL_HOST));
+		$paramStr = array_map(function($k, $v){return "$k/$v";}, array_keys($aryParams), array_values($aryParams));
+		
+		$logApiURL = $url . '/' . implode('/',$paramStr);
+		$logMsg = "=========\n" . date('Y-m-d H:i:s') ."\n".'FILE: '. __FILE__ . ' -- LINE:'. __LINE__ . "\n" .'API Result: '."\n------\n". var_export($result, true). "\n------\n" . 'ACTION: '. var_export($logApiURL, true) . "\n" .'PARAMS: '. var_export($aryParams, true). "\n".'API SERVER IP: '.$serverIP. "\n========="."\n\n";
+		error_log($logMsg, 3, dirname(dirname(dirname(__FILE__))).'/logs/api.log');
 		
 		return $result;
 	}
