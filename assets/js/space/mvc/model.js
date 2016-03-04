@@ -30,10 +30,12 @@ $.extend(
 					postdata: {},
 					callbackSuccess: function(result, status, xhr) {
 						callback(result);
+						objLayout.changeLoginButtonStatus();						
 					},
 					callbackFail: function(xhr, status, error) {
 						if (status == 'Login') {
-							objUltis.showAlert(status, error, function() {
+							objLayout.changeLoginButtonStatus();
+							objUltis.showAlert(status, error, function() {								
 								objUser.showLogin();
 							});
 						} else {
@@ -54,12 +56,12 @@ $.extend(
 							username: username,
 							password: password
 						},
-						callbackSuccess: function(result, status, xhr) {
-							console.log(result);
+						callbackSuccess: function(result, status, xhr) {							
 							appprofile = result.USER;
 							objController.refresh();
 							dlg.modal('hide');
 							dlg = null;
+							objLayout.changeLoginButtonStatus();
 						},
 						callbackFail: function(xhr, status, error) {
 							var customErr = {
@@ -78,7 +80,7 @@ $.extend(
 									err: 'Password không đúng!'
 								};
 							}
-							callback(username, password, customErr);							
+							callback(username, password, customErr);
 						}
 					};
 					if (dlg != null)
@@ -90,9 +92,10 @@ $.extend(
 				var opts = {
 					script: '/ajax/privatecontent/logout',
 					postdata: {},
-					callbackSuccess: function(result, status, xhr) {
+					callbackSuccess: function(result, status, xhr) {						
 						callback(result);
 						appprofile = null;
+						objLayout.changeLoginButtonStatus();
 					},
 					callbackFail: function(xhr, status, error) {
 						objUltis.showAlert(status, error, function() {
@@ -142,7 +145,7 @@ $.extend(
 								parsedData.file = result.file;
 							}
 
-							for(var i = 0; i < parsedData.file.length; i ++ ) {
+							for (var i = 0; i < parsedData.file.length; i++) {
 								sizeUsed += parseFloat(parsedData.file[i].size);
 							}
 						}

@@ -57,6 +57,8 @@ $.extend(
 			}
 
 			this.showLogin = function() {
+				appprofile = null;
+				submitCount = false;
 				formHTML = $('<form id="loginForm" action="/login" method="post" class="form-horizontal">' 
 				+ '<div class="form-group">' 
 				+ '<label class="col-xs-3 control-label">Username</label>' 

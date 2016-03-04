@@ -9,6 +9,6 @@ $base_url = base_url();
 <script src="<?php echo $base_url;?>assets/js/jquery/swfobject.js" ></script>
 <script src="<?php echo $base_url;?>assets/js/bootstrap/ace.min.js" ></script>
 <script src="<?php echo $base_url;?>assets/js/bootstrap/ace-elements.min.js" ></script>
-<script src="<?php echo $base_url;?>assets/js/space/mvc/manager.js"></script>
+<script src="<?php echo $base_url;?>assets/js/space/mvc/space.js"></script>
 </body>
 </html>

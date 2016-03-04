@@ -17,6 +17,9 @@ $.extend(
             if (o.grid == undefined)
                 o.grid = $('DIV#file-container');
 
+            var btnListView = $('.show-list-view');
+            var btnGridView = $('.show-grid-view');
+
             var dropZone = $('DIV#drop-zone');
 
             var aryButtons = $(o.toolsbar).find('BUTTON');
@@ -32,8 +35,13 @@ $.extend(
                 $(aryButtons).each(function(index) {
                     var button = this;
                     var func = $(button).attr('data-act');
+
                     $(button).bind('click', function(e) {
-                        eval('objController.' + func + '();');
+                        if ($(button).attr('id') == 'btnLogout') {
+                            objController.signinButtonClick();
+                        } else {
+                            eval('objController.' + func + '();');
+                        }
                     });
                 });
 
@@ -90,6 +98,7 @@ $.extend(
                 grid.parent().width('calc(100% - ' + (tree.parent().width() + 8) + 'px)');
                 maxWidth = getDirTreeMaxWidth();
                 $(o.tree).height(dirTreeHeight - 5);
+                console.log(btnListView);
             };
 
             var renameInit = function(node) {
@@ -265,7 +274,7 @@ $.extend(
                 var dateStr = '';
 
                 var totalUsed = $('<span></span>', {
-                    html: 'Tổng dung lượng đã sử dụng: <strong>' + objUltis.formatFileSize(appprofile.SPACE.used) + '/' + objUltis.formatFileSize(appprofile.SPACE.total) + '</strong> - '  + (appprofile.SPACE.expire != '' ? 'Sử dụng đến: ' + '<strong>' + appprofile.SPACE.expire +'</strong>' : '')
+                    html: 'Tổng dung lượng đã sử dụng: <strong>' + objUltis.formatFileSize(appprofile.SPACE.used) + '/' + objUltis.formatFileSize(appprofile.SPACE.total) + '</strong> - ' + (appprofile.SPACE.expire != '' ? 'Sử dụng đến: ' + '<strong>' + appprofile.SPACE.expire + '</strong>' : '')
                 });
                 var statusItems = $('<span></span>');
                 var statusSize = $('<span></span>');
@@ -285,6 +294,15 @@ $.extend(
                     $(statusItems).html(html);
                     $(statusSize).html(' - Dung lượng:<strong>' + objUltis.formatFileSize(selectedSize) + '</strong>');
                     $(o.statusbar).append(statusItems, statusSize);
+                }
+            };
+
+            this.changeLoginButtonStatus = function() {
+                var loginButton = $(o.toolsbar).find('BUTTON#btnLogout');
+                if (appprofile != null) {
+                    $(loginButton).find('I').html('&nbsp;Thoát');
+                } else {
+                    $(loginButton).find('I').html('&nbsp;Đăng nhập');
                 }
             }
 

@@ -69,7 +69,7 @@ $.extend(
 						var node = objTree.findNodeById(source[i]);
 						arySource[i] = node;
 					}
-				} 
+				}
 
 				objSpaceModel.paste(items, destination, act, function(data) {
 					self.refresh(destination, function(data) {
@@ -103,7 +103,7 @@ $.extend(
 			};
 
 			this.share = function() {
-				
+
 			};
 
 			this.preview = function() {
@@ -120,7 +120,16 @@ $.extend(
 					submitCount = false;
 					self.refresh();
 				});
-			}
+			};
+
+			this.signinButtonClick = function() {
+				var loginButton = $(o.toolsbar).find('BUTTON#btnLogout');
+				if (appprofile != null) {
+					self.logout();					
+				} else {
+					objUser.showLogin();
+				}
+			};
 
 			this.refresh = function(currDir, callback, callbackparam) {
 				if (currDir == undefined) currDir = objTree.getSelectedNode();
@@ -183,19 +192,18 @@ $.extend(
 						return false;
 					});
 
-
 				objTree.setOptions('eventHandlers', treeEventHandlers);
 				objGrid.setOptions('eventHandlers', gridEventHandlers);
 				objTree.createRootNode();
 
 				objSpaceModel.loadSpace(function(data) {
-					appprofile = data.USER;					
+					appprofile = data.USER;
 					self.refresh(null, function(data) {
 						objLayout.setStatusBar();
 					}, null);
 
 				});
-				
+
 				objConnection.ping();
 			};
 
