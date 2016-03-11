@@ -3,7 +3,7 @@ $.extend(
         vsViewLayout: function(o) {
             if (o == null) o = {};
             if (o.maincontainer == undefined)
-                o.maincontainer = null;
+                o.maincontainer = $('DIV#file-container.vsgrid');
             if (o.titlebar == undefined)
                 o.titlebar = $('DIV#navbar');
             if (o.toolsbar == undefined)
@@ -43,6 +43,14 @@ $.extend(
                             eval('objController.' + func + '();');
                         }
                     });
+                });
+
+                $(btnListView).bind('click', function(e) {
+                    objController.switchToListView();
+                });
+
+                $(btnGridView).bind('click', function(e) {
+                    objController.switchToGridView();
                 });
 
                 documentEventsBinding();
@@ -149,7 +157,129 @@ $.extend(
 
                     objController.refresh($(node).attr('data-parent'));
                 });
-            }
+            };
+
+            /******************
+             * CHANGE VIEW MODE - START *
+             ******************/
+            var sortList = function(sortby, direction) {
+                var liArray = $('ul.vsgrid').find('li.vscell');
+                var container = $('ul.vsgrid');
+
+                liArray.sort(function(a, b) {
+                    var an = $(a).attr('data-' + sortby);
+                    var bn = $(b).attr('data-' + sortby);
+
+                    if (sortby == 'name') {
+                        an = objUltis.removeVietnameseSign(an);
+                        bn = objUltis.removeVietnameseSign(bn);
+                    } else if (sortby == 'size') {
+                        an = parseInt(an);
+                        bn = parseInt(bn);
+                    }
+
+                    if (direction == 'asc' && an > bn) return 1;
+                    if (direction == 'asc' && an < bn) return -1;
+                    if (direction == 'desc' && an > bn) return -1;
+                    if (direction == 'desc' && an < bn) return 1;
+                });
+
+                $(liArray).detach().appendTo(container);
+            };
+
+            this.showListViewHeader = function() {
+                var icon = $('<div></div>', {
+                    'class': icon
+                });
+                var hFilename = $('<div></div>', {
+                    class: 'grid-col-header-filename',
+                    'data-fieldname': 'name',
+                    text: 'Thư mục/File'
+                });
+                var hSize = $('<div></div>', {
+                    class: 'grid-col-header-size',
+                    'data-fieldname': 'size',
+                    text: 'Dung lượng'
+                });
+                var hMineType = $('<div></div>', {
+                    class: 'grid-col-header-minetype',
+                    'data-fieldname': 'type',
+                    text: 'Loại'
+                });
+                var hDate = $('<div></div>', {
+                    class: 'grid-col-header-date',
+                    'data-fieldname': 'date',
+                    text: 'Thời gian cập nhật'
+                });
+                var hidden = (viewMode == 'grid' ? 'none' : 'inline');
+                var li = $('<li></li>', {
+                    'class': 'grid-col-header'
+                }).append(icon, hFilename, hSize, hMineType, hDate);
+                $(li).css({
+                    'display': hidden
+                });
+                return li;
+            };
+
+            this.changeViewMode = function(mode) {
+                viewMode = mode;
+                var hidden = (viewMode == 'grid' ? 'hidden' : 'visible');
+                if (mode == 'list') {
+                    $(o.maincontainer).addClass('list-view');
+                } else {
+                    $(o.maincontainer).removeClass('list-view');
+                }
+
+                $(o.maincontainer).find('.grid-col-header').css({
+                    'display': (viewMode == 'grid' ? 'none' : 'inline')
+                });
+                $(o.maincontainer).find('.size-column').css({
+                    'visibility': hidden
+                });
+                $(o.maincontainer).find('.minetype-column').css({
+                    'visibility': hidden
+                });
+                $(o.maincontainer).find('.date-column').css({
+                    'visibility': hidden
+                });
+            };
+
+            this.binColHeaderEvent = function() {
+                var colArray = $(o.maincontainer).find("[class^='grid-col-header-']");
+                for (var i = 0; i < $(colArray).length; i++) {
+                    var col = colArray[i];
+                    $(col).bind('click', function(e) {
+                        colHeaderClick(this, e)
+                    });
+                }
+            };
+
+            var colHeaderClick = function(node, event) {
+                var colArray = $(o.maincontainer).find("[class^='grid-col-header-']");
+                for (var i = 0; i < $(colArray).length; i++) {
+                    var col = colArray[i];
+                    if (col !== node) $(col).removeClass('sort-as').removeClass('sort-ds');
+                }
+
+                var sortby = $(node).attr('data-fieldname');
+                var direction = null;
+
+                if ($(node).hasClass('sort-as')) {
+                    $(node).removeClass('sort-as');
+                    $(node).addClass('sort-ds');
+                    direction = 'desc';
+                } else {
+                    $(node).addClass('sort-as');
+                    direction = 'asc';
+                }
+
+                sortList(sortby, direction);
+
+            };
+
+            /******************
+             * CHANGE VIEW MODE - END *
+             ******************/
 
             var validateCreateFolder = function(foldername, customErr) {
                 if (customErr == undefined) customErr = null;

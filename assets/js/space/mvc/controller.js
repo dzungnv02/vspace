@@ -148,6 +148,14 @@ $.extend(
 			};
 
 			this.addonInsert = function() {};
+
+	 		this.switchToListView = function() {
+                objLayout.changeViewMode('list');
+            };
+
+            this.switchToGridView = function() {
+                objLayout.changeViewMode('grid');
+            };
 			/**************************
 			 * EVENT HANDLING - END *
 			 *************************/

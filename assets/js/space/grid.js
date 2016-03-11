@@ -119,6 +119,39 @@ if(jQuery) (function($){
 
 			}
 
+
+			/******************
+			 * SORT LIST - START *
+			 ******************/
+			var sortList = function (sortby, direction) {
+				var liArray = $('ul.vsgrid').find('li.vscell');
+				var container = $('ul.vsgrid');
+
+				liArray.sort(function(a,b){
+					var an = $(a).attr('data-' + sortby);
+					var bn = $(b).attr('data-' + sortby);
+
+					if (sortby == 'name') {
+						an = o.manager.removeVietnameseSign(an);
+						bn = o.manager.removeVietnameseSign(bn);
+					}else if (sortby == 'size') {
+						an = parseInt(an);
+						bn = parseInt(bn);
+					}
+
+					if (direction == 'asc' && an > bn) return 1;
+					if (direction == 'asc' && an < bn) return -1;
+					if (direction == 'desc' && an > bn) return -1;
+					if (direction == 'desc' && an < bn) return 1;
+				});
+
+				$(liArray).detach().appendTo(container);
+			}
+
+			/******************
+			 * SORT LIST - END *
+			 ******************/			
+
 			var bindNodeEvents = function (node) {
 				var type = $(node).find('> DIV[class^="file-name"] > INPUT[type="hidden"][class^="type"]').val();
 				$(node)
@@ -259,37 +292,6 @@ if(jQuery) (function($){
 				$("<img />").attr("src", src);
 			}
 
-			/******************
-			 * SORT LIST - START *
-			 ******************/
-			var sortList = function (sortby, direction) {
-				var liArray = $('ul.vsgrid').find('li.vscell');
-				var container = $('ul.vsgrid');
-
-				liArray.sort(function(a,b){
-					var an = $(a).attr('data-' + sortby);
-					var bn = $(b).attr('data-' + sortby);
-
-					if (sortby == 'name') {
-						an = o.manager.removeVietnameseSign(an);
-						bn = o.manager.removeVietnameseSign(bn);
-					}else if (sortby == 'size') {
-						an = parseInt(an);
-						bn = parseInt(bn);
-					}
-
-					if (direction == 'asc' && an > bn) return 1;
-					if (direction == 'asc' && an < bn) return -1;
-					if (direction == 'desc' && an > bn) return -1;
-					if (direction == 'desc' && an < bn) return 1;
-				});
-
-				$(liArray).detach().appendTo(container);
-			}
-
-			/******************
-			 * SORT LIST - END *
-			 ******************/
 
 			/******************
 			 * RENAME - START *

@@ -33,13 +33,12 @@ $.extend(
 					preloadedObj = $('<img />', {
 						src: Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + item.id
 					});
-				}
-				else if ($.inArray(opts.minetype, htmlvideos) > -1) {
+				} else if ($.inArray(opts.minetype, htmlvideos) > -1) {
 					preloadedObj = $('<video></video>', {
 						src: Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + item.id
 					});
 
-					preloadedObj[0].addEventListener('loadedmetadata', function (e){
+					preloadedObj[0].addEventListener('loadedmetadata', function(e) {
 						$(this).attr('width', this.videoWidth);
 						$(this).attr('height', this.videoHeight);
 					});
@@ -54,11 +53,16 @@ $.extend(
 					href: '#',
 					rel: item.name,
 					text: item.name,
-					'data-id':item.id
+					'data-id': item.id
 				});
 				var divLink = $('<div></div>', {
 					'class': 'file-name'
 				}).append(a);
+
+				var divSize = $('<div></div>',{class:'size-column',style:'visibility:' + (viewMode == 'list' ? 'visible':'hidden'), text: objUltis.formatFileSize(item.size)});
+				var divMineType = $('<div></div>',{class:'minetype-column',style:'visibility:' + (viewMode == 'list' ? 'visible':'hidden'), text: (opts.minetype == 'directory' ? 'Thư mục':opts.minetype)});
+				var divDate = $('<div></div>',{class:'date-column',style:'visibility:' + (viewMode == 'list' ? 'visible':'hidden'), text:item.date});
+
 				var li = $('<li></li>', {
 					'class': 'vscell',
 					id: opts.minetype + '-' + item.id,
@@ -69,7 +73,7 @@ $.extend(
 					'data-date': item.date,
 					'data-parent': item.parentID,
 					'data-child': opts.minetype == 'directory' ? item.subdirs : '0'
-				}).append(div, divLink);
+				}).append(div, divLink, divSize, divMineType, divDate);
 				bindNodeEvents(li, preloadedObj);
 				return li;
 			};
@@ -168,9 +172,13 @@ $.extend(
 
 			this.renderGrid = function(items, isAppend) {
 				var ul = $('UL.vsgrid');
+
 				if (isAppend == undefined) isAppend = false;
 
 				if (!isAppend) $(ul).empty();
+
+				$(ul).append(objLayout.showListViewHeader());
+				objLayout.binColHeaderEvent();
 
 				if (items.folder.length > 0) {
 					for (var i = 0; i < items.folder.length; i++) {
@@ -191,7 +199,7 @@ $.extend(
 				}
 			};
 
-			this.clearContent = function () {
+			this.clearContent = function() {
 				$(o.gridContainer).find('UL.vsgrid LI').remove();
 			};
 

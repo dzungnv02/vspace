@@ -13,6 +13,7 @@ var aryImg = ['jpg', 'jpeg', 'gif', 'png', 'bmp'];
 var aryVideo = ['mp4', 'flv', 'webm'];
 var flashvideos = ['flv'];
 
+var viewMode = 'grid';
 var totalSizeUsed = 0;
 var spaceQuota = 0;
 var expireDate = '';
