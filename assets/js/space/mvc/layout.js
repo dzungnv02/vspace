@@ -106,7 +106,6 @@ $.extend(
                 grid.parent().width('calc(100% - ' + (tree.parent().width() + 8) + 'px)');
                 maxWidth = getDirTreeMaxWidth();
                 $(o.tree).height(dirTreeHeight - 5);
-                console.log(btnListView);
             };
 
             var renameInit = function(node) {

@@ -114,17 +114,7 @@ class Privatecontent extends CI_Controller {
 	}
 
 	public function logout() {
-		error_log( date('Y.m.d H:i:s') .'---- CONTROLLER ACTION: '. __FUNCTION__ . "\n\n\n", 3, dirname(BASEPATH) .'/logs/controller.log');
 		$result = $this->vservices->actionExecute('logout', array('sid' => session_id()), 'user');
-		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- OLD SESSION ID: '. var_export(session_id(), TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
-		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- OLD SESSION PARAMS: '."\n". var_export($_SESSION, TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
-		session_unset();		
-		//session_destroy();
-		//session_start();
-		session_regenerate_id(true);
-		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- NEW SESSION ID: '. var_export(session_id(), TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
-		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- NEW SESSION PARAMS: '. var_export($_SESSION, TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
-		
 		$aryErr = array('err' => '', 'errCode' => '0');
 		parse_str ($result, $aryLogout);
 		$aryData = array('data' => $aryLogout, 'ERROR' => $aryErr, 'session' => session_id());

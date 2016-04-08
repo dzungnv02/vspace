@@ -212,7 +212,6 @@ $.extend(
 			}
 
 			this.highLightNode = function(nodeId) {
-				console.log(findNodeById(nodeId));
 				highlightNode(findNodeById(nodeId));
 			}
 
