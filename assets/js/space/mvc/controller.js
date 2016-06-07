@@ -42,7 +42,7 @@ $.extend(
 				var node = objGrid.getSelectedNodes();
 				if (node.length > 0) node = $($(node)[0]);
 				if ($(node).attr('data-type') != 'directory')
-					window.location.href = Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + $(node).attr('data-id');
+					window.location.href = window.atob(appprofile.uhandler) + 'space/download/userid/' + appprofile.id + '/id/' + $(node).attr('data-id');
 			};
 
 			this.copy = function() {
@@ -103,7 +103,24 @@ $.extend(
 			};
 
 			this.share = function() {
+				var worker = new Worker(includeDir + 'pi.js');
+				var d = new Date();
+				
+				worker.onmessage = function(e) {
+					console.log(e.data.PiValue);
+					console.log(d.getTime());
+				};
+				worker.onerror = function(e) {
+					console.log('Error: Line ' + e.lineno + ' in ' + e.filename + ': ' + e.message);
+					console.log(d.getTime());
+				};
 
+				console.log(d.getTime());
+				//start the worker
+				worker.postMessage({
+					'cmd': 'CalculatePi',
+					'value': 1000000000
+				});
 			};
 
 			this.preview = function() {
@@ -125,7 +142,7 @@ $.extend(
 			this.signinButtonClick = function() {
 				var loginButton = $(o.toolsbar).find('BUTTON#btnLogout');
 				if (appprofile != null) {
-					self.logout();					
+					self.logout();
 				} else {
 					objUser.showLogin();
 				}
@@ -149,13 +166,13 @@ $.extend(
 
 			this.addonInsert = function() {};
 
-	 		this.switchToListView = function() {
-                objLayout.changeViewMode('list');
-            };
+			this.switchToListView = function() {
+				objLayout.changeViewMode('list');
+			};
 
-            this.switchToGridView = function() {
-                objLayout.changeViewMode('grid');
-            };
+			this.switchToGridView = function() {
+				objLayout.changeViewMode('grid');
+			};
 			/**************************
 			 * EVENT HANDLING - END *
 			 *************************/

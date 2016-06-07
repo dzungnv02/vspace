@@ -5,7 +5,119 @@
 		[
 			[
 				"obj",
-				"objUltis	(controller.js)"
+				"objWidth"
+			],
+			[
+				"modal",
+				"modal('show	(vlightbox_1.js)"
+			],
+			[
+				"dlg",
+				"dlgWidth"
+			],
+			[
+				"dlgH",
+				"dlgHeight"
+			],
+			[
+				"reset",
+				"resetViewer"
+			],
+			[
+				"video",
+				"video"
+			],
+			[
+				"su",
+				"supportedType"
+			],
+			[
+				"sup",
+				"supportedPlayer"
+			],
+			[
+				"init",
+				"initVideoPlayer"
+			],
+			[
+				"contai",
+				"container"
+			],
+			[
+				"unde",
+				"undefined	(grid.js)"
+			],
+			[
+				"vide",
+				"videojsObj"
+			],
+			[
+				"pre",
+				"preload"
+			],
+			[
+				"sel",
+				"self"
+			],
+			[
+				"cut",
+				"currentPlayer"
+			],
+			[
+				"hi",
+				"hidden	(grid.js)"
+			],
+			[
+				"mim",
+				"mimeType"
+			],
+			[
+				"ca",
+				"calculate"
+			],
+			[
+				"l",
+				"log	(grid.js)"
+			],
+			[
+				"dis",
+				"display	(vlightbox_.js)"
+			],
+			[
+				"retur",
+				"returnPlayer"
+			],
+			[
+				"supp",
+				"supportedType"
+			],
+			[
+				"text",
+				"textViewer"
+			],
+			[
+				"de",
+				"default"
+			],
+			[
+				"file",
+				"filename"
+			],
+			[
+				"vi",
+				"videoPlayer"
+			],
+			[
+				"ima",
+				"imageViewer"
+			],
+			[
+				"vid",
+				"videojs"
+			],
+			[
+				"w",
+				"width	.width()"
 			],
 			[
 				"app",
@@ -42,10 +154,6 @@
 			[
 				"var_",
 				"var_dump"
-			],
-			[
-				"unde",
-				"undefined"
 			],
 			[
 				"ex",
@@ -156,10 +264,6 @@
 				"inline-block"
 			],
 			[
-				"pre",
-				"preventDefault()	Event"
-			],
-			[
 				"key",
 				"keypress	Event"
 			],
@@ -236,58 +340,26 @@
 	"buffers":
 	[
 		{
-			"file": "assets/js/space/mvc/controller.js",
-			"settings":
-			{
-				"buffer_size": 6427,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "assets/js/space/mvc/layout.js",
-			"settings":
-			{
-				"buffer_size": 18733,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "assets/js/space/mvc/ultis.js",
-			"settings":
-			{
-				"buffer_size": 2834,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "assets/js/space/mvc/grid.js",
 			"settings":
 			{
-				"buffer_size": 7127,
+				"buffer_size": 6466,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "assets/js/space/mvc/space.js",
+			"file": "assets/js/space/mvc/vlightbox.js",
 			"settings":
 			{
-				"buffer_size": 2087,
+				"buffer_size": 5342,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "assets/js/space/grid.js",
+			"file": "assets/js/space/mvc/vlightbox_1.js",
 			"settings":
 			{
-				"buffer_size": 14354,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "assets/js/space/manager.js",
-			"settings":
-			{
-				"buffer_size": 99345,
+				"buffer_size": 6561,
 				"line_ending": "Windows"
 			}
 		}
@@ -342,35 +414,82 @@
 	"expanded_folders":
 	[
 		"/C/projects/vspace",
+		"/C/projects/vspace/application",
+		"/C/projects/vspace/application/helpers",
 		"/C/projects/vspace/assets",
 		"/C/projects/vspace/assets/js",
 		"/C/projects/vspace/assets/js/space",
-		"/C/projects/vspace/assets/js/space/mvc"
+		"/C/projects/vspace/assets/js/space/mvc",
+		"/C/projects/vspace/assets/js/space/mvc/video.js"
 	],
 	"file_history":
 	[
+		"/C/projects/hosting/VPS1/common.css",
+		"/C/projects/vspace/application/controllers/Preview.php",
+		"/C/projects/vspace/application/helpers/flv.php",
+		"/C/projects/vspace/assets/js/space/mvc/vlightbox_1.js",
+		"/C/projects/vspace/application/controllers/Privatecontent.php",
+		"/C/projects/pacman-master/pacman.js",
+		"/C/projects/vspace/index.php",
+		"/C/projects/vspace/.htaccess",
+		"/C/projects/hosting/53/20160523/Privatecontent.php",
+		"/C/projects/hosting/53/20160523/Vservices.php",
+		"/C/projects/hosting/53/20160523/api.log",
+		"/C/projects/hosting/53/20160523/index.php",
+		"/C/projects/hosting/53/20160523/.htaccess",
+		"/C/projects/hosting/53/20160523/model.js",
+		"/C/projects/hosting/53/20160523/connection.js",
+		"/C/projects/vspace/assets/js/space/mvc/grid.js",
+		"/C/projects/vspace/assets/js/space/mvc/vlightbox.js",
+		"/C/projects/vspace/assets/js/space/mvc/connection.js",
+		"/C/projects/vspace/assets/js/space/mvc/space.js",
+		"/C/projects/vspace/assets/js/space/mvc/layout.js",
+		"/C/projects/vspace/assets/js/space/mvc/vlightbox_.js",
+		"/C/projects/vspace/assets/js/space/mvc/controller.js",
+		"/C/projects/vspace/assets/js/space/mvc/pi.js",
+		"/C/projects/vspace/application/controllers/Welcome.php",
+		"/C/projects/vspace/assets/js/space/mvc/dummyvideo.js",
+		"/C/projects/vspace/application/config/config.php",
+		"/C/projects/enciweb/assets/swf/monoslideshow.xml",
+		"/C/projects/vspace/application/libraries/Vservices.php",
+		"/C/projects/hosting/VPS2/httpd.conf",
+		"/C/projects/hosting/VPS2/httpd-directories.conf",
+		"/C/projects/hosting/VPS2/httpd-mpm.conf",
+		"/C/projects/hosting/VPS2/httpd-cache.conf",
+		"/C/projects/hosting/VPS2/httpd-hostname.conf",
+		"/C/projects/hosting/VPS2/httpd-modsecurity.conf",
+		"/C/projects/hosting/VPS2/httpd-expires.conf",
+		"/C/Users/dzungnv02/AppData/Local/Temp/scp05699/etc/httpd/conf/extra/directadmin-vhosts.conf",
+		"/C/projects/hosting/VPS2/httpd-phpaddmodules.conf",
+		"/C/projects/hosting/VPS2/httpd-includes.conf",
+		"/C/projects/hosting/VPS2/da/httpd.conf",
+		"/C/projects/vspace/assets/js/space/mvc/model.js",
+		"/C/projects/vspace/application/views/19/footer.php",
+		"/C/projects/hosting/VPS2/directadmin-vhosts.conf",
+		"/C/projects/hosting/VPS2/httpd-nginx.conf",
+		"/C/projects/hosting/VPS2/httpd-phpmodules.conf",
+		"/C/projects/hosting/VPS2/php.ini",
+		"/C/projects/hosting/VPS1/monoslideshow.xml",
+		"/C/projects/hosting/53/httpd.conf",
+		"/C/projects/vspace/assets/js/space/mvc/mimetype.js",
+		"/C/projects/vspace/application/views/layout/footer.php",
+		"/C/projects/vspace/application/controllers/Mysocket.php",
+		"/C/projects/vspace/assets/js/space/mvc/tree.js",
 		"/C/projects/vspace/assets/js/space/manager.js",
+		"/C/projects/vspace/assets/js/space/mvc/upload.js",
+		"/C/projects/vspace/assets/js/space/mvc/ultis.js",
+		"/C/projects/vspace/assets/js/space/grid.js",
 		"/C/projects/vspace/test.html",
 		"/C/projects/vspace/map.php",
 		"/C/projects/vspace/vspace.sublime-project",
 		"/C/projects/vspace/userinfo.log",
 		"/C/projects/vspace/session_.log",
 		"/C/projects/vspace/session.log",
-		"/C/projects/vspace/assets/js/space/mvc/layout.js",
-		"/C/projects/vspace/assets/js/space/mvc/model.js",
-		"/C/projects/vspace/assets/js/space/mvc/controller.js",
-		"/C/projects/vspace/assets/js/space/mvc/space.js",
-		"/C/projects/vspace/application/views/19/footer.php",
 		"/C/projects/vspace/assets/js/space/mvc/user.js",
 		"/C/projects/vspace/application/views/main_19.php",
 		"/C/projects/vspace/map",
-		"/C/projects/vspace/application/controllers/Privatecontent.php",
-		"/C/projects/vspace/assets/js/space/mvc/grid.js",
-		"/C/projects/vspace/assets/js/space/mvc/connection.js",
 		"/C/projects/vspace/logs/controller.log",
 		"/C/projects/vspace/logs/loginout.log",
-		"/C/projects/vspace/application/libraries/Vservices.php",
-		"/C/projects/vspace/index.php",
 		"/C/projects/vspace/application/libraries/Curl.php",
 		"/C/projects/vspace/logs/api.log",
 		"/C/projects/vspace/assets/js/space/mvc/manager.js",
@@ -381,15 +500,10 @@
 		"/C/projects/vspace/logs/api_20160223145736.log",
 		"/C/projects/vspace/logs/api_20160223153840.log",
 		"/C/projects/vspace/logs/api_20160223153440.log",
-		"/C/projects/vspace/assets/js/space/mvc/upload.js",
-		"/C/projects/vspace/assets/js/space/mvc/ultis.js",
 		"/C/projects/vspace/api.log",
 		"/C/Windows/System32/drivers/etc/hosts",
 		"/C/projects/vspace/assets/js/space/mvc/embedded/flashobject.js",
-		"/C/projects/vspace/assets/js/space/mvc/vlightbox.js",
-		"/C/projects/vspace/assets/js/space/grid.js",
 		"/C/Users/dzungnv02/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/C/projects/vspace/application/controllers/Mysocket.php",
 		"/C/projects/hosting/53/hosts",
 		"/C/projects/vspace/nodejs.html",
 		"/Volumes/SSD/www/application/controllers/Privatecontent.php",
@@ -437,8 +551,7 @@
 		"/Volumes/SSD/www/application/views/19/loginform.php",
 		"/Volumes/SSD/www/.htaccess",
 		"/Users/dzungnv02/Desktop/database.php",
-		"/Volumes/Data/mysql-init.txt",
-		"/usr/local/mysql-5.7.10-osx10.9-x86_64/support-files/my-default.cnf"
+		"/Volumes/Data/mysql-init.txt"
 	],
 	"find":
 	{
@@ -458,6 +571,36 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"mediaType",
+			"defaultWidth",
+			"defaultHeight",
+			"defaultWidth",
+			"calculate",
+			"initImageViewer",
+			"renderContainer",
+			"console.log",
+			"container",
+			"currentPlayer",
+			"maxHeight",
+			"preloadedObj",
+			"objLightBox.calculate",
+			"/var/www/html",
+			"<Directory />",
+			"mod_security2",
+			"mod_proxy",
+			" ",
+			"LoadModule",
+			"mod_",
+			"Timeout",
+			"container",
+			"itlc",
+			"Base64",
+			"preloadedObj",
+			"console",
+			"preview",
+			"vLightbox",
+			"[contact",
+			"contact-form",
 			"showListViewHeader",
 			"changeViewMode",
 			"maincontainer",
@@ -556,9 +699,13 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
+			"objWidth",
+			"objHeight",
+			"objWidth",
+			"\\n",
 			"H",
 			"G",
 			"F",
@@ -578,24 +725,24 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "assets/js/space/mvc/controller.js",
+					"file": "assets/js/space/mvc/grid.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6427,
+						"buffer_size": 6466,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4103,
-								4117
+								3525,
+								3525
 							]
 						],
 						"settings":
@@ -604,37 +751,36 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1470.0,
+						"translation.y": 1125.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "assets/js/space/mvc/layout.js",
+					"file": "assets/js/space/mvc/vlightbox.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18733,
+						"buffer_size": 5342,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6285,
-								6289
+								4026,
+								4026
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1740.0,
+						"translation.y": 1785.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -642,19 +788,19 @@
 				},
 				{
 					"buffer": 2,
-					"file": "assets/js/space/mvc/ultis.js",
+					"file": "assets/js/space/mvc/vlightbox_1.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2834,
+						"buffer_size": 6561,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								333,
-								347
+								3746,
+								3746
 							]
 						],
 						"settings":
@@ -663,127 +809,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "assets/js/space/mvc/grid.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7127,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2739,
-								2739
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 377.0,
+						"translation.y": 1438.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "assets/js/space/mvc/space.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2087,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								796,
-								796
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "assets/js/space/grid.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 14354,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9162,
-								9180
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3070.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "assets/js/space/manager.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 99345,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								42197,
-								41933
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 10462.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
 					"type": "text"
 				}
 			]

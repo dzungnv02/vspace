@@ -25,7 +25,7 @@ $.extend(
 								console.debug(error);
 							},
 							success: function(result, status, xhr) {
-								console.debug(status);
+								//console.debug(status);
 							},
 							timeout: ajaxTimeout
 						};
@@ -47,7 +47,7 @@ $.extend(
 				var crossDomain = (opts.crossDomain == undefined) ? false : opts.crossDomain;
 				var cache = (opts.cache == undefined) ? false : opts.cache;				
 
-				var options = {					
+				var options = {
 					async: true,
 					cache: false,
 					crossDomain: crossDomain,
@@ -102,9 +102,13 @@ $.extend(
 				if (p.callbackFail == undefined) p.callbackFail = null;
 				if (p.xhr == undefined) p.xhr = null;
 				if (p.timeout == undefined) p.timeout = ajaxTimeout;
+				if (p.absPath == undefined) p.absPath = false;
 
-				var iserver = p.server != undefined ? p.server : server;
-				p.script = p.script != null ? iserver + p.script : '';
+				if (p.absPath == false) {
+					var iserver = p.server != undefined ? p.server : server;
+					p.script = p.script != null ? iserver + p.script : '';
+				}
+
 				self.connectionSetup(p);
 
 				var result = null;

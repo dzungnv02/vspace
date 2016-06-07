@@ -2,204 +2,194 @@ $.extend(
 	$.fn, {
 		vLightbox: function(o) {
 			if (o == null) o = {};
-			if (o.source == undefined) o.source = {
-				title: '',
-				type: 'image',
-				src: '',
-				dimensions: {
-					x: '320',
-					y: '240'
-				},
-				minetype: ''
-			};
-
 
 			var self = this;
 			var container = null;
-			var maxWidth = 0;
-			var maxHeight = 0;
+			var maxWidth = 300;
+			var maxHeight = 300;
+			var imageViewer = null;
+			var videoPlayer = null;
+			var audioPlayer = null;
+			var textViewer = null;
+			var currentPlayer = null;
+			var mediaType = 'image';
+			var videojsObj = null;
+
+			var objWidth = '320';
+			var objHeight = '240';
+
+			var defaultDlgWidth = '320';
+			var defaultDHeight = '240';
+
+			var dlgWidth = defaultDlgWidth;
+			var dlgHeight = defaultDHeight;
+
+			var supportedType = ['image', 'video', 'audio', 'text'];
+			var supportedPlayer = [];
 
 			var init = function() {
-				renderContainer();
-				self.calculate();
+				initModal();
+				videojs.options.flash.swf = server + includeDir + 'video.js/video-js.swf';
 			};
 
-			var unsupported = function() {
-				var player = $('<span></span>', {
-					id: 'emptyPl',
-					text: 'Chưa hỗ trợ xem kiểu file này!'
+			var initVideoPlayer = function() {
+				videoPlayer = $('<video></video>', {
+					'id': 'vLightBoxVideo',
+					'controls': true,
+					'width': '100%',
+					'height': '100%',
+					'class': 'video-js vjs-default-skin'
+				})
+			}
+
+			var initAudioPlayer = function() {
+				audioPlayer = $('<audio></audio>', {
+					'id': 'vLightBoxAudio',
+					'controls': 'controls',
+					'class': 'video-js vjs-default-skin'
 				});
-				player.css('display', 'inline-block');
-				player.css('width', '100%');
-				player.css('height', '100%');
-				player.css('text-align', 'center');
-				return player;
 			};
 
-			var picturePreview = function() {
-				var player = $('<img/>', {
-					id: 'vLightBoxImage',
-					src: o.source.src,
-					style: 'max-width:100%;max-height:100%;'
+			var initTextViewer = function() {
+				textViewer = $('<iframe />', {
+					'id': 'vLightBoxText'
 				});
-
-				player.bind('loadedmetadata',function (e){
-					console.log(this);
-				});
-
-				return player;
 			};
 
-			var htmlVideosPreview = function() {
-				var player = $('<video controls autoplay></video>', {
-					id: 'vLightBoxVideo',
-					style: 'max-width:100%;max-height:100%;padding:0px;'
-				}).append($('<source />', {
-					src: o.source.src,
-					type: 'video/' + o.source.minetype
-				}));
-
-				$(player).hide();
-
-				player[0].addEventListener('loadedmetadata', function(e) {
-					o.source.dimensions.x = player[0].videoWidth;
-					o.source.dimensions.y = player[0].videoHeight;
-					$(player).width('100%');
-					$(player).height('100%');
-					$(player).show();
-				});
-
-				return player;
-			};
-
-			var flashVideosPlayer = function () {
-				var generateFlash = function (url, id, width, height, version, bg, flashvars, params, att) {
-
-				};
-			};
-
-			var htmlAudioPreview = function() {
-				var player = $('<audio></audio>', {
-					id: 'vLightBoxAudio',
-					'controls': 'controls'
-				}).append($('<source />', {
-					src: o.source.src,
-					type: 'audio/' + o.source.minetype
-				}));
-
-				return player;
-			};
-
-			var renderContainer = function() {
+			var initModal = function() {
 				container = $('<div></div>', {
 					id: 'vLightBoxDlg',
 					class: 'modal fade',
 					tabindex: '-1',
 					role: 'dialog'
 				});
+
 				var modalDlg = $('<div></div>', {
 					class: 'modal-dialog',
 					style: 'padding:0px;background: rgba(0, 0, 0, 0)'
 				});
+
 				var dlgContent = $('<div></div>', {
 					class: 'modal-content',
 					style: 'background: rgba(0, 0, 0, 0.4)'
 				});
-				var dlgHeader = $('<div></div>', {
+
+				/*var dlgHeader = $('<div></div>', {
 						class: 'modal-header',
 						style: 'padding:5px;background: rgba(0, 0, 0, 0.4);margin:0px;'
 					})
 					.append($('<span></span>', {
 						id: 'previewTitle',
 						class: 'modal-title',
-						style: 'font-size:10px;min-height:10px;color:#aaa'
-					}));
+						style: 'font-size:10px;min-height:10px;color:#aaa;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;'
+					}));*/
 
 				var dlgBody = $('<div></div>', {
 					class: 'modal-body',
 					style: 'padding:0px;border:none;margin:0px;background: rgba(0, 0, 0, 0.4)'
 				});
+
 				var dlgFooter = $('<div></div>', {
 					class: 'modal-footer'
 				});
-				container.append(modalDlg.append(dlgContent.append(dlgHeader, dlgBody)));
-			}
+				container.append(modalDlg.append(dlgContent.append( /*dlgHeader, */ dlgBody)));
+				$('BODY').append(container);
+			};
 
-			var generatePlayer = function() {
-				var player = null;
-				if (o.source.src == '') return null;
+			var getDimension = function() {
+				var mimeType = MimeType.lookup(o.file);
+				var aryMimeType = mimeType.split('/');
+				mediaType = aryMimeType[0];
 
-				switch (o.source.type) {
-					case 'image':
-						player = picturePreview();
-						break;
-					case 'video':
-						if ($.inArray(o.source.minetype, htmlvideos) > -1) {
-							player = htmlVideosPreview();
-						} else {
-							player = unsupported();
-						}
+				if (mediaType == 'image') {
+					objWidth = o.preload.naturalWidth;
+					objHeight = o.preload.naturalHeight;
+				} else if (mediaType == 'video') {
 
-						break;
-					case 'audio':
-						player = htmlAudioPreview();
-						break;
-					default:
-						// statements_def
-						player = unsupported();
-						break;
+				} else {
+
 				}
+				self.calculate();
+			};
 
-				return player;
+			var resizeDlg = function() {
+				container.find('DIV.modal-dialog').css('max-width', '100%');
+				container.find('DIV.modal-dialog').css('max-height', '100%');
+				container.find('DIV.modal-dialog').css('width', dlgWidth + 'px');
+				container.find('DIV.modal-dialog').css('height', dlgHeight + 'px');
+				container.find('DIV.modal-body').css('height', (dlgHeight - Math.abs(container.find('DIV.modal-header').height())) + 'px');
+				container.find('DIV.modal-body').css('text-align', 'center');
 			};
 
 			this.setup = function(opts) {
 				o = opts;
 			};
 
-			this.show = function(opts) {
-				if (opts != undefined) o = opts;
-				var player = generatePlayer();
+			this.show = function() {
+				$(container).on('show.bs.modal', function() {
+					self.render(function() {
+						resizeDlg();
+					});
+				})
+					.on('shown.bs.modal', function() {
 
-				container.find('DIV.modal-header span').html('File: <strong>' + o.source.title + '</strong> - Kích thước: ' + o.source.dimensions.x + 'px × ' + o.source.dimensions.y + 'px');
+					})
+					.on('hidden.bs.modal', function() {
+						dlgWidth = defaultDlgWidth;
+						dlgHeight = defaultDHeight;
+					});
 
-				var width = o.source.dimensions.x > maxWidth ? maxWidth : o.source.dimensions.x;
-				var ratio = (o.source.dimensions.x / o.source.dimensions.y);
+				$(container).modal('show');
+			};
 
-				var height = parseInt(o.source.dimensions.y) <= maxHeight ? parseInt(o.source.dimensions.y) : Math.ceil((width * o.source.dimensions.y) / o.source.dimensions.x);
-				height += parseInt(Math.abs(container.find('DIV.modal-header').height()));
+			this.render = function(callback) {
+				container.find('DIV.modal-body').empty();
+				if (mediaType == 'image') {
+					container.find('DIV.modal-body').append(o.preload);
+					$(o.preload).ready(function(e) {
+						getDimension();
+						if (objWidth < dlgWidth) {
+							$(o.preload).attr('width', objWidth + 'px');
+							$(o.preload).attr('height', objHeight + 'px');
+						} else {
+							$(o.preload).attr('width', '100%');
+							$(o.preload).attr('height', '100%');
+						}
+						//container.find('DIV.modal-header span').html('File: <strong>' + o.file + '</strong>');
+					});
 
-				if (height > maxHeight) {
-					height = maxHeight;
-					width = Math.ceil((height - Math.abs(container.find('DIV.modal-header').height())) * ratio);
+				} else if (mediaType == 'video') {
+
+				} else {
+
 				}
 
-				container.find('DIV.modal-dialog').css('max-width', '100%');
-				container.find('DIV.modal-dialog').css('max-height', '100%');
-				container.find('DIV.modal-dialog').css('width', width + 'px');
-				container.find('DIV.modal-dialog').css('height', height + 'px');
-				container.find('DIV.modal-body').css('height', (height - Math.abs(container.find('DIV.modal-header').height())) + 'px');
+				if (callback !== undefined) {
+					callback();
+				}
 
-				$(container).on('shown.bs.modal', function(e) {
-					container.find('DIV.modal-body').empty();
-					container.find('DIV.modal-body').append(player);
-
-					if (o.source.type == 'video') {
-						if (player[0].tagName == 'VIDEO') {
-							player[0].play();
-						}
-					}
-				}).on('hide.bs.modal', function(e) {
-					if (player[0].tagName == 'VIDEO') {
-						player[0].pause();
-					}
-					container.find('DIV.modal-body').empty();
-				}).modal('show');
 			};
 
 			this.calculate = function() {
+
 				maxWidth = Math.ceil($(document).width() / 100 * 85);
 				maxHeight = Math.ceil($(document).height() / 100 * 85);
+				var ratio = (objWidth / objHeight);
+
+				if (objWidth > dlgWidth || objHeight > dlgHeight) {
+					dlgWidth = objWidth > maxWidth ? maxWidth : objWidth;
+					dlgHeight = parseInt(objHeight) <= maxHeight ? parseInt(objHeight) : Math.ceil((dlgWidth * objHeight) / objWidth);
+					//dlgHeight += parseInt(Math.abs(container.find('DIV.modal-header').height()));
+				} else {
+					dlgWidth = objWidth;
+					dlgHeight = objHeight;
+				}
+
+				if (dlgHeight > maxHeight) {
+					dlgHeight = maxHeight;
+					dlgWidth = Math.ceil(dlgHeight * ratio);
+					//dlgWidth = Math.ceil((dlgHeight - Math.abs(container.find('DIV.modal-header').height())) * ratio);
+				}
 			};
 
 			this.initialize = function() {

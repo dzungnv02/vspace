@@ -128,6 +128,21 @@ class Privatecontent extends CI_Controller {
 		$result['ERROR'] = $aryError;
 	}
 
+	public function preview () {
+		$fileId = $this->input->post('id', TRUE);
+		$aryParams = array('sid' => session_id(), 'userid' => $_SESSION['userinfo']['id'], 'id' => $fileId);
+		$result = $this->vservices->actionExecute('file', $aryParams, 'space');
+		$tmpFile = './tmp/' . uniqid() . '_tmp';
+		error_log($result, 3, $tmpFile);
+
+		echo mime_content_type($tmpFile);
+
+		//echo $result;
+		//error_log($result, 3, './logs/getfile.log');
+		//$aryError = array('err' => '', 'errCode' => 0);
+		//$result['ERROR'] = $aryError;
+	}
+
 	private function _checkLogin (&$result) {
 		$aryErr = array('err' => 'Bạn chưa đăng nhập. Dịch vụ này yêu cầu bạn phải đăng nhập mới truy cập được.', 'errCode' => 'Login');
 		if (!isset($_SESSION['userinfo'])) {
@@ -195,7 +210,7 @@ class Privatecontent extends CI_Controller {
 		if ($currUserInfo != '')  parse_str ($currUserInfo, $aryUserData);
 		if ((int)$aryUserData['id'] != 0) {
 			$aryUserData['session'] = $sid;
-			$aryUserData['uhandler'] = base64_encode($this->config->item('api_url'));
+			$aryUserData['uhandler'] = base64_encode($this->config->item('api_url'));			
 			$_SESSION['userinfo'] = $aryUserData;
 			$logged = TRUE;
 		}

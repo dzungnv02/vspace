@@ -28,6 +28,7 @@ $.extend(
 				var opts = {
 					script: '/privatecontent/onload',
 					postdata: {},
+					timeout:0,
 					callbackSuccess: function(result, status, xhr) {
 						callback(result);
 						objLayout.changeLoginButtonStatus();						
@@ -250,7 +251,7 @@ $.extend(
 						}
 						return xhrobj;
 					},
-					url: Base64.decode(appprofile.uhandler) + 'space/upload',
+					url: window.atob(appprofile.uhandler) + 'space/upload',
 					crossDomain: true,
 					type: "POST",
 					dataType: 'xml',
@@ -346,6 +347,10 @@ $.extend(
 					}
 				}
 			};
+
+			this.getPreviewFileHeader = function (fileId) {
+
+			}
 
 			this.initialize = function() {
 				init();

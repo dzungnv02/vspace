@@ -47,7 +47,7 @@ if (jQuery)
 
 		var initApp = function() {
 			var scriptFiles = [
-				'vlightbox.js', 'tree.js', 'grid.js', 'upload.js', 'encryption.js', 'ultis.js', 'connection.js', 'model.js', 'user.js', 'layout.js', 'controller.js'
+				'mimetype.js', 'vlightbox.js', 'tree.js', 'grid.js', 'upload.js', 'ultis.js', 'connection.js', 'model.js', 'user.js', 'layout.js', 'controller.js', 'video.js/video.min.js', 'dummyvideo.js'
 			];
 
 			includingScript(scriptFiles).done(function() {
@@ -62,6 +62,13 @@ if (jQuery)
 				if (objLayout == null) objLayout = $().vsViewLayout();
 				if (objController == null) objController = $().vsController();
 			});
+
+			loadCSS("space/video-js.css");
+		};
+
+		var loadCSS = function(href) {
+			var cssLink = $("<link rel='stylesheet' type='text/css' href='" + server + '/assets/css/' + href + "'>");
+			$("head").append(cssLink);
 		};
 
 		$(document).ready(function() {

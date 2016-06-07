@@ -31,22 +31,16 @@ $.extend(
 
 				if ($.inArray(opts.minetype, aryImg) > -1) {
 					preloadedObj = $('<img />', {
-						src: Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + item.id
-					});
-				} else if ($.inArray(opts.minetype, htmlvideos) > -1) {
-					preloadedObj = $('<video></video>', {
-						src: Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + item.id
-					});
-
-					preloadedObj[0].addEventListener('loadedmetadata', function(e) {
-						$(this).attr('width', this.videoWidth);
-						$(this).attr('height', this.videoHeight);
+						'id': 'preloadimage-' + item.id,
+						'src': window.atob(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + item.id,
+						'data-name': item.name
 					});
 				}
 
 				var div = $('<div></div>', {
 					'class': icon
 				});
+
 				if (img != null) $(div).append(img);
 				var a = $('<a></a>', {
 					id: item.id,
@@ -59,9 +53,21 @@ $.extend(
 					'class': 'file-name'
 				}).append(a);
 
-				var divSize = $('<div></div>',{class:'size-column',style:'visibility:' + (viewMode == 'list' ? 'visible':'hidden'), text: objUltis.formatFileSize(item.size)});
-				var divMineType = $('<div></div>',{class:'minetype-column',style:'visibility:' + (viewMode == 'list' ? 'visible':'hidden'), text: (opts.minetype == 'directory' ? 'Thư mục':opts.minetype)});
-				var divDate = $('<div></div>',{class:'date-column',style:'visibility:' + (viewMode == 'list' ? 'visible':'hidden'), text:item.date});
+				var divSize = $('<div></div>', {
+					class: 'size-column',
+					style: 'visibility:' + (viewMode == 'list' ? 'visible' : 'hidden'),
+					text: objUltis.formatFileSize(item.size)
+				});
+				var divMineType = $('<div></div>', {
+					class: 'minetype-column',
+					style: 'visibility:' + (viewMode == 'list' ? 'visible' : 'hidden'),
+					text: (opts.minetype == 'directory' ? 'Thư mục' : opts.minetype)
+				});
+				var divDate = $('<div></div>', {
+					class: 'date-column',
+					style: 'visibility:' + (viewMode == 'list' ? 'visible' : 'hidden'),
+					text: item.date
+				});
 
 				var li = $('<li></li>', {
 					'class': 'vscell',
@@ -91,33 +97,14 @@ $.extend(
 								oViewTree.nodeClick($('DIV#treeview-container').find('A[data-id="' + $(node).attr('data-id') + '"]'));
 							});
 						} else {
-							var dimensions = {
-								x: '900',
-								y: '470'
-							};
-							var nodeType = $(node).attr('data-type');
-							var type = $.inArray(nodeType, aryImg) > -1 ? 'image' : ($.inArray(nodeType, aryVideo) > -1 ? 'video' : 'other');
-							if (type == 'image') {
-								dimensions = {
-									x: preloadedObj[0].naturalWidth,
-									y: preloadedObj[0].naturalHeight
-								}
-							} else if (type == 'video') {
-								dimensions.x = $(preloadedObj).attr('width');
-								dimensions.y = $(preloadedObj).attr('height');
-							}
 
-							var opts = {
-								source: {
-									type: type,
-									src: Base64.decode(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + $(node).attr('data-id'),
-									minetype: nodeType,
-									dimensions: dimensions,
-									title: $(node).attr('data-name'),
-								}
-							};
-
-							objLightBox.show(opts);
+							//var fileId = $(node).attr('data-id');
+							//var encodedData = window.btoa("Hello, world"); // encode a string
+							//var decodedData = window.atob(encodedData); // decode the string
+							var url = window.atob(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + $(node).attr('data-id'); // decode the string
+							var filename = $(node).attr('data-name');
+							objLightBox.setup({preload:preloadedObj[0], src: url, file: filename});
+							objLightBox.show();
 						}
 					});
 			};
