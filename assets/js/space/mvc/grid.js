@@ -92,18 +92,16 @@ $.extend(
 					return false;
 				})
 					.bind('dblclick', function(e) {
+						var nodeData = $(node).data();
 						if ($(node).attr('data-type') == 'directory') {
 							o.eventHandlers.open(node, function(node, oViewTree) {
-								oViewTree.nodeClick($('DIV#treeview-container').find('A[data-id="' + $(node).attr('data-id') + '"]'));
+								oViewTree.nodeClick($('DIV#treeview-container').find('A[data-id="' + nodeData.id + '"]'));
 							});
 						} else {
-
-							//var fileId = $(node).attr('data-id');
-							//var encodedData = window.btoa("Hello, world"); // encode a string
-							//var decodedData = window.atob(encodedData); // decode the string
-							var url = window.atob(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + $(node).attr('data-id'); // decode the string
-							var filename = $(node).attr('data-name');
-							objLightBox.setup({preload:preloadedObj[0], src: url, file: filename});
+							var url = window.atob(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + nodeData.id; // decode the string							
+							var filename = nodeData.name;
+							var preload = preloadedObj != undefined ? preloadedObj[0] : null;
+							objLightBox.setup({preload:preload, src: url, file: filename});
 							objLightBox.show();
 						}
 					});

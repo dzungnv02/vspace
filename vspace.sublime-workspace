@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"unde",
+				"undefined"
+			],
+			[
 				"obj",
 				"objWidth"
 			],
@@ -42,10 +46,6 @@
 			[
 				"contai",
 				"container"
-			],
-			[
-				"unde",
-				"undefined	(grid.js)"
 			],
 			[
 				"vide",
@@ -343,7 +343,7 @@
 			"file": "assets/js/space/mvc/grid.js",
 			"settings":
 			{
-				"buffer_size": 6466,
+				"buffer_size": 6342,
 				"line_ending": "Windows"
 			}
 		},
@@ -351,7 +351,7 @@
 			"file": "assets/js/space/mvc/vlightbox.js",
 			"settings":
 			{
-				"buffer_size": 5342,
+				"buffer_size": 4990,
 				"line_ending": "Windows"
 			}
 		},
@@ -415,6 +415,7 @@
 	[
 		"/C/projects/vspace",
 		"/C/projects/vspace/application",
+		"/C/projects/vspace/application/config",
 		"/C/projects/vspace/application/helpers",
 		"/C/projects/vspace/assets",
 		"/C/projects/vspace/assets/js",
@@ -424,6 +425,7 @@
 	],
 	"file_history":
 	[
+		"/C/projects/vspace/application/config/config.php",
 		"/C/projects/hosting/VPS1/common.css",
 		"/C/projects/vspace/application/controllers/Preview.php",
 		"/C/projects/vspace/application/helpers/flv.php",
@@ -449,7 +451,6 @@
 		"/C/projects/vspace/assets/js/space/mvc/pi.js",
 		"/C/projects/vspace/application/controllers/Welcome.php",
 		"/C/projects/vspace/assets/js/space/mvc/dummyvideo.js",
-		"/C/projects/vspace/application/config/config.php",
 		"/C/projects/enciweb/assets/swf/monoslideshow.xml",
 		"/C/projects/vspace/application/libraries/Vservices.php",
 		"/C/projects/hosting/VPS2/httpd.conf",
@@ -571,6 +572,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"instanceCount",
+			"self.render(",
+			"initVideoPlayer",
+			"render",
+			"initModal",
+			"initVideoPlayer",
+			"videojsObj",
+			"supportedPlayer",
+			"mimeType",
+			"renderVideoPlayer",
+			"getDimension",
+			"console.log",
+			"initModal",
+			"data-",
 			"mediaType",
 			"defaultWidth",
 			"defaultHeight",
@@ -684,24 +699,15 @@
 			";\n",
 			"                $(",
 			"getSelectedNode",
-			"rpStr",
-			"newFolderName",
-			"validateLogin",
-			";\n",
-			"currDir",
-			"objController",
-			"//$(",
-			"loginDlg",
-			"';",
-			"};\n",
-			"api.php"
+			"rpStr"
 		],
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
+			"render(",
 			"objWidth",
 			"objHeight",
 			"objWidth",
@@ -725,7 +731,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -734,15 +740,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6466,
+						"buffer_size": 6342,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3525,
-								3525
+								950,
+								950
 							]
 						],
 						"settings":
@@ -751,7 +757,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1125.0,
+						"translation.y": 1296.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -763,15 +769,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5342,
+						"buffer_size": 4990,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4026,
-								4026
+								4076,
+								4076
 							]
 						],
 						"settings":
@@ -780,10 +786,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1785.0,
+						"translation.y": 2898.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -799,8 +805,8 @@
 						"selection":
 						[
 							[
-								3746,
-								3746
+								3493,
+								3493
 							]
 						],
 						"settings":
@@ -809,10 +815,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1438.0,
+						"translation.y": 1724.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -895,7 +901,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 228.0,
+	"side_bar_width": 240.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
