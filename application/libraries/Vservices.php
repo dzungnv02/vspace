@@ -70,8 +70,8 @@ Class Vservices {
 		
 		$result = $this->_curlObj->execute();
 
-		$serverIP = gethostbyname (parse_url($this->_apiUrl, PHP_URL_HOST));
-		/*$mapFunc = function($k, $v)
+		/*$serverIP = gethostbyname (parse_url($this->_apiUrl, PHP_URL_HOST));
+		$mapFunc = function($k, $v)
 					{
 						return "$k/$v";
 					};

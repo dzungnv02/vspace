@@ -5,7 +5,10 @@
 			"path": "."
 		},
 		{
-			"path": "c:/projects/vspace"
+			"path": "C:\\projects\\editor"
+		},
+		{
+			"path": "C:\\projects\\enci-new-web"
 		}
 	]
 }

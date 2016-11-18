@@ -32,34 +32,41 @@ $.extend(
 			var init = function() {
 				initModal();
 				initVideoPlayer();
+				initImageViewer();
 				videojs.options.flash.swf = server + includeDir + 'video.js/video-js.swf';
 			};
 
 			var initVideoPlayer = function() {
-				if (videoPlayer == null) {
+				if (videoPlayer == null || videoPlayer == undefined) {
 					videoPlayer = $('<video></video>', {
 						'id': 'vLightBoxVideo',
 						'controls': true,
 						'width': '100%',
 						'height': '100%',
 						'class': 'video-js vjs-default-skin'
-					});
+					}).append($('<source></source>', {
+						'src': dummyvideo,
+						'type': 'video/mp4'
+					}));
 				}
+				videoPlayer.hide();
+				$(container).find('DIV.modal-body').append(videoPlayer);
+				videojsObj = videojs('vLightBoxVideo', {
+					'controls': true,
+					'autoplay': true,
+					'preload': 'auto'
+				});
 			}
 
-			/*var initAudioPlayer = function() {
-				audioPlayer = $('<audio></audio>', {
-					'id': 'vLightBoxAudio',
-					'controls': 'controls',
-					'class': 'video-js vjs-default-skin'
+			var initImageViewer = function() {
+				imageViewer = $('<img />', {
+					'id': 'vLightBoxImage',
+					'width': '100%',
+					'height': '100%',
 				});
+				imageViewer.hide();
+				$(container).find('DIV.modal-body').append(imageViewer);
 			};
-
-			var initTextViewer = function() {
-				textViewer = $('<iframe />', {
-					'id': 'vLightBoxText'
-				});
-			};*/
 
 			var initModal = function() {
 				container = $('<div></div>', {
@@ -118,34 +125,55 @@ $.extend(
 			};
 
 			var renderVideoPlayer = function() {
-				
+				/*$(videoPlayer).empty();
+				$(videoPlayer).append($('<source></source>', {
+					'src': o.src,
+					'type': mimeType
+				}));
+
+				videoPlayer.show();
+
+				videojs('vLightBoxVideo', {
+					'controls': true,
+					'autoplay': true,
+					'preload': 'auto'
+				});*/
+			};
+
+			var renderImageViewer = function() {
+				imageViewer[0].src = o.src;
+				$(imageViewer).ready(function(e) {
+					if (objWidth < dlgWidth) {
+						$(imageViewer).attr('width', objWidth + 'px');
+						$(imageViewer).attr('height', objHeight + 'px');
+					} else {
+						$(imageViewer).attr('width', '100%');
+						$(imageViewer).attr('height', '100%');
+					}
+				});
+				imageViewer.show();
 			};
 
 			var resetVideoplayer = function() {
-				console.log(container.children().size());
+				/*if (videojs.getPlayers()['vLightBoxVideo']) {
+					videojs.getPlayers()['vLightBoxVideo'].dispose();
+					$(container).find('DIV.modal-body').find('DIV#vLightBoxVideo').remove();
+				}
 				$(container).find('DIV.modal-body').empty();
-				console.log(container);
-				$(videoPlayer).each(function(index) {
-					$(this).hide();
-					if ($(container).find('DIV.modal-body').find(this).length == 0)
-						$(container).find('DIV.modal-body').append(this);
-				});
-			}
+				delete videoPlayer;
+				initVideoPlayer();*/
+			};
+
+			var resetImageViewer = function() {
+				/*$(container).find('DIV.modal-body').empty();
+				delete imageViewer;
+				initImageViewer();*/
+			};
 
 			var render = function(callback) {
-				container.find('DIV.modal-body').empty();
 				getDimension();
 				if (mediaType == 'image') {
-					container.find('DIV.modal-body').append(o.preload);
-					$(o.preload).ready(function(e) {
-						if (objWidth < dlgWidth) {
-							$(o.preload).attr('width', objWidth + 'px');
-							$(o.preload).attr('height', objHeight + 'px');
-						} else {
-							$(o.preload).attr('width', '100%');
-							$(o.preload).attr('height', '100%');
-						}
-					});
+					renderImageViewer();
 				} else if (mediaType == 'video') {
 					renderVideoPlayer();
 				} else {
@@ -173,7 +201,8 @@ $.extend(
 					.on('hidden.bs.modal', function(e) {
 						dlgWidth = defaultDlgWidth;
 						dlgHeight = defaultDHeight;
-						resetVideoplayer();
+						//resetVideoplayer();
+						//resetImageViewer();
 						$(this).unbind();
 					});
 

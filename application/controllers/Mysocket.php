@@ -42,4 +42,27 @@ class Mysocket extends CI_Controller {
 	    socket_close($socket);
 
 	}
+
+	public function test() {
+$array = array( "orange" , "apple" , "grape" , "banana" , "raspberry" );
+$popped = array_pop( $array );
+$shifted = array_shift( $array );
+print_r( $array );
+	}
+
+	
+}
+
+function culc( $mode )
+{
+  $value  = 10;
+  switch( $mode )
+  {
+    default : $value += 1;
+    case "a" :   $value += 5;break;
+    case "b" :   $value += 3;break;
+    case "c" :   $value += 7;
+    case "d" :   $value += 2;break;
+  }
+  return $value;
 }

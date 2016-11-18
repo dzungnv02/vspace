@@ -31,8 +31,26 @@ var objUser = null;
 var objUpload = null;
 var objLightBox = null;
 
+var objTinyMCE = null;
+
+var mode = '';
+
 if (jQuery)
 	(function($) {
+		var getUrlParameter = function getUrlParameter(sParam) {
+			var sPageURL = decodeURIComponent($(location).get(0).search.substring(1)),
+				sURLVariables = sPageURL.split('&'),
+				sParameterName, i;
+
+			for (i = 0; i < sURLVariables.length; i++) {
+				sParameterName = sURLVariables[i].split('=');
+
+				if (sParameterName[0] === sParam) {
+					return sParameterName[1] === undefined ? true : sParameterName[1];
+				}
+			}
+		}
+
 		var includingScript = function(scriptFiles) {
 			var _arr = $.map(scriptFiles, function(scr) {
 				return $.getScript((includeDir || "") + scr);
@@ -46,9 +64,16 @@ if (jQuery)
 		}
 
 		var initApp = function() {
+			mode = getUrlParameter('mode');
+			
 			var scriptFiles = [
 				'mimetype.js', 'vlightbox.js', 'tree.js', 'grid.js', 'upload.js', 'ultis.js', 'connection.js', 'model.js', 'user.js', 'layout.js', 'controller.js', 'video.js/video.min.js', 'dummyvideo.js'
 			];
+
+			if (mode == 'plugin') {
+				scriptFiles.push('../postmessage.js');
+				scriptFiles.push('tinymce.js');
+			}
 
 			includingScript(scriptFiles).done(function() {
 				if (objLightBox == null) objLightBox = $().vLightbox();
@@ -61,6 +86,10 @@ if (jQuery)
 				if (objGrid == null) objGrid = $().vsViewGrid();
 				if (objLayout == null) objLayout = $().vsViewLayout();
 				if (objController == null) objController = $().vsController();
+
+				if (mode == 'plugin') {
+					if (objTinyMCE == null) objTinyMCE = $().vsTinyMCE();
+				}
 			});
 
 			loadCSS("space/video-js.css");

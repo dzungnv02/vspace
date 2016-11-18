@@ -87,10 +87,10 @@ $.extend(
 			var bindNodeEvents = function(node, preloadedObj) {
 				if (o.eventHandlers == null) return false;
 				$(node).bind('click', function(e) {
-					e.stopPropagation();
-					nodeClick(this, e);
-					return false;
-				})
+						e.stopPropagation();
+						nodeClick(this, e);
+						return false;
+					})
 					.bind('dblclick', function(e) {
 						var nodeData = $(node).data();
 						if ($(node).attr('data-type') == 'directory') {
@@ -101,8 +101,20 @@ $.extend(
 							var url = window.atob(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + nodeData.id; // decode the string							
 							var filename = nodeData.name;
 							var preload = preloadedObj != undefined ? preloadedObj[0] : null;
-							objLightBox.setup({preload:preload, src: url, file: filename});
-							objLightBox.show();
+							if (mode == 'plugin') {
+								objTinyMCE.tinymcePreview({
+									id:nodeData.id,
+									src:url,
+									file: filename
+								});
+							} else {
+								objLightBox.setup({
+									preload: preload,
+									src: url,
+									file: filename
+								});
+								objLightBox.show();
+							}
 						}
 					});
 			};

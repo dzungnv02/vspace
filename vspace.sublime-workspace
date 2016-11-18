@@ -4,6 +4,190 @@
 		"selected_items":
 		[
 			[
+				"conti",
+				"continue"
+			],
+			[
+				"wi",
+				"width	.width()"
+			],
+			[
+				"und",
+				"undefined	(layout.js)"
+			],
+			[
+				"post",
+				"postmessage	(editor_plugin.js)"
+			],
+			[
+				"plugin",
+				"plugins"
+			],
+			[
+				"violet",
+				"violetspace"
+			],
+			[
+				"u",
+				"username"
+			],
+			[
+				"var_",
+				"var_export($aryParams	(Vservices.php)"
+			],
+			[
+				"da",
+				"date_create"
+			],
+			[
+				"res",
+				"result"
+			],
+			[
+				"pa",
+				"padding-left"
+			],
+			[
+				"bo",
+				"border"
+			],
+			[
+				"h",
+				"hidden	(customer.js)"
+			],
+			[
+				"fonts",
+				"font-style"
+			],
+			[
+				"err",
+				"error"
+			],
+			[
+				"is",
+				"isValid"
+			],
+			[
+				"get",
+				"getCustomerList"
+			],
+			[
+				"cus",
+				"cusId"
+			],
+			[
+				"is_a",
+				"is_array"
+			],
+			[
+				"de",
+				"deleteCustomer"
+			],
+			[
+				"edit",
+				"edittingId"
+			],
+			[
+				"crea",
+				"createCustomer"
+			],
+			[
+				"are",
+				"aryError"
+			],
+			[
+				"for",
+				"formDialog"
+			],
+			[
+				"fom",
+				"formAct"
+			],
+			[
+				"form",
+				"formAct"
+			],
+			[
+				"cus_",
+				"cus_name	(Customer_model.php)"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"paddin",
+				"padding-left"
+			],
+			[
+				"data",
+				"datalist	(main.php)"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"c",
+				"cellspacing	Attr"
+			],
+			[
+				"is_",
+				"is_array"
+			],
+			[
+				"ary",
+				"aryCustomers"
+			],
+			[
+				"Cus",
+				"Customer_model"
+			],
+			[
+				"fo",
+				"foreach	foreach …"
+			],
+			[
+				"getCustomer",
+				"getCustomerById	(Ajax.php)"
+			],
+			[
+				"i",
+				"italic"
+			],
+			[
+				"op",
+				"option	Tag"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"tex",
+				"text-align"
+			],
+			[
+				"co",
+				"commands"
+			],
+			[
+				"vi",
+				"violetspace"
+			],
+			[
+				"video",
+				"videoPlayer"
+			],
+			[
+				"image",
+				"imageViewer"
+			],
+			[
+				"chi",
+				"child	(grid.js)"
+			],
+			[
 				"unde",
 				"undefined"
 			],
@@ -26,10 +210,6 @@
 			[
 				"reset",
 				"resetViewer"
-			],
-			[
-				"video",
-				"video"
 			],
 			[
 				"su",
@@ -96,16 +276,8 @@
 				"textViewer"
 			],
 			[
-				"de",
-				"default"
-			],
-			[
 				"file",
 				"filename"
-			],
-			[
-				"vi",
-				"videoPlayer"
 			],
 			[
 				"ima",
@@ -152,16 +324,8 @@
 				"session_regenerate_id"
 			],
 			[
-				"var_",
-				"var_dump"
-			],
-			[
 				"ex",
 				"expire	(Privatecontent.php)"
-			],
-			[
-				"pa",
-				"pattern"
 			],
 			[
 				"preg_",
@@ -208,10 +372,6 @@
 				"aryParams"
 			],
 			[
-				"wi",
-				"width	Style CSS"
-			],
-			[
 				"cons",
 				"console.log()"
 			],
@@ -240,10 +400,6 @@
 				"_msession"
 			],
 			[
-				"err",
-				"error_log"
-			],
-			[
 				"session_de",
 				"session_destroy"
 			],
@@ -268,24 +424,12 @@
 				"keypress	Event"
 			],
 			[
-				"is",
-				"is_array"
-			],
-			[
 				"pro",
 				"progress	Event"
 			],
 			[
-				"paddin",
-				"padding-top"
-			],
-			[
 				"bac",
 				"background-color"
-			],
-			[
-				"font",
-				"font-size"
 			],
 			[
 				"li",
@@ -340,27 +484,110 @@
 	"buffers":
 	[
 		{
-			"file": "assets/js/space/mvc/grid.js",
+			"file": "/C/projects/enci-new-web/source/application/config/routes.php",
 			"settings":
 			{
-				"buffer_size": 6342,
+				"buffer_size": 2188,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "<?php defined('BASEPATH') OR exit('No direct script access allowed');\n\nclass Admin extends MX_Controller {\n\n	public function __construct()\n	{\n		parent::__construct();\n		$is_logged = $this->ion_auth->logged_in();\n		if (!$is_logged && !in_array($this->router->method, array('login','logout'))) {	\n			redirect('admin/login', 'refresh');\n			exit();\n		}\n		else if ($is_logged && in_array($this->router->method, array('login'))) {\n			redirect('admin', 'refresh');\n			exit();\n		}\n	}\n\n	public function index() {\n		var_dump($this->bcrypt->hash('123456'))\n		$this->themes->load_template('admin/dashboard/index', 'admin');\n	}\n\n	public function login() {\n		$this->themes->load_page('admin/pages/login');\n	}\n\n	public function logout() {\n		$this->ion_auth->logout();\n		redirect('admin/login', 'refresh');\n	}\n}",
+			"file": "/C/projects/enci-new-web/source/application/modules/admin/controllers/Admin.php",
+			"file_size": 783,
+			"file_write_time": 131031770704283860,
+			"settings":
+			{
+				"buffer_size": 795,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "assets/js/space/mvc/vlightbox.js",
+			"file": "/C/projects/enci-new-web/source/application/modules/admin/controllers/Ajax.php",
 			"settings":
 			{
-				"buffer_size": 4990,
+				"buffer_size": 1674,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "assets/js/space/mvc/vlightbox_1.js",
+			"file": "/C/projects/enci-new-web/source/application/modules/admin/controllers/Users.php",
 			"settings":
 			{
-				"buffer_size": 6561,
+				"buffer_size": 4695,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/projects/enci-new-web/source/application/views/themes/default/admin/pages/login.php",
+			"settings":
+			{
+				"buffer_size": 2814,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/user_.js",
+			"settings":
+			{
+				"buffer_size": 2196,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/bpadmin.list.js",
+			"settings":
+			{
+				"buffer_size": 941,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/admin.user.js",
+			"settings":
+			{
+				"buffer_size": 590,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/admin.datatable.js",
+			"settings":
+			{
+				"buffer_size": 850,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/projects/enci-new-web/source/application/modules/users/libraries/Ion_auth.php",
+			"settings":
+			{
+				"buffer_size": 14067,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/projects/enci-new-web/source/application/modules/users/models/Ion_auth_model.php",
+			"settings":
+			{
+				"buffer_size": 54231,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/projects/enci-new-web/source/application/modules/users/config/ion_auth.php",
+			"settings":
+			{
+				"buffer_size": 8557,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/projects/enci-new-web/source/application/modules/users/libraries/Bcrypt.php",
+			"settings":
+			{
+				"buffer_size": 2741,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -413,156 +640,159 @@
 	},
 	"expanded_folders":
 	[
-		"/C/projects/vspace",
-		"/C/projects/vspace/application",
-		"/C/projects/vspace/application/config",
-		"/C/projects/vspace/application/helpers",
-		"/C/projects/vspace/assets",
-		"/C/projects/vspace/assets/js",
-		"/C/projects/vspace/assets/js/space",
-		"/C/projects/vspace/assets/js/space/mvc",
-		"/C/projects/vspace/assets/js/space/mvc/video.js"
+		"/C/projects/enci-new-web/source/assets/themes/default",
+		"/C/projects/enci-new-web/source/assets/themes/default/admin",
+		"/C/projects/enci-new-web/source/assets/themes/default/admin/js",
+		"/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin",
+		"/C/projects/enci-new-web/source/system"
 	],
 	"file_history":
 	[
-		"/C/projects/vspace/application/config/config.php",
-		"/C/projects/hosting/VPS1/common.css",
-		"/C/projects/vspace/application/controllers/Preview.php",
-		"/C/projects/vspace/application/helpers/flv.php",
-		"/C/projects/vspace/assets/js/space/mvc/vlightbox_1.js",
-		"/C/projects/vspace/application/controllers/Privatecontent.php",
-		"/C/projects/pacman-master/pacman.js",
-		"/C/projects/vspace/index.php",
-		"/C/projects/vspace/.htaccess",
-		"/C/projects/hosting/53/20160523/Privatecontent.php",
-		"/C/projects/hosting/53/20160523/Vservices.php",
-		"/C/projects/hosting/53/20160523/api.log",
-		"/C/projects/hosting/53/20160523/index.php",
-		"/C/projects/hosting/53/20160523/.htaccess",
-		"/C/projects/hosting/53/20160523/model.js",
-		"/C/projects/hosting/53/20160523/connection.js",
-		"/C/projects/vspace/assets/js/space/mvc/grid.js",
+		"/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/connect.js",
+		"/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/login.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/violetspace/common.js",
+		"/C/projects/vspace/assets/js/space/1.9/manager.1.9.js",
 		"/C/projects/vspace/assets/js/space/mvc/vlightbox.js",
-		"/C/projects/vspace/assets/js/space/mvc/connection.js",
-		"/C/projects/vspace/assets/js/space/mvc/space.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/violetspace/editor_plugin.js",
+		"/C/projects/vspace/assets/js/space/mvc/grid.js",
+		"/C/projects/vspace/assets/js/space/mvc/tinymce.js",
+		"/C/projects/enci-new-web/source/application/modules/users/controllers/Auth.php",
+		"/C/projects/hosting/VPS3/2016.11.01/wp-config.php",
+		"/C/projects/hosting/VPS3/2016.11.01/header.php",
+		"/C/projects/hosting/VPS3/wp-settings.php",
+		"/C/projects/hosting/VPS3/functions.php",
+		"/C/projects/hosting/VPS3/pluggable.php",
+		"/C/projects/hosting/VPS3/pluggable-deprecated.php",
 		"/C/projects/vspace/assets/js/space/mvc/layout.js",
-		"/C/projects/vspace/assets/js/space/mvc/vlightbox_.js",
-		"/C/projects/vspace/assets/js/space/mvc/controller.js",
-		"/C/projects/vspace/assets/js/space/mvc/pi.js",
-		"/C/projects/vspace/application/controllers/Welcome.php",
-		"/C/projects/vspace/assets/js/space/mvc/dummyvideo.js",
-		"/C/projects/enciweb/assets/swf/monoslideshow.xml",
-		"/C/projects/vspace/application/libraries/Vservices.php",
-		"/C/projects/hosting/VPS2/httpd.conf",
-		"/C/projects/hosting/VPS2/httpd-directories.conf",
-		"/C/projects/hosting/VPS2/httpd-mpm.conf",
-		"/C/projects/hosting/VPS2/httpd-cache.conf",
-		"/C/projects/hosting/VPS2/httpd-hostname.conf",
-		"/C/projects/hosting/VPS2/httpd-modsecurity.conf",
-		"/C/projects/hosting/VPS2/httpd-expires.conf",
-		"/C/Users/dzungnv02/AppData/Local/Temp/scp05699/etc/httpd/conf/extra/directadmin-vhosts.conf",
-		"/C/projects/hosting/VPS2/httpd-phpaddmodules.conf",
-		"/C/projects/hosting/VPS2/httpd-includes.conf",
-		"/C/projects/hosting/VPS2/da/httpd.conf",
+		"/C/projects/hosting/VPS3/wp-config.php",
+		"/C/projects/hosting/VPS3/widgets.php",
 		"/C/projects/vspace/assets/js/space/mvc/model.js",
-		"/C/projects/vspace/application/views/19/footer.php",
-		"/C/projects/hosting/VPS2/directadmin-vhosts.conf",
-		"/C/projects/hosting/VPS2/httpd-nginx.conf",
-		"/C/projects/hosting/VPS2/httpd-phpmodules.conf",
-		"/C/projects/hosting/VPS2/php.ini",
-		"/C/projects/hosting/VPS1/monoslideshow.xml",
-		"/C/projects/hosting/53/httpd.conf",
-		"/C/projects/vspace/assets/js/space/mvc/mimetype.js",
-		"/C/projects/vspace/application/views/layout/footer.php",
-		"/C/projects/vspace/application/controllers/Mysocket.php",
-		"/C/projects/vspace/assets/js/space/mvc/tree.js",
-		"/C/projects/vspace/assets/js/space/manager.js",
-		"/C/projects/vspace/assets/js/space/mvc/upload.js",
-		"/C/projects/vspace/assets/js/space/mvc/ultis.js",
-		"/C/projects/vspace/assets/js/space/grid.js",
-		"/C/projects/vspace/test.html",
-		"/C/projects/vspace/map.php",
-		"/C/projects/vspace/vspace.sublime-project",
-		"/C/projects/vspace/userinfo.log",
-		"/C/projects/vspace/session_.log",
-		"/C/projects/vspace/session.log",
-		"/C/projects/vspace/assets/js/space/mvc/user.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/advhr/editor_plugin_src.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/advimage/jscripts/functions.js",
+		"/C/projects/editor/tinymce/examples/myplugin.htm",
 		"/C/projects/vspace/application/views/main_19.php",
-		"/C/projects/vspace/map",
-		"/C/projects/vspace/logs/controller.log",
-		"/C/projects/vspace/logs/loginout.log",
-		"/C/projects/vspace/application/libraries/Curl.php",
+		"/C/projects/vspace/application/views/19/footer.php",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/violetspace/postmessage.js",
+		"/C/projects/vspace/assets/js/space/postmessage.js",
+		"/C/projects/vspace/assets/js/space/mvc/space.js",
+		"/C/projects/vspace/assets/js/space/mvc/controller.js",
+		"/C/projects/vspace/assets/js/space/mvc/connection.js",
+		"/C/projects/vspace/assets/css/space/style.css",
+		"/C/projects/vspace/assets/css/space/style2.css",
+		"/C/projects/vspace/assets/css/space/classes.css",
+		"/C/projects/vspace/application/views/19/header.php",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/media/editor_plugin_src.js",
+		"/E/httpd.conf",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/tiny_mce_src.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/insertdatetime/editor_plugin_src.js",
+		"/C/projects/hosting/VPS3/2016.09.12/wp-login.php",
+		"/C/projects/hosting/VPS3/2016.09.14/enci.vn.conf",
+		"/C/projects/hosting/VPS3/2016.09.12/setup-config.php",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/ibrowser/editor_plugin.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/emotions/editor_plugin_src.js",
+		"/C/Users/dzungnv02/AppData/Local/Temp/scp30592/apps/www/new_fire/public_html/wp-config.php",
+		"/C/Program Files (x86)/Slimi/Counter Strike 1.6/cstrike/steam_appid.txt",
+		"/C/projects/hosting/53/API/Privatecontent.php",
+		"/C/projects/hosting/53/API/mvc_/connection.js",
+		"/C/projects/hosting/53/API/mvc_/model.js",
+		"/C/projects/hosting/53/API/mvc_/manager.js",
+		"/C/projects/hosting/53/API/Security.php",
+		"/C/projects/vspace/index.php",
+		"/C/projects/hosting/53/API/api.log",
+		"/C/projects/hosting/53/20160804/.htaccess",
+		"/C/projects/hosting/53/API/mvc_/space.js",
+		"/C/projects/vspace/system/core/Security.php",
+		"/C/projects/hosting/53/API/config.php",
+		"/C/projects/hosting/53/API/constants.php",
+		"/C/projects/hosting/53/API/index.php",
+		"/C/projects/hosting/53/API/CodeIgniter.php",
+		"/C/projects/hosting/53/API/loginout.log",
+		"/C/projects/hosting/53/API/model.js",
+		"/C/projects/hosting/53/API/.htaccess",
+		"/C/projects/vspace/.htaccess",
+		"/C/projects/hosting/53/API/Vservices.php",
+		"/C/projects/vspace/application/libraries/Vservices.php",
+		"/C/projects/hosting/VPS3/2016.09.12/wp-config.php",
+		"/C/projects/hosting/VPS3/2016.09.12/wp-settings.php",
 		"/C/projects/vspace/logs/api.log",
-		"/C/projects/vspace/assets/js/space/mvc/manager.js",
-		"/C/projects/vspace/logs/api_20160223170858.log",
-		"/C/projects/vspace/logs/api_20160223164356.log",
-		"/C/projects/vspace/logs/api_20160223164132.log",
-		"/C/projects/vspace/logs/api_20160223163934.log",
-		"/C/projects/vspace/logs/api_20160223145736.log",
-		"/C/projects/vspace/logs/api_20160223153840.log",
-		"/C/projects/vspace/logs/api_20160223153440.log",
-		"/C/projects/vspace/api.log",
-		"/C/Windows/System32/drivers/etc/hosts",
-		"/C/projects/vspace/assets/js/space/mvc/embedded/flashobject.js",
-		"/C/Users/dzungnv02/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
-		"/C/projects/hosting/53/hosts",
-		"/C/projects/vspace/nodejs.html",
-		"/Volumes/SSD/www/application/controllers/Privatecontent.php",
-		"/Volumes/SSD/www/assets/js/space/mvc/upload.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/grid.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/ultis.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/layout.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/model.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/manager.js",
-		"/Volumes/SSD/www/application/views/19/header.php",
-		"/Volumes/SSD/www/assets/js/space/mvc/vlightbox.js",
-		"/Volumes/SSD/www/assets/css/space/grid.css",
-		"/Volumes/SSD/www/assets/css/space/style2.css",
-		"/Volumes/SSD/www/assets/js/space/manager.js",
-		"/Volumes/SSD/www/application/views/19/footer.php",
-		"/Volumes/SSD/www/assets/js/space/mvc/user.js",
-		"/Volumes/SSD/www/application/views/main_19.php",
-		"/Volumes/SSD/vspace/assets/js/space/1.9/manager.1.9.js",
-		"/Volumes/SSD/www/api.log",
-		"/Volumes/SSD/www/assets/js/space/mvc/connection.js",
-		"/Volumes/SSD/www/application/config/config.php",
-		"/Volumes/SSD/www/application/libraries/Vservices.php",
-		"/Volumes/SSD/www/assets/js/space/mvc/tree.js",
-		"/Volumes/SSD/www/assets/css/space/style.css",
-		"/Volumes/SSD/www/logs/session.log",
-		"/Volumes/SSD/www/application/config/autoload.php",
-		"/Volumes/SSD/www/index.php",
-		"/Volumes/SSD/vspace/application/controllers/Privatecontent.php",
-		"/Volumes/SSD/www/assets/css/space/upload.css",
-		"/Volumes/SSD/www/assets/js/space/grid.js",
-		"/Volumes/SSD/www/system/libraries/Session/Session.php",
-		"/Volumes/SSD/www/system/libraries/Session/SessionHandlerInterface.php",
-		"/Volumes/SSD/www/system/libraries/Session/drivers/Session_files_driver.php",
-		"/Volumes/SSD/www/system/libraries/Session/Session_driver.php",
-		"/Volumes/SSD/vspace/assets/js/space/grid.js",
-		"/Volumes/SSD/www/assets/js/space/tree.js",
-		"/Volumes/SSD/www/assets/css/space/vsgrid.css",
-		"/Volumes/SSD/www/application/controllers/Filemanager.php",
-		"/Volumes/SSD/www/assets/js/space/mvc/encryption.js",
-		"/Volumes/SSD/www/assets/js/space/mvc/controller.js",
-		"/Volumes/SSD/www/assets/css/space/vupload.css",
-		"/Volumes/SSD/www/application/views/main.php",
-		"/Volumes/SSD/www/readme.rst",
-		"/Volumes/SSD/www/application/config/routes.php",
-		"/Volumes/SSD/www/application/views/19/loginform.php",
-		"/Volumes/SSD/www/.htaccess",
-		"/Users/dzungnv02/Desktop/database.php",
-		"/Volumes/Data/mysql-init.txt"
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/violetspace/langs/en.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/tiny_mce_dev.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/tiny_mce.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/flash/langs/en.js",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/flash/editor_plugin_src.js",
+		"/C/projects/hosting/VPS3/2016.08.29/enci.vn.conf",
+		"/C/projects/hosting/VPS3/2016.08.29/.htaccess",
+		"/C/projects/hosting/VPS3/2016.08.29/teacher.php",
+		"/C/projects/hosting/VPS3/2016.08.29/error_log",
+		"/C/projects/hosting/VPS3/2016.08.29/header.php",
+		"/C/projects/hosting/VPS3/2016.08.29/logs.txt",
+		"/C/projects/hosting/VPS3/2016.08.29/routes.php",
+		"/C/projects/clevvermail/application/controllers/Ajax.php",
+		"/C/projects/clevvermail/assets/js/customer.js",
+		"/C/projects/clevvermail/application/views/customers.php",
+		"/C/projects/clevvermail/application/controllers/Customer.php",
+		"/C/projects/clevvermail/application/models/Customer_model.php",
+		"/C/projects/clevvermail/assets/css/style.css",
+		"/C/projects/hosting/VPS3/2016.08.28/clevvermail.conf",
+		"/C/projects/hosting/VPS3/2016.08.28/database.php",
+		"/C/projects/clevvermail/application/helpers/validate_helper.php",
+		"/C/projects/hosting/VPS3/2016.08.28/enci.vn.conf",
+		"/C/projects/hosting/VPS3/2016.08.28/phpmyadmin.conf",
+		"/C/projects/clevvermail/application/controllers/Welcome.php",
+		"/C/projects/clevvermail/application/views/main.php",
+		"/C/projects/vspace/application/views/19/loginform.php",
+		"/C/projects/vspace/application/views/19/modalform.php",
+		"/C/projects/clevvermail/application/language/english/validation_lang.php",
+		"/C/projects/clevvermail/application/config/autoload.php",
+		"/C/projects/clevvermail/application/config/javascript.php",
+		"/C/projects/clevvermail/info.php",
+		"/C/projects/clevvermail/application/views/crud/list.php",
+		"/C/projects/clevvermail/application/views/crud/form.php",
+		"/C/projects/clevvermail/application/language/english/validattion_lang.php",
+		"/C/projects/clevvermail/application/config/routes.php",
+		"/C/projects/clevvermail/application/config/database.php",
+		"/C/projects/hosting/VPS3/2016.08.27/header.php",
+		"/C/projects/hosting/VPS3/2016.08.27/topbanner.php",
+		"/C/projects/editor/tinymce/examples/example_full.htm",
+		"/C/projects/editor/tinymce/jscripts/tiny_mce/plugins/violetspace/lang/en.js",
+		"/C/projects/vspace/vspace.sublime-project",
+		"/C/projects/hosting/VPS3/2016.08.23/httpd.conf",
+		"/C/xampp/apache/conf/extra/httpd-vhosts.conf",
+		"/C/projects/hosting/VPS3/2016.08.20/httpd.conf",
+		"/C/projects/hosting/VPS3/2016.08.23/.htaccess",
+		"/C/projects/hosting/VPS3/2016.08.23/config.sample.inc.php",
+		"/C/projects/hosting/VPS3/2016.08.23/wp-config.php",
+		"/C/projects/hosting/VPS3/2016.08.20/phpmyadmin.conf",
+		"/C/projects/hosting/VPS3/2016.08.23/config.php",
+		"/C/projects/vspace/application/controllers/Privatecontent.php",
+		"/C/Users/dzungnv02/Documents/Downloads/Compressed/fire.enci.vn/data.sql",
+		"/C/projects/fire/wp-content/themes/happiweb.net/header.php",
+		"/C/projects/fire/wp-content/themes/happiweb.net/index.php",
+		"/C/projects/hosting/VPS3/2016.08.14/httpd/enci.vn.conf",
+		"/C/projects/hosting/VPS3/2016.08.14/httpd/enci.edu.vn.conf",
+		"/C/projects/hosting/VPS3/2016.08.14/httpd/httpd.conf",
+		"/C/projects/hosting/VPS3/2016.08.14/httpd/welcome.conf",
+		"/C/projects/hosting/53/httpd.conf",
+		"/C/projects/hosting/VPS3/2016.08.11/nginx.conf",
+		"/C/projects/hosting/VPS3/2016.08.11/sites-enabled/enci.edu.vn.conf",
+		"/C/projects/hosting/VPS3/2016.08.13/httpd.conf"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
 		"height": 93.0,
 		"where_history":
 		[
+			"C:\\projects\\editor",
+			"C:\\projects\\editor\\tinymce\\jscripts\\tiny_mce\\plugins",
+			"C:\\projects\\editor",
+			"C:\\projects\\vspace\\assets\\js\\space\\mvc",
+			"C:\\projects\\editor",
+			"C:\\projects\\editor\\tinymce\\jscripts\\tiny_mce\\plugins",
+			"C:\\projects\\editor",
 			"C:\\projects\\vspace\\assets\\js\\space\\mvc",
 			""
 		]
@@ -572,6 +802,82 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"function hash_password",
+			"store_salt",
+			"salt()",
+			"hash_password",
+			"register",
+			"getDimension",
+			"render",
+			"cdn.mecash.ru",
+			"replace.js",
+			"addon",
+			"ot_get_option",
+			"WP_DEBUG_DISPLAY",
+			"widget",
+			"WP_Widget",
+			" my_widget",
+			"addonDetectMineType",
+			"addonOpenInsertDialog",
+			"addonRenderInsertContent",
+			"JSON",
+			"mceInsertContent",
+			"addon",
+			"status",
+			"item",
+			"    $(document).on('click', '.modal-backdrop', function(event) {\n        bootbox.hideAll()\n    });",
+			"initImageViewer",
+			"mceInsertContent",
+			"logout",
+			"aryButtons",
+			"toolbar",
+			"o.toolbar",
+			"tools-bar",
+			"o.toolsbar",
+			"toolsbar",
+			"btnShare",
+			"btnGetFileURL",
+			"mceInsertContent",
+			"load",
+			"ScriptLoader",
+			"mceInsertContent",
+			"pendingFiles",
+			"load",
+			"ScriptLoader",
+			"type",
+			"submitMethod",
+			"login",
+			"args",
+			"template",
+			"inline",
+			"tinymce",
+			"getCustomerList",
+			"P.",
+			"renderPaginator",
+			"buildList",
+			"createCustomer",
+			"data",
+			" \n",
+			"init",
+			"language",
+			"IBrowserPlugin",
+			"CacheDirLength",
+			"KeepAlive ",
+			"to",
+			"include",
+			"DocumentRoot",
+			"extension",
+			"extension_dir",
+			"mt",
+			"0983621978",
+			"sbgapi.violet.vn",
+			"http://sbgapi.violet.vn/user",
+			"renderImageViewer",
+			"renderVideoPlayer",
+			"initVideoPlayer",
+			"resetVideoplayer",
+			"resetViewer",
+			"videojs",
 			"instanceCount",
 			"self.render(",
 			"initVideoPlayer",
@@ -623,83 +929,7 @@
 			"setViewMode",
 			"changeViewMode",
 			"btnListView",
-			"o.viewMode",
-			"loginButton",
-			"A",
-			"console",
-			"login",
-			"date('Y.m.d H:i:s') . __FUNCTION__",
-			"_checkLogin",
-			"setStatusBar",
-			"login",
-			"appprofile",
-			"_getSession",
-			"_checkLogin",
-			"session",
-			"File",
-			"getinfo",
-			"statusbar",
-			"logout",
-			"_getSession",
-			"viewMode",
-			"console.debug",
-			"logout",
-			"dir",
-			"'+'\">",
-			"renameInit",
-			"imagePreloaded",
-			"};\n",
-			"_checkLogin",
-			",\n",
-			"handlerDropFile",
-			";\n",
-			"onloadDlg",
-			"_checkLogin",
-			"));\n",
-			";\n",
-			"stopPropagation",
-			"nodeClick",
-			"clearAllHighLightNode",
-			"click",
-			"objGrid",
-			"copy",
-			".keyCode",
-			"renameInit",
-			".keyCode",
-			"e.key",
-			"upload",
-			"copy",
-			"();\n",
-			"ul.vstree",
-			"vstree",
-			"vsTree",
-			"oViewTree",
-			"console",
-			"console.log",
-			"dirs",
-			"json",
-			"ajaxTimeout",
-			"updateProgess",
-			"progress",
-			"url",
-			"uhandler",
-			"							\n",
-			"self::_sid",
-			"_sid",
-			"sid",
-			"rootNode",
-			");\n",
-			"				\n",
-			"					\n",
-			"console.log",
-			"renderTreeBranch",
-			"				\n",
-			"selectedNode",
-			"{\n",
-			";\n",
-			"                $(",
-			"getSelectedNode",
-			"rpStr"
+			"o.viewMode"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -707,6 +937,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"tool-bar",
+			"o.toolbar",
+			"renderList",
 			"render(",
 			"objWidth",
 			"objHeight",
@@ -731,82 +964,198 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "assets/js/space/mvc/grid.js",
+					"file": "/C/projects/enci-new-web/source/application/config/routes.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6342,
+						"buffer_size": 2188,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								950,
-								950
+								1003,
+								1003
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/PHP/PHP.tmLanguage"
 						},
-						"translation.x": 0.0,
-						"translation.y": 1296.0,
+						"translation.x": -0.0,
+						"translation.y": 684.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "assets/js/space/mvc/vlightbox.js",
+					"file": "/C/projects/enci-new-web/source/application/modules/admin/controllers/Admin.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4990,
+						"buffer_size": 795,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4076,
-								4076
+								676,
+								676
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2898.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/projects/enci-new-web/source/application/modules/admin/controllers/Ajax.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1674,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1331,
+								1331
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 57.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/projects/enci-new-web/source/application/modules/admin/controllers/Users.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4695,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4445,
+								4445
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2223.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "assets/js/space/mvc/vlightbox_1.js",
+					"buffer": 4,
+					"file": "/C/projects/enci-new-web/source/application/views/themes/default/admin/pages/login.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6561,
+						"buffer_size": 2814,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3493,
-								3493
+								1594,
+								1594
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 513.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/user_.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2196,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2196,
+								2196
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 627.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/bpadmin.list.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 941,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								588,
+								588
 							]
 						],
 						"settings":
@@ -815,10 +1164,184 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1724.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/admin.user.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 590,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								411,
+								411
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/C/projects/enci-new-web/source/assets/themes/default/admin/js/bpadmin/admin.datatable.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 850,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								561,
+								561
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/C/projects/enci-new-web/source/application/modules/users/libraries/Ion_auth.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14067,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8040,
+								8048
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5415.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/C/projects/enci-new-web/source/application/modules/users/models/Ion_auth_model.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 54231,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6098,
+								6128
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4689.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/C/projects/enci-new-web/source/application/modules/users/config/ion_auth.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8557,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7204,
+								7204
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2675.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/C/projects/enci-new-web/source/application/modules/users/libraries/Bcrypt.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2741,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								465,
+								469
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -826,7 +1349,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 22.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -863,7 +1386,7 @@
 	"project": "vspace.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -901,7 +1424,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 240.0,
+	"side_bar_width": 286.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

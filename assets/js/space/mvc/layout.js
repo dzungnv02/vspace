@@ -6,8 +6,8 @@ $.extend(
                 o.maincontainer = $('DIV#file-container.vsgrid');
             if (o.titlebar == undefined)
                 o.titlebar = $('DIV#navbar');
-            if (o.toolsbar == undefined)
-                o.toolsbar = $('DIV#tools-bar');
+            if (o.toolbar == undefined)
+                o.toolbar = $('DIV#tool-bar');
             if (o.statusbar == undefined)
                 o.statusbar = $('DIV#status-bar');
             if (o.navigationbar == undefined)
@@ -22,7 +22,7 @@ $.extend(
 
             var dropZone = $('DIV#drop-zone');
 
-            var aryButtons = $(o.toolsbar).find('BUTTON');
+            var aryButtons = $(o.toolbar).find('BUTTON');
 
             var aryBreadcrumb = [];
 
@@ -32,13 +32,20 @@ $.extend(
 
             var init = function() {
                 layoutRender();
+                $('BUTTON#btnTinyMCE').hide();
+
                 $(aryButtons).each(function(index) {
                     var button = this;
                     var func = $(button).attr('data-act');
+                    if ($(button).attr('id') == 'btnTinyMCE' && mode == 'plugin') {
+                        $(button).show();
+                    }
 
                     $(button).bind('click', function(e) {
                         if ($(button).attr('id') == 'btnLogout') {
                             objController.signinButtonClick();
+                        } else if ($(button).attr('id') == 'btnTinyMCE' && mode == 'plugin') {                            
+                            objTinyMCE.tinymcePreview();
                         } else {
                             eval('objController.' + func + '();');
                         }
@@ -98,7 +105,7 @@ $.extend(
 
             var layoutRender = function() {
                 var scrHeght = $(window).innerHeight();
-                var dirTreeHeight = scrHeght - $(o.titlebar).height() - $(o.toolsbar).height() - $(o.statusbar).height() - 5;
+                var dirTreeHeight = scrHeght - $(o.titlebar).height() - $(o.toolbar).height() - $(o.statusbar).height() - 5;
                 var tree = $(o.tree);
                 var grid = $(o.grid);
                 tree.parent().height(dirTreeHeight);
@@ -412,7 +419,7 @@ $.extend(
                     for (var i = 0; i < selectedNode.length; i++) {
                         selectedSize += parseFloat($(selectedNode[i]).attr('data-size'));
                     }
-                    var html = selectedNode.length == 1 ? ($(selectedNode).attr('data-type') == 'directory' ? 'Thư mục:' : 'File:') + ' <strong>' + $(selectedNode).attr('data-name') + '</strong>' : '<strong>' + selectedNode.length + ' file/thư mục được chọn';
+                    var html = selectedNode.length == 1 ? ($(selectedNode).attr('data-type') == 'directory' ? 'Thư mục:' : 'File:') + ' <strong stype="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + $(selectedNode).attr('data-name') + '</strong>' : '<strong>' + selectedNode.length + ' file/thư mục được chọn';
 
                 } else {
                     var html = '';
@@ -427,7 +434,7 @@ $.extend(
             };
 
             this.changeLoginButtonStatus = function() {
-                var loginButton = $(o.toolsbar).find('BUTTON#btnLogout');
+                var loginButton = $(o.toolbar).find('BUTTON#btnLogout');
                 if (appprofile != null) {
                     $(loginButton).find('I').html('&nbsp;Thoát');
                 } else {

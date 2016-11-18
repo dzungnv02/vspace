@@ -246,16 +246,16 @@ footer h2 i {
   top: 100%;
 }
 
-#tools-bar .btn-success, #tools-bar .btn-success:focus, #tools-bar .btn-danger,
-#tools-bar .btn-danger:focus, #tools-bar .btn-warning,
-#tools-bar .btn-warning:focus, #tools-bar .btn-info, #tools-bar .btn-info:focus{
+#tool-bar .btn-success, #tool-bar .btn-success:focus, #tool-bar .btn-danger,
+#tool-bar .btn-danger:focus, #tool-bar .btn-warning,
+#tool-bar .btn-warning:focus, #tool-bar .btn-info, #tool-bar .btn-info:focus{
   background-color: transparent;
   border-color: transparent;
 }
 
-#tools-bar .btn, #tools-bar .btn-default, #tools-bar .btn:focus,
-#tools-bar .btn-default:focus, #tools-bar .btn:hover,
-#tools-bar .btn-default:hover {
+#tool-bar .btn, #tool-bar .btn-default, #tool-bar .btn:focus,
+#tool-bar .btn-default:focus, #tool-bar .btn:hover,
+#tool-bar .btn-default:hover {
   background-color: transparent !important;
   border-color: #F5F5F5;
 }
@@ -266,11 +266,11 @@ footer h2 i {
     border-radius: 100px !important;
 }*/
 
-#tools-bar .btn{
+#tool-bar .btn{
   color: #666 !important;
 }
 
-#tools-bar DIV.logout {
+#tool-bar DIV.logout {
   display: inline-block;
   float: right;
 }

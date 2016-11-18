@@ -38,6 +38,7 @@
  */
 
 // everything is wrapped in the XD function to reduce namespace collisions
+
 var XD = function(){
   
     var interval_id,

@@ -4,7 +4,7 @@ $base_url = base_url();
 ?>
 <div id="main-content" class="container-fluid">
     <div class="row">
-        <div id="tools-bar" class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+        <div id="tool-bar" class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
             <div class="btn-group basic">
                 <button id="btnNewFolder" data-act="createDir" class="btn btn-success" title="Tạo thư mục mới"><i class="fa fa-folder"></i></button>
                 <button id="btnRename" data-act="rename" class="btn btn-success" title="Đổi tên"><i class="fa fa-edit"></i></button>
@@ -23,7 +23,7 @@ $base_url = base_url();
             </div>
             <div class="btn-group control">
                 <button id="btnRefresh" data-act="refresh" class="btn btn-info" title="Tải lại"><i class="fa fa-refresh"></i></button>
-                <!--<button id="btnGetFileURL" data-act="addonInsert" class="btn btn-info" title="Lấy link của file"><i class="fa fa-link"></i></button>-->
+                <button id="btnTinyMCE" data-act="tinymcePreview" class="btn btn-info" title="Lấy link của file"><i class="fa fa-link"></i></button>
             </div>
             <div class="btn-group logout">
                 <button id="btnLogout" data-act="logout" class="btn btn-info" title="Logout"><i class="fa fa-power-off"></i></button>
