@@ -32,7 +32,7 @@ $.extend(
 
 			};
 
-			var detectMineType = function(item) {
+			var detectTag = function(ext) {
 				var aryImages = ['jpg', 'jpeg', 'png', 'gif', 'tiff', 'dvg', 'bmp'];
 				var aryHTML5Video = ['mp4', 'm4v', 'webm', 'ogg'];
 				var aryFlashVideos = ['flv', 'avi', 'mpg'];
@@ -43,61 +43,65 @@ $.extend(
 					apptype: null
 				}
 
-				if (item.minetype == undefined) return {
+				if (ext == undefined) return {
 					type: 'dir',
-					apptype: 'vspace/dir'
+					apptype: 'vspace/dir',
+					htmltag: null
 				};
-				if ($.inArray(item.minetype, aryImages) > -1) return {
+				if ($.inArray(ext, aryImages) > -1) return {
 					type: 'img',
-					apptype: 'application/' + item.minetype
+					apptype: 'application/' + ext,
+					htmltag: 'img'
 				};
-				if ($.inArray(item.minetype, aryHTML5Video) > -1) {
+				if ($.inArray(ext, aryHTML5Video) > -1) {
 					return {
 						type: 'html5video',
-						apptype: $.inArray(item.minetype, ['mp4', 'm4v']) > -1 ? 'video/mp4' : (item.minetype == 'ogg' ? 'video/ogg' : 'video/webm')
+						apptype: $.inArray(ext, ['mp4', 'm4v']) > -1 ? 'video/mp4' : (ext == 'ogg' ? 'video/ogg' : 'video/webm'),
+						htmltag: 'video'
 					}
 				}
-				if ($.inArray(item.minetype, aryFlashVideos) > -1) {
+				if ($.inArray(ext, aryFlashVideos) > -1) {
 					return {
 						type: 'flashvideo',
-						apptype: 'application/' + item.minetype
+						apptype: 'application/' + ext,
+						htmltag: 'object'
 					};
 				}
-				if ($.inArray(item.minetype, aryAudios) > -1) {
+				if ($.inArray(ext, aryAudios) > -1) {
 					return {
 						type: 'html5audio',
-						apptype: item.minetype == 'mp3' ? 'audio/mpeg' : (item.minetype == 'ogg' ? 'audio/ogg' : 'audio/wav')
+						apptype: ext == 'mp3' ? 'audio/mpeg' : (ext == 'ogg' ? 'audio/ogg' : 'audio/wav'),
+						htmltag: 'audio'
 					};
 				}
 
 				return {
 					type: 'file',
-					apptype: 'application/' + item.minetype
+					apptype: 'application/' + ext,
+					htmltag: 'a'
 				};
 			}
 
 			this.tinymcePreview = function(item) {
-				
+				var container = $('LI[data-id="' + item.id + '"]');
 				mimeType = MimeType.lookup(item.file);
+				var ext = item.file.substr(item.file.lastIndexOf('.') + 1).toLowerCase();
 				var aryMimeType = mimeType.split('/');
 				mediaType = aryMimeType[0];
-
-				console.debug(mediaType);
 				
 				var width = 320;
 				var height = 240;
-
+				if (mediaType == 'image') {
+					width = $(container).data('width');
+					height = $(container).data('height');
+				}
+				
 				/*var item = o.data.FILES[searchItemByID(item.id, 'file')];
 				var type = addonDetectMineType(item);
 				var width = 320;
 				var height = 240;
 				var dlgHtml = '';
-				if (type.type == 'img') {
-					var theImage = new Image();
-					theImage.src = item.fileurl;
-					height = theImage.height;
-					width = theImage.width;
-				}*/
+				*/
 
 				/*else if (type.type == 'html5video') {
 					$(addonPreviewElement).get(0).pause();
@@ -183,15 +187,17 @@ $.extend(
 							'Chèn': {
 								label: "Chèn",
 								callback: function() {
+									console.log('Ext: '+ext);
+									var tag = detectTag(ext);
 									self.addonInsertToEditor({
-										tag: 'img',
+										tag: tag.htmltag,										
 										src: item.src,
+										name: item.file,
 										width: $("#addonFileWidth").length ? $('#addonFileWidth').val() : width,
 										height: $("#addonFileHeight").length ? $('#addonFileHeight').val() : height,
 										description: $('#addonFileDescription').val(),
-										align: $("input:radio[name=addonAlign]").length ? $("input:radio[name=addonAlign]:checked").val() : 'left',
-										type: mediaType/*,
-										apptype: type.apptype*/
+										align: $("input:radio[name=addonAlign]").length ? $("input:radio[name=addonAlign]:checked").val() : 'left',										
+										type: mediaType
 									});
 								}
 							},
@@ -209,8 +215,10 @@ $.extend(
 				var messageSrc = document.referrer;
 				var objMsg = {
 					command: 'mceInsertContent',
+					/*command: 'mceInsertRawHTML',*/
 					data: content
 				};
+				console.log(objMsg);
 				var msg = JSON.stringify(objMsg);
 				XD.postMessage(msg, document.referrer);
 			};

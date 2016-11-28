@@ -23,7 +23,7 @@ $.extend(
 				var img = null;
 				var preloadedObj = null;
 				if (item.thumbnail != undefined) {
-					img = item.thumbnail != '' ? $('<img>', {
+					img = item.thumbnail != '' ? $('<img />', {
 						src: item.thumbnail,
 						align: 'middle'
 					}) : null;
@@ -34,6 +34,9 @@ $.extend(
 						'id': 'preloadimage-' + item.id,
 						'src': window.atob(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + item.id,
 						'data-name': item.name
+					}).load(function(e){
+						$(img).parent().parent().attr('data-width',preloadedObj[0].width);
+						$(img).parent().parent().attr('data-height',preloadedObj[0].height);
 					});
 				}
 
