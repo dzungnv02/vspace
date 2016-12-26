@@ -1,3 +1,5 @@
+'use strict';
+
 var server = $(location).get(0).protocol + '//' + $(location).get(0).hostname;
 var appprofile = null;
 var includeDir = '/assets/js/space/mvc/';
@@ -31,9 +33,11 @@ var objUser = null;
 var objUpload = null;
 var objLightBox = null;
 
-var objTinyMCE = null;
+var objConnector = null;
 
 var mode = '';
+
+var hasCopy = 0;
 
 if (jQuery)
 	(function($) {
@@ -67,12 +71,23 @@ if (jQuery)
 			mode = getUrlParameter('mode');
 			
 			var scriptFiles = [
-				'mimetype.js', 'vlightbox.js', 'tree.js', 'grid.js', 'upload.js', 'ultis.js', 'connection.js', 'model.js', 'user.js', 'layout.js', 'controller.js', 'video.js/video.min.js', 'dummyvideo.js'
+				'controller.js',
+				'layout.js',
+				'mimetype.js',
+				'vlightbox.js',
+				'tree.js', 
+				'grid.js', 
+				'upload.js', 
+				'ultis.js', 
+				'connection.js', 
+				'model.js', 
+				'user.js', 
+				'alertify.js/alertify.js',
 			];
 
 			if (mode == 'plugin') {
 				scriptFiles.push('../postmessage.js');
-				scriptFiles.push('tinymce.js');
+				scriptFiles.push('connector.js');
 			}
 
 			includingScript(scriptFiles).done(function() {
@@ -88,11 +103,13 @@ if (jQuery)
 				if (objController == null) objController = $().vsController();
 
 				if (mode == 'plugin') {
-					if (objTinyMCE == null) objTinyMCE = $().vsTinyMCE();
+					if (objConnector == null) objConnector = $().vsConnector();
 				}
 			});
 
 			loadCSS("space/video-js.css");
+			loadCSS("space/alertify.css");
+			loadCSS("space/contextmenu.css");
 		};
 
 		var loadCSS = function(href) {
@@ -100,8 +117,8 @@ if (jQuery)
 			$("head").append(cssLink);
 		};
 
-		$(document).ready(function() {
-			initApp();
-		});
-
+		// $(document).ready(function() {
+		// 	initApp(); 
+		// });
+		initApp();
 	})(jQuery);

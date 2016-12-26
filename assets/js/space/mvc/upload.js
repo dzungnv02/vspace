@@ -79,7 +79,7 @@ $.extend(
 							'class': 'progress progress-mini uploadprogess'
 						})
 						.append($('<div></div>', {
-							'class': 'progress-bar progress-danger',
+							'class': 'progress-bar',
 							'style': 'width:0%'
 						}));
 
@@ -108,11 +108,12 @@ $.extend(
 
 						if (fileValid[i].type == 'application/zip') formData.append('unpack', 'true');
 
-						objSpaceModel.upload(formData, progressBar, function(xmldata) {
+						objSpaceModel.upload(formData, progressBar, function(xmldata, progressBar) {
 							isUploaded = true;
 							var files = [];
 							var dirs = [];
 							var returnList = $(xmldata).find('list');
+							progressBar.removeClass('progress-wait');
 							if (returnList.length > 0) {
 								returnList.find('folder').each(function(idx) {
 									dirs[idx] = {
@@ -142,9 +143,11 @@ $.extend(
 									folder: dirs,
 									file: files
 								};
+								progressBar.addClass('progress-done');
 								objGrid.renderGrid(items, true);
 							} else {
 								var error = $(xmldata).find('status');
+								progressBar.addClass('progress-error');
 								error.each(function(idx){
 									console.log($(this).attr('errCode'));
 									console.log($(this).attr('err'));

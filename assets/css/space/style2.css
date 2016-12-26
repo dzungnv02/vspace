@@ -18,8 +18,10 @@ html {
   /* min-height:900px; */
 }
 
-body {/* font:15px/1.3 Arial, sans-serif; */
-  color: #4f4f4f;
+body {
+  font: 12px/1.5 Arial, sans-serif;
+  color: #666;
+  overflow: hidden;
 }
 
 a, a:visited {
@@ -246,37 +248,88 @@ footer h2 i {
   top: 100%;
 }
 
-#tool-bar .btn-success, #tool-bar .btn-success:focus, #tool-bar .btn-danger,
-#tool-bar .btn-danger:focus, #tool-bar .btn-warning,
-#tool-bar .btn-warning:focus, #tool-bar .btn-info, #tool-bar .btn-info:focus{
-  background-color: transparent;
-  border-color: transparent;
-}
-
-#tool-bar .btn, #tool-bar .btn-default, #tool-bar .btn:focus,
-#tool-bar .btn-default:focus, #tool-bar .btn:hover,
-#tool-bar .btn-default:hover {
+.btn, .btn-default, .btn:focus, .btn:hover,
+.btn-default:focus, .btn-default:hover,
+.btn-success, .btn-success:focus, .btn-danger,
+.btn-danger:focus, .btn-warning,
+.btn-warning:focus, .btn-info, .btn-info:focus {
   background-color: transparent !important;
-  border-color: #F5F5F5;
-}
-
-/*.btn:hover, .btn-default:hover {
-    border: 1px solid #666;
-    border-width: 1px !important;
-    border-radius: 100px !important;
-}*/
-
-#tool-bar .btn{
+  border-color: transparent !important;
   color: #666 !important;
-}
-
-#tool-bar DIV.logout {
-  display: inline-block;
-  float: right;
-}
-
-button:focus {
+  text-shadow: none !important;
+  border: 0;
+  font-size: 12px;
   outline: none !important;
+}
+
+#tool-bar .btn {
+  font-size: 14px;
+}
+#tool-bar .user {
+  float: right;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+}
+
+#tool-bar .user.open .dropdown-menu {
+  left: -140px;
+  top: calc(100% - 10px);
+  padding: 0 15px;
+  border: 1px solid rgba(61,70,77,0.1);
+  border-radius: 3px !important;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+  font-size: 12px;
+}
+
+#tool-bar .user.open .dropdown-menu > span {
+  padding: 10px 0
+}
+
+#tool-bar .user.open .dropdown-menu > li {
+  margin: 0 -15px
+}
+
+#tool-bar .user.open .dropdown-menu > li:hover {
+  background-color: #e3f2ff;
+}
+
+#tool-bar .user.open .dropdown-menu > li > button {
+  width: 100%;
+  text-align: left;
+  font-size: 12px;
+}
+
+#tool-bar .user.open .quota-bar-container {
+  margin: 10px 0;
+  border-top: 1px solid #ddd;
+  background: #eee;
+  height: 5px;
+  width: 165px;
+}
+#tool-bar .user.open .quota-bar-container > .quota-bar {
+  margin-top: -1px;
+  background: #69b5f2;
+  border: 1px solid #5d9fd5;
+  height: 4px;
+}
+
+.folder-action-group {
+  float: right;
+  margin-right: 10px;
+}
+
+.file-action-group {
+  display: none;
+}
+
+.file-action-group > span {
+  vertical-align: middle;
+  margin: 0 10px
+}
+
+.gray {
+  color: #aaa
 }
 
 .modal {
@@ -313,22 +366,21 @@ button:focus {
 
 #navigation-bar {
   border-bottom: 1px solid #eee;
-  padding: 10px 0;
+  padding-top: 10px;
+  min-height: 45px;
+}
+
+.breadcrumb {
+  margin: 0
 }
 
 .breadcrumb .home-icon {
-  color: #666666;
+  color: #666;
 }
 
 .breadcrumb > li > a {
   color: #2C3E50;
   cursor: pointer;
-}
-
-@media only screen and (max-width: 991px) {
-  .breadcrumb {
-    margin-left: 10px;
-  }
 }
 
 .change-file-view {
@@ -736,8 +788,8 @@ ul.vstree li:before, ul.vstree li a:before {
 }
 
 ul.vstree li:before {
-  color: #666666;
-  position: relative;
+  color: #666;
+  position: absolute;
 }
 
 ul.vstree li a:before {
@@ -799,7 +851,7 @@ ul.vstree a.currentDir {
   background-color: #C1E0F5;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-xvl {
+#file-container ul.vsgrid li.vscell div.icon-xvl:not(.has-thumb) {
   background-image: url(../../images/icon-set/violet.png) !important;
 }
 
@@ -809,51 +861,51 @@ ul.vstree a.currentDir {
   margin-bottom: 4px;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-xls {
+#file-container ul.vsgrid li.vscell div.icon-xls:not(.has-thumb) {
   background-image: url(../../images/icon-set/xls.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-xlsx {
+#file-container ul.vsgrid li.vscell div.icon-xlsx:not(.has-thumb) {
   background-image: url(../../images/icon-set/xlsx.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-doc {
+#file-container ul.vsgrid li.vscell div.icon-doc:not(.has-thumb) {
   background-image: url(../../images/icon-set/doc.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-docx {
+#file-container ul.vsgrid li.vscell div.icon-docx:not(.has-thumb) {
   background-image: url(../../images/icon-set/docx.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-ppt {
+#file-container ul.vsgrid li.vscell div.icon-ppt:not(.has-thumb) {
   background-image: url(../../images/icon-set/ppt.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-pptx {
+#file-container ul.vsgrid li.vscell div.icon-pptx:not(.has-thumb) {
   background-image: url(../../images/icon-set/pptx.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-txt {
+#file-container ul.vsgrid li.vscell div.icon-txt:not(.has-thumb) {
   background-image: url(../../images/icon-set/txt.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-mp4,
-#file-container ul.vsgrid li.vscell div.icon-flv,
-#file-container ul.vsgrid li.vscell div.icon-avi,
-#file-container ul.vsgrid li.vscell div.icon-wmv {
+#file-container ul.vsgrid li.vscell div.icon-mp4:not(.has-thumb),
+#file-container ul.vsgrid li.vscell div.icon-flv:not(.has-thumb),
+#file-container ul.vsgrid li.vscell div.icon-avi:not(.has-thumb),
+#file-container ul.vsgrid li.vscell div.icon-wmv:not(.has-thumb) {
   background-image: url(../../images/icon-set/video.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-mp3,
-#file-container ul.vsgrid li.vscell div.icon-wav {
+#file-container ul.vsgrid li.vscell div.icon-mp3:not(.has-thumb),
+#file-container ul.vsgrid li.vscell div.icon-wav:not(.has-thumb) {
   background-image: url(../../images/icon-set/audio.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-psd {
+#file-container ul.vsgrid li.vscell div.icon-psd:not(.has-thumb) {
   background-image: url(../../images/icon-set/psd.png) !important;
 }
 
-#file-container ul.vsgrid li.vscell div.icon-bmp {
+#file-container ul.vsgrid li.vscell div.icon-bmp:not(.has-thumb) {
   background-image: url(../../images/icon-set/bmp.png) !important;
 }
 /*------------ File Manager: Grid View ----- */
@@ -872,7 +924,6 @@ ul.vstree a.currentDir {
 #file-container ul.vsgrid li.vscell div[class^="icon-"] img {
   max-width: 100%;
   max-height: 100%;
-  height: 100%;
   border: 1px solid #B8B8B8;
   margin: 0 auto;
 }
@@ -892,7 +943,7 @@ ul.vstree a.currentDir {
 /*------------ File Manager: List View ----- */
 
 .list-view#file-container {
-  padding: 0;
+  padding: 0 0 150px 0;
 }
 
 .list-view#file-container > ul.vsgrid {
@@ -1012,104 +1063,6 @@ ul.vstree a.currentDir {
   background-size: cover;
   position: initial;
 }
-/* --------------- Context Menu --------------------*/
-
-#context-menu-container .right-arrow {
-  float: right;
-  top: 4px;
-  position: relative;
-}
-
-#context-menu-container ul {
-  margin: 0px;
-  padding: 4px 0;
-  list-style: none;
-  min-width: 160px;
-  white-space: nowrap;
-}
-
-#context-menu-container ul.menu div.icon-frame {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 2px;
-}
-
-#context-menu-container ul.menu {
-  border: 1px solid rgba(61,70,77,0.1);
-  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
-  background: #fff;
-  border-radius: 5px;
-  background-clip: padding-box;
-}
-
-#context-menu {
-  position: fixed;
-  z-index: 501;
-}
-
-#context-menu a {
-  min-width: 160px;
-  margin: 0;
-  padding: 8px 10px;
-  display: block;
-}
-
-#context-menu a:hover {
-  text-decoration: none;
-}
-
-#context-menu button {
-  min-width: 160px;
-  height: 100%;
-  padding: 8px 8px;
-  margin: 0;
-  text-align: left;
-  vertical-align: middle;
-  background-color: transparent;
-  border: none;
-}
-
-#context-menu button.disabled {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
-  opacity: 0.4;
-}
-
-#context-menu a>img {
-  margin-right: 4px;
-}
-
-#context-menu a, #context-menu button, #context-menu button div {
-  cursor: pointer;
-  color: #222;
-}
-
-#context-menu .secondary {
-  display: none;
-  position: absolute;
-  top: -5px;
-  left: 98%;
-  z-index: 20;
-}
-
-#context-menu .secondary button {
-  padding-right: 12px;
-}
-
-#context-menu li.primary {
-  position: relative;
-}
-
-#context-menu li.action {
-  height: 34px;
-}
-
-#context-menu li:hover {
-  background: #E3F2FF;
-}
-
-#context-menu li:hover > .secondary {
-  display: block;
-}
 
 #file-container div.ghost-select {
   display: none;
@@ -1128,4 +1081,19 @@ ul.vstree a.currentDir {
   width: 100%;
   height: 100%;
   float: left;
+}
+*[data-active="0"] {
+  opacity: 0.3;
+  cursor: default;
+}
+video::-internal-media-controls-download-button {
+  display:none;
+}
+
+video::-webkit-media-controls-enclosure {
+  overflow:hidden;
+}
+
+video::-webkit-media-controls-panel {
+  width: calc(100% + 30px); /* Adjust as needed */
 }

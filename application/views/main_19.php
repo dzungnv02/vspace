@@ -5,29 +5,33 @@ $base_url = base_url();
 <div id="main-content" class="container-fluid">
     <div class="row">
         <div id="tool-bar" class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-            <div class="btn-group basic">
-                <button id="btnNewFolder" data-act="createDir" class="btn btn-success" title="Tạo thư mục mới"><i class="fa fa-folder"></i></button>
-                <button id="btnRename" data-act="rename" class="btn btn-success" title="Đổi tên"><i class="fa fa-edit"></i></button>
-                <button id="btnDel" data-act="delete" class="btn btn-success" title="Xóa"><i class="fa fa-eraser"></i></button>
-                <button id="btnCopy" data-act="copy" class="btn btn-success" title="Sao chép"><i class="fa fa-copy"></i></button>
-                <button id="btnCut" data-act="move" class="btn btn-success" title="Cắt"><i class="fa fa-cut"></i></button>
-                <button id="btnPaste" data-act="paste" class="btn btn-success" title="Dán"><i class="fa fa-paste"></i></button>
+            <div class="dropdown user">
+                <span data-toggle="dropdown" class="dropdown-toggle"></span>
+                <ul class="dropdown-menu">
+                    <div class="data-used gray">530 MB of 2 GB used</div>
+                    <div class="quota-bar-container">
+                        <div class="quota-bar"></div>
+                    </div>
+                    <li><button data-act="logout" class="btn" title="Thoát"> Thoát</button></li>
+                </ul>   
             </div>
-            <div class="btn-group social">
-                <button id="btnShare" data-act="share" class="btn btn-danger" title="Chia sẻ"><i class="fa fa-share-alt"></i></button>
-                <button id="btnPreview" data-act="preview" class="btn btn-danger" title="Xem trước"><i class="fa fa-eye"></i></button>
+            <div class="folder-action-group">
+                <button id="btnUpload" data-act="upload" class="btn" title="Tải lên"><i class="fa fa-cloud-upload"></i></button>
+                <button id="btnNewFolder" data-act="createDir" class="btn" title="Tạo thư mục mới"><i class="fa fa-folder"></i></button>
+                <button id="btnRefresh" data-act="refresh" class="btn" title="Làm mới"><i class="fa fa-refresh"></i></button>
             </div>
-            <div class="btn-group creation">
-                <button id="btnDownload" data-act="download" class="btn btn-warning" title="Tải xuống"><i class="fa fa-cloud-download"></i></button>
-                <button id="btnUpload" data-act="upload" class="btn btn-info" title="Tải lên"><i class="fa fa-cloud-upload"></i></button>
-            </div>
-            <div class="btn-group control">
-                <button id="btnRefresh" data-act="refresh" class="btn btn-info" title="Tải lại"><i class="fa fa-refresh"></i></button>
-                <button id="btnTinyMCE" data-act="tinymcePreview" class="btn btn-info" title="Lấy link của file"><i class="fa fa-link"></i></button>
-            </div>
-            <div class="btn-group logout">
-                <button id="btnLogout" data-act="logout" class="btn btn-info" title="Logout"><i class="fa fa-power-off"></i></button>
-            </div>
+            <ul class="breadcrumb"></ul>
+            <!-- <button id="btnShare" data-act="share" class="btn" title="Chia sẻ"><i class="fa fa-share-alt"></i></button>
+            <button id="btnPreview" data-act="preview" class="btn" title="Xem trước"><i class="fa fa-eye"></i></button> -->
+
+            <!-- <button id="btnDownload" data-act="download" class="btn" title="Tải xuống"><i class="fa fa-cloud-download"></i> <span>Tải xuống</span></button> -->
+            <!-- <button id="btnUpload" data-act="upload" class="btn" title="Tải lên"><i class="fa fa-cloud-upload"></i> <span>Tải lên</span></button> -->
+
+            <!-- <button id="btnRefresh" data-act="refresh" class="btn" title="Làm mới"><i class="fa fa-refresh"></i> <span>Làm mới</span></button> -->
+            <!-- <button id="btnTinyMCE" data-act="tinymcePreview" class="btn" title="Lấy link của file"><i class="fa fa-link"></i></button> -->
+
+            
+            <!-- <button id="btnLogout" data-act="logout" class="btn logout" title="Thoát"><i class="fa fa-power-off"></i> <span></span></button> -->
         </div>
     </div>
 
@@ -38,15 +42,16 @@ $base_url = base_url();
 
         <div id="directory-content-view-container">
         	<div id="navigation-bar">
-        		<ul class="breadcrumb">
-	    			<li><i class="ace-icon fa fa-folder home-icon"></i><a href="" title="">Home</a></li>
-	    			<li><a href="" title="">Folder</a></li>
-	    			<li><a href="" title="">File</a></li>
-	    		</ul>
-                <ul class="change-file-view list-inline pull-right">
-                    <li><i class="ace-icon fa fa-th-large show-grid-view" title="Hiển thị thumbnail"></i></li>
-                    <li><i class="ace-icon fa fa-th-list show-list-view" title="Hiển thị danh sách"></i></li>
-                </ul>
+                <div class="file-action-group">
+                    <span></span>
+                    <button data-act="rename" class="btn" title="Sửa tên"><i class="fa fa-edit"></i> <span>Sửa tên</span></button>
+                    <button data-act="delete" class="btn" title="Xóa"><i class="fa fa-eraser"></i> <span>Xóa</span></button>
+                    <button data-act="copy" class="btn" title="Sao chép"><i class="fa fa-copy"></i> <span>Sao chép</span></button>
+                    <button  data-act="move" class="btn" title="Cắt"><i class="fa fa-cut"></i> <span>Cắt</span></button>
+                    <button data-act="paste" data-active="0" class="btn" title="Dán"><i class="fa fa-paste"></i> <span>Dán</span></button>
+                    <button data-act="download" class="btn" title="Tải xuống"><i class="fa fa-cloud-download"></i> <span>Tải xuống</span></button>
+                    <span></span>
+                </div>
         	</div>
             <!-- add class 'list-view' -> show list-file type -->
             <div id="file-container" class="vsgrid">
@@ -56,11 +61,24 @@ $base_url = base_url();
     </div>
 
     <div class="row">
-        <div id="status-bar" class="col-sm-12 col-md-12 col-lg-12 header-color-blue2"></div>
+        <div id="status-bar" class="col-sm-12 col-md-12 col-lg-12 header-color-blue2">
+            <ul class="change-file-view list-inline pull-right">
+                <li><i class="ace-icon fa fa-th-large show-grid-view" title="Hiển thị thumbnail"></i></li>
+                <li><i class="ace-icon fa fa-th-list show-list-view" title="Hiển thị danh sách"></i></li>
+            </ul>
+        </div>
+        <video id="videoElement"></video>
     </div>
 </div>
 <!-- <div id="drop-zone"></div> -->
 <div class="loading-modal"></div>
+<div id="loader-wrapper">
+    <div id="loader">
+        <div class="coffee_cup">
+    </div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
 <?php
 $this->load->view('19/footer');
 ?>

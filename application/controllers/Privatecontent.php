@@ -86,10 +86,12 @@ class Privatecontent extends CI_Controller {
 		error_log( date('Y.m.d H:i:s') .'---- CONTROLLER ACTION: '. __FUNCTION__ . "\n\n\n", 3, dirname(BASEPATH) .'/logs/controller.log');
 		$username = $this->input->post('username', TRUE);
 		$password = $this->input->post('password', TRUE);
+		
+		$sessionId = session_id();
 
 		error_log( date('Y.m.d H:i:s') .'------'. __FUNCTION__ .'---- SESSION ID: '. var_export(session_id(), TRUE) . "\n", 3, dirname(BASEPATH) .'/logs/loginout.log');
 		$aryErr = array('err' => '', 'errCode' => '0');
-		$aryParams = array('src' => 'space', 'token' => md5($username.self::TOKENPW),'username' => $username, 'password' => $password, 'sid' => session_id());
+		$aryParams = array('src' => 'space', 'token' => md5($username.self::TOKENPW),'username' => $username, 'password' => $password, 'sid' => $sessionId);
 		$userData = $this->vservices->actionExecute('login', $aryParams, 'user');
 		$aryUserData = array();
 		parse_str ($userData, $aryUserData);
@@ -205,6 +207,7 @@ class Privatecontent extends CI_Controller {
     	$logged = FALSE;
     	$currUserInfo = '';
     	$sid = session_id();
+
 		$currUserInfo = $this->vservices->actionExecute('getcurrentuser', array('sid' => $sid), 'user');		
 		$aryUserData = array('id' => 0);			
 		if ($currUserInfo != '')  parse_str ($currUserInfo, $aryUserData);

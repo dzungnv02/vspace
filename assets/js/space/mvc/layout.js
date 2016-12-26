@@ -32,7 +32,10 @@ $.extend(
 
             var init = function() {
                 layoutRender();
-                $('BUTTON#btnTinyMCE').hide();
+
+                $('html').bind('contextmenu', function(e){
+                    return false;
+                })
 
                 $(aryButtons).each(function(index) {
                     var button = this;
@@ -45,7 +48,7 @@ $.extend(
                         if ($(button).attr('id') == 'btnLogout') {
                             objController.signinButtonClick();
                         } else if ($(button).attr('id') == 'btnTinyMCE' && mode == 'plugin') {                            
-                            objTinyMCE.tinymcePreview();
+                            objConnector.preview();
                         } else {
                             eval('objController.' + func + '();');
                         }
@@ -76,7 +79,7 @@ $.extend(
                     $(o.tree).parent().resizable({
                         maxWidth: maxWidth
                     });
-                    objLightBox.calculate();
+                    //objLightBox.calculate();
                 });
             };
 
@@ -121,6 +124,7 @@ $.extend(
                     type: 'text',
                     name: 'newname',
                     id: 'txtNewName',
+                    width: '100%',
                     value: $(node).attr('data-name')
                 });
 
@@ -287,71 +291,17 @@ $.extend(
              * CHANGE VIEW MODE - END *
              ******************/
 
-            var validateCreateFolder = function(foldername, customErr) {
-                if (customErr == undefined) customErr = null;
-                var errMsg = '';
-                var objErr = $('FORM#createFolderForm DIV.help-block[for="foldername"]');
-                $(objErr).text('').hide();
-                $(objErr).parent().parent().removeClass('has-error');
-
-                if (customErr == null) {
-                    if (foldername == '') {
-                        errMsg = 'Bạn hãy nhập tên thư mục!';
-                    }
-                } else {
-                    errMsg = customErr.err;
-                }
-
-                if (errMsg != '') {
-                    $(objErr).text(errMsg).show();
-                    $(objErr).parent().parent().addClass('has-error');
-                    $(objErr).parent().find('INPUT').focus();
-                    return false;
-                } else return true;
-            };
-
             this.rename = function(node) {
                 renameInit(node);
             }
 
             this.showCreateFolderDlg = function(callback) {
-                var formHTML = '<form id="createFolderForm" action="#" name="createFolderForm" method="POST" class="form-horizontal">';
-                formHTML += '    <div class="form-group">';
-                formHTML += '		<div class="col-xs-9">';
-                formHTML += '			<input type="text" class="form-control" name="foldername" placeholder="Nhập tên thư  mục" />';
-                formHTML += '			<div class="help-block" style="display:none" for="foldername"></div>';
-                formHTML += '		</div>';
-                formHTML += '		<div class="col-xs-3">';
-                formHTML += '			<button id="btnOK" type="button" class="btn btn-success btn-sm">OK</button>';
-                formHTML += '		</div>';
-                formHTML += '	</div>';
-                formHTML += '</form>';
-
-                var dlg = bootbox.dialog({
-                        title: 'Tạo thư mục',
-                        message: formHTML,
-                        show: false
-                    })
-                    .on('shown.bs.modal', function() {
-                        $(this).find('FORM#createFolderForm').find('INPUT').focus();
-                    })
-                    .on('hide.bs.modal', function(e) {})
-                    .modal('show');
-
-                $(dlg).find('DIV.modal-dialog').css('width', '350px');
-                var btnOK = $(dlg).find('DIV.modal-dialog FORM#createFolderForm BUTTON#btnOK');
-                var form = $(dlg).find('DIV.modal-dialog FORM#createFolderForm');
-
-                $(btnOK).unbind('click').bind('click', function(e) {
-                    $(form).submit();
-                });
-
-                $(form).on('submit', function(e) {
-                    e.preventDefault();
-                    var newFolderName = $(dlg).find('FORM#createFolderForm INPUT[name="foldername"]').val().trim();
+                alertify.okBtn('Tạo').cancelBtn('Hủy').prompt('Nhập tên thư mục', function (val, ev) {
+                    ev.preventDefault();
+                    var newFolderName = val.trim();
                     var destination = objTree.getSelectedNode();
-                    objSpaceModel.createFolder(newFolderName, destination, dlg, validateCreateFolder);
-                });
+                    objSpaceModel.createFolder(newFolderName, destination);
+                })
             };
 
             this.showDeleteConfirm = function(aryId) {
@@ -360,24 +310,76 @@ $.extend(
                 if (aryId.length == 1) {
                     var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent() : objGrid.findNodeById(aryId[0]);
                     var type = $(node).attr('data-type') == 'directory' ? 'thư mục' : 'file';
-                    rpStr = type + ' <strong style="color:red">' + $(node).attr('data-name') + '</strong>';
+                    rpStr = type + ' <strong>' + $(node).attr('data-name') + '</strong>';
                 } else {
                     rpStr = '<strong>' + aryId.length + '</strong>' + ' file/thư mục đã chọn'
                 }
 
-                bootbox.confirm(message.replace('[cusmsg]', rpStr), function(result) {
-                    if (result == true) objSpaceModel.delete(aryId, function() {
+                alertify.okBtn('Xóa').cancelBtn('Không').confirm(message.replace('[cusmsg]', rpStr), function () {
+                    objSpaceModel.delete(aryId, function() {
                         var node = objGrid.findNodeById(aryId[0]).attr('data-id') == undefined ? $(objTree.findNodeById(aryId[0])).parent() : objGrid.findNodeById(aryId[0]);
                         objController.refresh($(node).attr('data-parent'));
-                    });
-                });
+                        objUltis.notification('File '+rpStr+' đã xóa');
+                    })
+                })
+            };
+
+            this.bindActContextMenu = function(node) {
+                node.each(function() {
+                    var element = $(this);
+                    var func = element.data('act');
+                    var active = element.attr('data-active');
+                    if (active == undefined || active == 1) {
+                        element.unbind('click').bind('click', function(e) {
+                            eval('objController.' + func + '();');
+                        })
+                    }
+                })
+            }
+
+            this.showContextMenuFile = function(node, position) {
+                var html = '<ul class="context-menu" style="top:'+position.y+'px;left:'+position.x+'px">'
+                    +'<li data-act="share">Chia sẻ</li>'
+                    +'<li data-act="download">Tải xuống</li>'
+                    +'<li data-act="copy">Sao chép</li>'
+                    +'<li data-act="move">Cắt</li>'
+                    +'<li data-act="rename">Đổi tên</li>'
+                    +'<li data-act="delete">Xóa</li>'
+                +'</ul>';
+                node.append(html);
+                self.bindActContextMenu($('.context-menu > li'));
+            };
+
+            this.showContextMenu = function(container, node, position) {
+                
+                var html = '<ul class="context-menu" style="top:'+position.y+'px;left:'+position.x+'px">'
+                    +'<li data-act="upload">Tải lên</li>'
+                    +'<li data-act="createDir">Tạo thư mục mới</li>'
+                    +'<li data-act="paste" data-active="'+hasCopy+'">Dán</li>'
+                    +'<li data-act="share">Chia sẻ</li>'
+                +'</ul>';
+                container.append(html);
+                self.bindActContextMenu($('.context-menu > li'));
+            };
+
+            this.showToolbar = function(node) {
+                var button = $('.file-action-group');
+                button.children('button[data-act="paste"]').attr('data-active', hasCopy);
+                button.children('span:first-child').html(node.name);
+                if (node.type == 'directory') button.children('button[data-act="download"]').hide()
+                else {
+                    button.children('button[data-act="download"]').show();
+                    button.children('span:last-child').html(objUltis.formatFileSize(node.size))
+                }
+                button.css('display','inline');
+                self.bindActContextMenu(button.children());
             };
 
             this.setBreadcrumb = function() {
                 var currId = objTree.getSelectedNode();
                 var node = objTree.findNodeById(currId);
                 var aryTreeBrand = objTree.findTreeBrand(node);
-                var container = $(o.navigationbar).find('UL.breadcrumb');
+                var container = $('ul.breadcrumb');
                 $(container).empty();
 
                 for (var i = aryTreeBrand.length - 1; i >= 0; i--) {
@@ -404,43 +406,26 @@ $.extend(
             };
 
             this.setStatusBar = function() {
-                $(o.statusbar).empty();
-                var selectedNode = objGrid.getSelectedNodes();
-                var selectedSize = 0;
-                var dateStr = '';
-
-                var totalUsed = $('<span></span>', {
-                    html: 'Tổng dung lượng đã sử dụng: <strong>' + objUltis.formatFileSize(appprofile.SPACE.used) + '/' + objUltis.formatFileSize(appprofile.SPACE.total) + '</strong> - ' + (appprofile.SPACE.expire != '' ? 'Sử dụng đến: ' + '<strong>' + appprofile.SPACE.expire + '</strong>' : '')
-                });
-                var statusItems = $('<span></span>');
-                var statusSize = $('<span></span>');
-
-                if (selectedNode.length > 0) {
-                    for (var i = 0; i < selectedNode.length; i++) {
-                        selectedSize += parseFloat($(selectedNode[i]).attr('data-size'));
-                    }
-                    var html = selectedNode.length == 1 ? ($(selectedNode).attr('data-type') == 'directory' ? 'Thư mục:' : 'File:') + ' <strong stype="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + $(selectedNode).attr('data-name') + '</strong>' : '<strong>' + selectedNode.length + ' file/thư mục được chọn';
-
-                } else {
-                    var html = '';
-                }
-
-                $(o.statusbar).append(totalUsed);
-                if (html != '') {
-                    $(statusItems).html(html);
-                    $(statusSize).html(' - Dung lượng:<strong>' + objUltis.formatFileSize(selectedSize) + '</strong>');
-                    $(o.statusbar).append(statusItems, statusSize);
-                }
+                var quotaUnit = (appprofile.SPACE.used/appprofile.SPACE.total) * 100;
+                $('.data-used').html(objUltis.formatFileSize(appprofile.SPACE.used)+' / '+objUltis.formatFileSize(appprofile.SPACE.total)+' đã sử dụng');
+                $('.quota-bar').css('width', quotaUnit+'%');
             };
 
             this.changeLoginButtonStatus = function() {
-                var loginButton = $(o.toolbar).find('BUTTON#btnLogout');
+                var userMenu = $(o.toolbar).find('.user');
                 if (appprofile != null) {
-                    $(loginButton).find('I').html('&nbsp;Thoát');
-                } else {
-                    $(loginButton).find('I').html('&nbsp;Đăng nhập');
-                }
-            }
+                    userMenu.show();
+                    userMenu.find('span').html(appprofile.username+' <b class="caret"></b>');
+                } else userMenu.hide();
+            };
+
+            this.setLoading = function() {
+                $('body').removeClass('loaded')
+            };
+
+            this.loaded = function() {
+                $('body').addClass('loaded')
+            };
 
             this.setOptions = function(opt, value) {
                 eval('o.' + opt + '= value;');

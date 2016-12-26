@@ -8,7 +8,8 @@ $.extend(
 			var data = [];
 			var currentViewMode = 'grid';
 			var aryImg = ['jpg', 'jpeg', 'gif', 'png', 'bmp'];
-			var aryVideo = ['mp4', 'flv', 'webm'];
+			var aryVideo = ['mp4', 'flv', 'webm', '3gp', 'avi', 'mov'];
+			var aryAudio = ['mp3'];
 
 			var init = function() {
 				var ul = $('<ul></ul>', {
@@ -24,7 +25,7 @@ $.extend(
 				var preloadedObj = null;
 				if (item.thumbnail != undefined) {
 					img = item.thumbnail != '' ? $('<img />', {
-						src: item.thumbnail,
+						src: window.atob(appprofile.uhandler)+item.thumbnail,
 						align: 'middle'
 					}) : null;
 				}
@@ -44,7 +45,10 @@ $.extend(
 					'class': icon
 				});
 
-				if (img != null) $(div).append(img);
+				if (img != null) {
+					$(div).addClass('has-thumb');
+					$(div).append(img);
+				}
 				var a = $('<a></a>', {
 					id: item.id,
 					href: '#',
@@ -72,6 +76,9 @@ $.extend(
 					text: item.date
 				});
 
+				var insertHint = '';
+				if (mode == 'plugin' && opts.minetype !== 'directory') insertHint = 'Click để chèn file';
+
 				var li = $('<li></li>', {
 					'class': 'vscell',
 					id: opts.minetype + '-' + item.id,
@@ -81,7 +88,10 @@ $.extend(
 					'data-type': opts.minetype,
 					'data-date': item.date,
 					'data-parent': item.parentID,
-					'data-child': opts.minetype == 'directory' ? item.subdirs : '0'
+					'data-child': opts.minetype == 'directory' ? item.subdirs : '0',
+					'data-toggle': 'tooltip',
+					'data-placement': 'bottom',
+					'title': insertHint
 				}).append(div, divLink, divSize, divMineType, divDate);
 				bindNodeEvents(li, preloadedObj);
 				return li;
@@ -89,38 +99,65 @@ $.extend(
 
 			var bindNodeEvents = function(node, preloadedObj) {
 				if (o.eventHandlers == null) return false;
-				$(node).bind('click', function(e) {
+				var that = $(node);
+				
+				that.bind('click', function(e) {
 						e.stopPropagation();
 						nodeClick(this, e);
 						return false;
 					})
 					.bind('dblclick', function(e) {
-						var nodeData = $(node).data();
-						if ($(node).attr('data-type') == 'directory') {
+						var nodeType = that.attr('data-type');
+						var nodeData = that.data();
+						if (nodeType == 'directory') {
 							o.eventHandlers.open(node, function(node, oViewTree) {
 								oViewTree.nodeClick($('DIV#treeview-container').find('A[data-id="' + nodeData.id + '"]'));
 							});
 						} else {
-							var url = window.atob(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + nodeData.id; // decode the string							
+							var url = window.atob(appprofile.uhandler) + 'space/file/userid/' + appprofile.id + '/id/' + nodeData.id; // decode the string
 							var filename = nodeData.name;
 							var preload = preloadedObj != undefined ? preloadedObj[0] : null;
 							if (mode == 'plugin') {
-								objTinyMCE.tinymcePreview({
+								objConnector.preview({
 									id:nodeData.id,
 									src:url,
-									file: filename
+									file: filename,
+									type: nodeData.type
 								});
 							} else {
-								objLightBox.setup({
-									preload: preload,
-									src: url,
-									file: filename
-								});
-								objLightBox.show();
+								if ($.inArray(nodeType, aryImg) > -1) {
+									objLightBox.setup({
+										preload: preload,
+										src: url,
+										file: 'thumbnail.jpg'
+									});
+									objLightBox.show();
+								} else if ($.inArray(nodeType, aryVideo) > -1) {
+									var video = '<video autobuffer controls><source src="'+objController.requestVideoPreview()+'" type="video/mp4"></video>';
+									objLightBox.setup({
+										preload: preload,
+										src: objController.requestVideoPreview(),
+										file: 'preview.mp4'
+									});
+									objLightBox.show();
+								} else if ($.inArray(nodeType, aryAudio) > -1) {
+									objUltis.alert('Chưa hỗ trợ xem tập tin này');
+								} else objUltis.alert('Chưa hỗ trợ xem tập tin này');
 							}
 						}
-					});
-			};
+					})
+					.bind('contextmenu',function(e) {
+						e.preventDefault();
+						nodeClick(this, e);
+						that.addClass('selected');
+						clearContextMenu(that);
+						var positionClick = {
+        					'x': e.pageX - 16,
+        					'y': e.pageY
+            			};
+						objLayout.showContextMenuFile(that, positionClick);
+					})
+				};
 
 			var nodeClick = function(node, event) {
 				o.eventHandlers.select(node, function() {
@@ -147,6 +184,13 @@ $.extend(
 
 			var highlightNode = function(node) {
 				$(node).addClass('selected');
+				var dirInfo = {
+                    id: $(node).data('id'),
+                    name: $(node).data('name'),
+                    type: $(node).data('type'),
+                    size: $(node).data('size')
+                }
+				objLayout.showToolbar(dirInfo);
 			};
 
 			var isHighLight = function(node) {
@@ -155,6 +199,8 @@ $.extend(
 
 			var clearAllHighLightNode = function() {
 				$(o.gridContainer).find('> UL > LI').removeClass('selected');
+				$(o.gridContainer).find('ul.context-menu').remove();
+				$('.file-action-group').css('display','none');
 			};
 
 			var clearHighLightNode = function(node) {
@@ -164,6 +210,10 @@ $.extend(
 			var highLightAllNode = function() {
 				clearAllHighLightNode();
 				$(o.gridContainer).find('> UL > LI').addClass('selected');
+			};
+
+			var clearContextMenu = function(node) {
+				node.remove('ul.context-menu');
 			};
 
 			var findNodeById = function(nodeId) {
@@ -197,6 +247,7 @@ $.extend(
 						$(ul).append(li);
 					};
 				}
+				$('[data-toggle="tooltip"]').tooltip();
 			};
 
 			this.clearContent = function() {

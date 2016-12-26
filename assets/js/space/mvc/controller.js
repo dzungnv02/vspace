@@ -47,11 +47,13 @@ $.extend(
 
 			this.copy = function() {
 				var items = getSelectedItems();
+				objUltis.notification('Copy file');
 				objUltis.clipBoard.put(items);
 				objUltis.clipBoard.do('copy');
 			};
 
 			this.move = function() {
+				$('li.vscell.selected').css('opacity', 0.5);
 				var items = getSelectedItems();
 				objUltis.clipBoard.put(items);
 				objUltis.clipBoard.do('move');
@@ -103,24 +105,37 @@ $.extend(
 			};
 
 			this.share = function() {
-				var worker = new Worker(includeDir + 'pi.js');
-				var d = new Date();
+				objUltis.alert('Chưa hỗ trợ tính năng này');
+				// var node = objGrid.getSelectedNodes();
+				// var str = $(node).data('id')+$(node).data('name')+$(node).data('date');
+				// var link = window.atob(appprofile.uhandler)+'file/'+objUltis.base64(str,'encode');
+				// alertify.okBtn('Copy').cancelBtn('Hủy').defaultValue(link).prompt('Đường link chia sẻ', function (val, e) {
+				// 	e.preventDefault();
+				// 	var aux = document.createElement('input');
+    //                 aux.setAttribute('value', val);
+    //                 document.body.appendChild(aux);
+    //                 aux.select();
+    //                 document.execCommand("copy");
+    //                 document.body.removeChild(aux);
+				// });
+				// var worker = new Worker(includeDir + 'pi.js');
+				// var d = new Date();
 				
-				worker.onmessage = function(e) {
-					console.log(e.data.PiValue);
-					console.log(d.getTime());
-				};
-				worker.onerror = function(e) {
-					console.log('Error: Line ' + e.lineno + ' in ' + e.filename + ': ' + e.message);
-					console.log(d.getTime());
-				};
+				// worker.onmessage = function(e) {
+				// 	console.log(e.data.PiValue);
+				// 	console.log(d.getTime());
+				// };
+				// worker.onerror = function(e) {
+				// 	console.log('Error: Line ' + e.lineno + ' in ' + e.filename + ': ' + e.message);
+				// 	console.log(d.getTime());
+				// };
 
-				console.log(d.getTime());
-				//start the worker
-				worker.postMessage({
-					'cmd': 'CalculatePi',
-					'value': 1000000000
-				});
+				// console.log(d.getTime());
+				// //start the worker
+				// worker.postMessage({
+				// 	'cmd': 'CalculatePi',
+				// 	'value': 1000000000
+				// });
 			};
 
 			this.preview = function() {
@@ -128,6 +143,13 @@ $.extend(
 				if (node.length > 0) node = $($(node)[0]);
 				if ($(node).attr('data-type') == 'directory') return;
 				$(node).trigger('dblclick');
+			};
+
+			this.requestVideoPreview = function() {
+				var node = objGrid.getSelectedNodes();
+				if (node.length > 0) node = $($(node)[0]);
+				var thumb = $(node).find('.has-thumb > img').attr('src');
+				return thumb.replace('thumbnail.jpg', 'preview.mp4');
 			};
 
 			this.logout = function() {
@@ -149,6 +171,7 @@ $.extend(
 			};
 
 			this.refresh = function(currDir, callback, callbackparam) {
+				objUltis.clipBoard.clear();
 				if (currDir == undefined) currDir = objTree.getSelectedNode();
 				var selectedNode = objTree.findNodeById((currDir != undefined) ? currDir : rootDirId);
 
@@ -215,6 +238,15 @@ $.extend(
 					}).unbind('click').bind('click', function(e) {
 						objGrid.clearSelecteds();
 						return false;
+					}).unbind('contextmenu').bind('contextmenu', function(e) {
+						if ($(this).find('.vscell.selected').length == 0) {
+							objGrid.clearSelecteds();	
+							var positionClick = {
+		    					'x': e.pageX - 16,
+		    					'y': e.pageY,
+		    				};
+							objLayout.showContextMenu($(this), objTree.getSelectedNode(), positionClick);
+						}
 					});
 
 				objTree.setOptions('eventHandlers', treeEventHandlers);

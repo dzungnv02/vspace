@@ -38,19 +38,21 @@ MimeType = {
 			include_charset = true;
 		}
 
-		if (path.extname !== undefined) {
-			ext = path.extname(fname).toLowerCase();
-		} else if (fname.lastIndexOf('.') > 0) {
-			ext = fname.substr(fname.lastIndexOf('.')).toLowerCase();
-		} else {
-			ext = fname;
-		}
+		// if (path.extname !== undefined) {
+		// 	ext = path.extname(fname).toLowerCase();
+		// } else if (fname.lastIndexOf('.') > 0) {
+		// 	ext = fname.substr(fname.lastIndexOf('.')).toLowerCase();
+		// } else {
+		// 	ext = fname;
+		// }
 
 		// Handle the special cases where their is no extension
 		// e..g README, manifest, LICENSE, TODO
-		if (ext === "") {
-			ext = fname;
-		}
+		// if (ext === "") {
+		// 	ext = fname;
+		// }
+
+		ext = '.'+fname;
 
 		if (this.catalog[ext] !== undefined) {
 			if (include_charset === true &&

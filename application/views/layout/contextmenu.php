@@ -1,4 +1,4 @@
-<!-- <ul id="treeMenu" class="contextMenu">
+<ul id="treeMenu" class="contextMenu">
 	<li class="newfolder"><a href="#newfolder">Tạo thư mục mới</a></li>
 	<li class="share separator"><a href="#share">Chia sẻ</a></li>
 	<li class="copy separator"><a href="#copy">Sao chép đến ...</a></li>
@@ -35,4 +35,4 @@
 	<li class="cut"><a href="#cut">Di chuyển đến...</a></li>
 	<li class="delete"><a href="#delete">Xóa</a></li>
 	<li class="rename separator"><a href="#rename">Đổi tên</a></li>
-</ul> -->
+</ul>
