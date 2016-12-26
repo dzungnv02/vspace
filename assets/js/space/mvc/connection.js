@@ -1,4 +1,4 @@
-$.extend(
+ $.extend(
 	$.fn, {
 		vsConnection: function(o) {
 			if (o == null) o = {};
@@ -42,6 +42,7 @@ $.extend(
 			this.connectionSetup = function(opts) {
 				var callbackSuccess = opts.callbackSuccess;
 				var callbackFail = opts.callbackFail;
+				if(opts.callbackDone) var callbackDone = opts.callbackDone;
 				var dataType = (opts.dataType == undefined) ? 'json' : opts.dataType;
 				var timeout = opts.timeout;
 				var crossDomain = (opts.crossDomain == undefined) ? false : opts.crossDomain;
@@ -84,6 +85,9 @@ $.extend(
 							}
 							console.debug(err);
 						}
+					},
+					complete: function(xhr, status) {
+						if(callbackDone) callbackDone();
 					},
 					timeout: timeout
 				};

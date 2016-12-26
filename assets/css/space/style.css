@@ -91,8 +91,6 @@ body.loading .loading-modal {
     vertical-align: middle;
     line-height: 40px;
     padding-left: 23px;
-    font-size: 16px;
-    color: #C0C0C0;
 }
 
 #status-bar {

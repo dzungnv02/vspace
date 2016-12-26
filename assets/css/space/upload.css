@@ -51,21 +51,44 @@
 #drop-zone DIV.fileuploading SPAN.uploadprogess {
     float: left;
     display: inline-block;
-    margin-top: 5px;
-    height: 5px;
+    margin-top: 3px;
     width: 26%;
     overflow-x: hidden;
 }
 
-#drop-zone DIV.fileuploading SPAN.uploadprogess DIV {
-    height: 5px;
+.progress-bar.progress-error {
+    background-color: #ff5722;
+}
+.progress-bar.progress-error:after {
+    content: 'Error';
+    display: block;
+}
+.progress-bar.progress-done {
+    background-color: #8BC34A;
+}
+.progress-bar.progress-done:after {
+    content: '100%';
+    display: block;
+}
+.progress-bar.progress-wait:after {
+    content: 'Đang xử lý..';
+    display: block;
+}
+.progress-bar:after {
+    content: '';
+    display: none;
+    font-size: 10px;
 }
 
 #drop-zone DIV.fileuploading SPAN.filesize.error {
     text-decoration: line-through;
     color: #c00606;
 }
-
+#drop-zone DIV.fileuploading SPAN.filesize.error:after {
+    content: 'Dung lượng sử dụng không đủ';
+    position: absolute;
+    margin-left: 10px;
+}
 #drop-zone DIV.fileuploading SPAN.progess{
 
 }   

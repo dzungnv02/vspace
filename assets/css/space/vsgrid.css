@@ -19,7 +19,7 @@ UL.vstree LI {
 UL.vstree A {
 	color: #333;
 	text-decoration: none;
-	display: inline-block;
+	display: block;
 	padding: 0px 2px;
 }
 

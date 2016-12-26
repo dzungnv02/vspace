@@ -69,6 +69,13 @@ $.extend(
                 var itemId = $(node).attr('data-id');
                 $(o.treeContainer).find('.currentDir').removeClass('currentDir');
                 $(node).addClass('currentDir');
+                var nodeParent = node.parent()
+                var dirInfo = {
+                    id: itemId,
+                    name: nodeParent.data('name'),
+                    type: nodeParent.data('type')
+                }
+                objLayout.showToolbar(dirInfo);
                 return node;
             }
 

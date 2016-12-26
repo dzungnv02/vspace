@@ -389,7 +389,7 @@ $config['sess_regenerate_destroy'] = FALSE;
 |
 */
 $config['cookie_prefix']	= '';
-$config['cookie_domain']	= 'violet.vn';
+$config['cookie_domain']	= 'hp-elearning.tk';
 $config['cookie_path']		= '/';
 $config['cookie_secure']	= FALSE;
 $config['cookie_httponly'] 	= FALSE;
@@ -511,4 +511,4 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
-$config['api_url'] = 'http://api1.violet.vn/';
+$config['api_url'] = 'http://api.donganh.edu.vn/';

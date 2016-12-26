@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Saigon');
-ini_set('session.cookie_domain', 'violet.vn');
+ini_set('session.cookie_domain', 'donganh.edu.vn');
 session_name('symfony');
 session_start();
 

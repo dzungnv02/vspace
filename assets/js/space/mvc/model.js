@@ -36,20 +36,23 @@ $.extend(
 					callbackFail: function(xhr, status, error) {
 						if (status == 'Login') {
 							objLayout.changeLoginButtonStatus();
-							objUltis.showAlert(status, error, function() {								
+							objUltis.alert(error, function() {								
 								objUser.showLogin();
 							});
 						} else {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								console.log(xhr);
 							});
 						}
+					},
+					callbackDone: function(xhr, status) {
+						objLayout.loaded();
 					}
 				};
 				objConnection.sendCommand(opts);
 			};
 
-			this.login = function(username, password, dlg, callback) {
+			this.login = function(username, password, callback) {
 				if (callback(username, password)) {
 					var opts = {
 						script: '/privatecontent/login',
@@ -57,35 +60,26 @@ $.extend(
 							username: username,
 							password: password
 						},
-						callbackSuccess: function(result, status, xhr) {							
+						callbackSuccess: function(result, status, xhr) {						
 							appprofile = result.USER;
 							objController.refresh();
-							dlg.modal('hide');
-							dlg = null;
 							objLayout.changeLoginButtonStatus();
 						},
 						callbackFail: function(xhr, status, error) {
-							var customErr = {
-								el: null,
-								err: null
-							};
+							var customErr = null;
 
 							if (error == 'errUserNotFound') {
-								customErr = {
-									el: 'username',
-									err: 'Username không tồn tại!'
-								};
+								customErr = 'Tài khoản không tồn tại!'
 							} else if (error == 'errIncorrectPassword') {
-								customErr = {
-									el: 'password',
-									err: 'Password không đúng!'
-								};
+								customErr = 'Mật khẩu không đúng!'
 							}
 							callback(username, password, customErr);
+						},
+						callbackDone: function(xhr, status) {
+							objLayout.loaded();
 						}
 					};
-					if (dlg != null)
-						objConnection.sendCommand(opts);
+					objConnection.sendCommand(opts);
 				}
 			};
 
@@ -99,7 +93,7 @@ $.extend(
 						objLayout.changeLoginButtonStatus();
 					},
 					callbackFail: function(xhr, status, error) {
-						objUltis.showAlert(status, error, function() {
+						objUltis.alert(error, function() {
 							console.log(xhr);
 						});
 					}
@@ -157,11 +151,11 @@ $.extend(
 					},
 					callbackFail: function(xhr, status, error) {
 						if (status == 'Login') {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								objUser.showLogin();
 							});
 						} else {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								console.log(xhr);
 							});
 						}
@@ -169,11 +163,7 @@ $.extend(
 				});
 			};
 
-			this.createFolder = function(newFolderName, destination, dlg, callback) {
-				if (!callback(newFolderName)) {
-					return false;
-				}
-
+			this.createFolder = function(newFolderName, destination) {
 				var opts = {
 					script: '/ajax/privatecontent/createdir',
 					postdata: {
@@ -182,21 +172,20 @@ $.extend(
 					},
 					callbackSuccess: function(result, status, xhr) {
 						objController.refresh();
-						dlg.modal('hide');
+						objUltis.notification('Đã tạo thư mục '+newFolderName);
 					},
 					callbackFail: function(xhr, status, error) {
 						if (status == 'Login') {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								objUser.showLogin();
-							});
+							})
 						} else {
 							var customErr = {
 								el: status,
 								err: error
 							};
-							callback(newFolderName, customErr);
+							objUltis.notification(status+': '+error)
 						}
-
 					}
 				};
 
@@ -219,11 +208,11 @@ $.extend(
 					},
 					callbackFail: function(xhr, status, error) {
 						if (status == 'Login') {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								objUser.showLogin();
 							});
 						} else {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								console.log(xhr);
 							});
 						}
@@ -234,6 +223,7 @@ $.extend(
 			};
 
 			this.upload = function(formData, progressBar, callback) {
+				var bar = $(progressBar).find('div');
 				var jqXHR = $.ajax({
 					xhr: function() {
 						var xhrobj = $.ajaxSettings.xhr();
@@ -245,8 +235,8 @@ $.extend(
 								if (event.lengthComputable) {
 									percent = Math.ceil(position / total * 100);
 								}
-								$(progressBar).find('DIV').css('width', percent + '%');
-
+								bar.css('width', percent + '%');
+								if (percent == 100) bar.addClass('progress-wait');
 							}, false);
 						}
 						return xhrobj;
@@ -261,10 +251,10 @@ $.extend(
 					data: formData,
 					timeout: 0,
 					success: function(data) {
-						callback(data);
+						callback(data, bar);
 					},
 					error: function() {
-						objUltis.showAlert(status, error, function() {
+						objUltis.alert(error, function() {
 							console.log(xhr);
 						});
 					}
@@ -289,11 +279,11 @@ $.extend(
 					},
 					callbackFail: function(xhr, status, error) {
 						if (status == 'Login') {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								objUser.showLogin();
 							});
 						} else {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								console.log(xhr);
 							});
 						}
@@ -316,11 +306,11 @@ $.extend(
 					},
 					callbackFail: function(xhr, status, error) {
 						if (status == 'Login') {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								objUser.showLogin();
 							});
 						} else {
-							objUltis.showAlert(status, error, function() {
+							objUltis.alert(error, function() {
 								console.log(xhr);
 							});
 						}

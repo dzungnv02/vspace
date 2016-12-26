@@ -31,41 +31,6 @@ $.extend(
 
 			var init = function() {
 				initModal();
-				initVideoPlayer();
-				initImageViewer();
-				videojs.options.flash.swf = server + includeDir + 'video.js/video-js.swf';
-			};
-
-			var initVideoPlayer = function() {
-				if (videoPlayer == null || videoPlayer == undefined) {
-					videoPlayer = $('<video></video>', {
-						'id': 'vLightBoxVideo',
-						'controls': true,
-						'width': '100%',
-						'height': '100%',
-						'class': 'video-js vjs-default-skin'
-					}).append($('<source></source>', {
-						'src': dummyvideo,
-						'type': 'video/mp4'
-					}));
-				}
-				videoPlayer.hide();
-				$(container).find('DIV.modal-body').append(videoPlayer);
-				videojsObj = videojs('vLightBoxVideo', {
-					'controls': true,
-					'autoplay': true,
-					'preload': 'auto'
-				});
-			}
-
-			var initImageViewer = function() {
-				imageViewer = $('<img />', {
-					'id': 'vLightBoxImage',
-					'width': '100%',
-					'height': '100%',
-				});
-				imageViewer.hide();
-				$(container).find('DIV.modal-body').append(imageViewer);
 			};
 
 			var initModal = function() {
@@ -108,7 +73,8 @@ $.extend(
 					objWidth = o.preload.naturalWidth;
 					objHeight = o.preload.naturalHeight;
 				} else if (mediaType == 'video') {
-
+					objWidth = 640;
+					objHeight = 360;
 				} else {
 
 				}
@@ -124,61 +90,33 @@ $.extend(
 				container.find('DIV.modal-body').css('text-align', 'center');
 			};
 
-			var renderVideoPlayer = function() {
-				/*$(videoPlayer).empty();
-				$(videoPlayer).append($('<source></source>', {
-					'src': o.src,
-					'type': mimeType
-				}));
-
-				videoPlayer.show();
-
-				videojs('vLightBoxVideo', {
-					'controls': true,
-					'autoplay': true,
-					'preload': 'auto'
-				});*/
-			};
-
-			var renderImageViewer = function() {
-				imageViewer[0].src = o.src;
-				$(imageViewer).ready(function(e) {
-					if (objWidth < dlgWidth) {
-						$(imageViewer).attr('width', objWidth + 'px');
-						$(imageViewer).attr('height', objHeight + 'px');
-					} else {
-						$(imageViewer).attr('width', '100%');
-						$(imageViewer).attr('height', '100%');
-					}
-				});
-				imageViewer.show();
-			};
-
-			var resetVideoplayer = function() {
-				/*if (videojs.getPlayers()['vLightBoxVideo']) {
-					videojs.getPlayers()['vLightBoxVideo'].dispose();
-					$(container).find('DIV.modal-body').find('DIV#vLightBoxVideo').remove();
-				}
-				$(container).find('DIV.modal-body').empty();
-				delete videoPlayer;
-				initVideoPlayer();*/
-			};
-
-			var resetImageViewer = function() {
-				/*$(container).find('DIV.modal-body').empty();
-				delete imageViewer;
-				initImageViewer();*/
-			};
-
 			var render = function(callback) {
 				getDimension();
+				var viewer = null;
 				if (mediaType == 'image') {
-					renderImageViewer();
+					var viewer_w = '100%';
+					var viewer_h = '100%';
+					if (objWidth < dlgWidth) {
+						viewer_w = objWidth + 'px';
+						viewer_h = objHeight + 'px';
+					}
+					viewer = $('<img />', {
+						'id': 'vLightBoxImage',
+						'width': viewer_w,
+						'height': viewer_h,
+						'src': o.src
+					})
 				} else if (mediaType == 'video') {
-					renderVideoPlayer();
+					if (viewer == null || viewer == undefined) {
+						viewer = $('<video autobuffer controls></video>').append($('<source></source>', {
+							'src': o.src,
+							'type': mimeType
+						}));
+					}
 				} else {
 
 				}
+				$(container).find('DIV.modal-body').html(viewer);
 
 				if (callback !== undefined) {
 					callback();
@@ -201,8 +139,6 @@ $.extend(
 					.on('hidden.bs.modal', function(e) {
 						dlgWidth = defaultDlgWidth;
 						dlgHeight = defaultDHeight;
-						//resetVideoplayer();
-						//resetImageViewer();
 						$(this).unbind();
 					});
 
